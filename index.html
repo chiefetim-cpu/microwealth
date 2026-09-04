@@ -188,49 +188,61 @@
 
 
     <!-- COMMUNITY -->
-    <section id="community" class="page">
+<section id="community" class="page">
 
-        <p class="eyebrow">COMMUNITY</p>
+    <p class="eyebrow">COMMUNITY</p>
 
-        <h1>Grow together</h1>
+    <h1>Grow together</h1>
 
-        <div class="post">
+    <p class="intro">
+        Connect with people building better money habits,
+        share your progress, and motivate each other.
+    </p>
 
-            <div class="avatar">A</div>
+    <button class="primary-button" onclick="showPage('home')">
+        ← Back to Home
+    </button>
 
-            <div>
-                <strong>Amara</strong>
+    <div class="post">
 
-                <p>
-                    Just completed my 7-day savings challenge! 🔥
-                </p>
+        <div class="avatar">A</div>
 
-                <button>♡ Like</button>
+        <div>
+            <strong>Amara</strong>
 
-            </div>
+            <p>
+                Just completed my 7-day savings challenge! 🔥
+            </p>
 
-        </div>
-
-        <div class="post">
-
-            <div class="avatar">D</div>
-
-            <div>
-                <strong>David</strong>
-
-                <p>
-                    Day 15 of my money-habit challenge.
-                    Consistency is the goal.
-                </p>
-
-                <button>♡ Like</button>
-
-            </div>
+            <button onclick="likePost(this)" data-likes="0">
+                ♡ Like
+            </button>
 
         </div>
 
-    </section>
+    </div>
 
+    <div class="post">
+
+        <div class="avatar">D</div>
+
+        <div>
+            <strong>David</strong>
+
+            <p>
+                Day 15 of my money-habit challenge.
+                Consistency is the goal.
+            </p>
+
+            <button onclick="likePost(this)" data-likes="0">
+                ♡ Like
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
 
     <!-- PROFILE -->
     <section id="profile" class="page">
