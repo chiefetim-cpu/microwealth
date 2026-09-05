@@ -1,337 +1,777 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>MicroWealth — Start Small. Grow Together.</title>
+
+    <meta name="description"
+        content="MicroWealth helps you build better money habits through small savings challenges, financial education and community.">
+
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header class="topbar">
-    <div class="logo">Micro<span>Wealth</span></div>
-    <button class="currency">INR ₹</button>
-</header>
+    <!-- ============================= -->
+    <!-- TOP BAR -->
+    <!-- ============================= -->
 
-<main>
+    <header class="topbar">
 
-    <!-- HOME -->
-    <section id="home" class="page active">
-
-        <p class="eyebrow">START SMALL. GROW TOGETHER.</p>
-
-        <h1>Build better money habits, one small step at a time.</h1>
-
-        <p class="intro">
-            Take simple financial challenges, learn about money,
-            track your progress and grow together with a community.
-        </p>
-
-        <div class="challenge-card">
-
-            <div class="coin">₹</div>
-
-            <h2>30-Day Wealth Challenge</h2>
-
-            <p>Day 8 of 30</p>
-
-            <div class="progress">
-                <div class="progress-bar"></div>
-            </div>
-
-            <p>27% complete</p>
-
-            <button class="primary-button" onclick="continueChallenge()">
-    Continue Challenge
-</button>
-
-<button class="primary-button" onclick="showPage('community')">
-    Join Community
-</button>
-
+        <div class="logo">
+            Micro<span>Wealth</span>
         </div>
 
-        <div class="stats">
+        <button class="currency" onclick="changeCurrency()">
+            INR ₹
+        </button>
 
-            <div class="stat">
-                <strong>🔥 8</strong>
-                <span>Day Streak</span>
-            </div>
+    </header>
 
-            <div class="stat">
-                <strong>1,250</strong>
-                <span>Points</span>
-            </div>
 
-            <div class="stat">
-                <strong>3</strong>
-                <span>Badges</span>
-            </div>
+    <!-- ============================= -->
+    <!-- MAIN APP -->
+    <!-- ============================= -->
 
-        </div>
+    <main>
 
-        <h2>Today's Focus</h2>
 
-        <div class="task-card">
+        <!-- ============================= -->
+        <!-- HOME -->
+        <!-- ============================= -->
 
-            <div class="task-icon">✓</div>
+        <section id="home" class="page active">
 
-            <div class="task-content">
-                <strong>Track today's spending</strong>
+            <p class="eyebrow">YOUR FINANCIAL JOURNEY</p>
+
+            <h1>
+                Build wealth<br>
+                one small step at a time.
+            </h1>
+
+            <p class="intro">
+                Develop better money habits through simple daily
+                challenges, financial education and a supportive community.
+            </p>
+
+
+            <!-- MAIN CHALLENGE -->
+
+            <div class="challenge-card">
+
+                <div class="coin">
+                    ₹
+                </div>
+
+                <p class="eyebrow">CURRENT CHALLENGE</p>
+
+                <h2>30-Day Wealth Challenge</h2>
 
                 <p>
-                    Take two minutes to record what you spent today.
+                    You're building a consistent saving habit.
                 </p>
+
+                <p>
+                    Day <strong>8</strong> of 30
+                </p>
+
+                <div class="progress">
+
+                    <div class="progress-bar"></div>
+
+                </div>
+
+                <p>
+                    <strong>27%</strong> completed
+                </p>
+
+                <button
+                    class="primary-button"
+                    onclick="continueChallenge()">
+
+                    Continue Challenge
+
+                </button>
+
             </div>
 
-            <button class="outline-button" onclick="completeTask(this)">
-    Complete
-</button>
 
-        </div>
+            <!-- QUICK STATS -->
 
-    </section>
+            <div class="stats">
 
+                <div class="stat">
 
-    <!-- CHALLENGES -->
-    <section id="challenges" class="page">
+                    <strong>🔥 8</strong>
 
-        <p class="eyebrow">CHALLENGE HUB</p>
+                    <span>
+                        Day streak
+                    </span>
 
-        <h1>Choose your challenge</h1>
-
-        <div class="cards">
-
-            <div class="card">
-                <span class="tag">BEGINNER</span>
-                <h2>7-Day Starter</h2>
-                <p>Build your first positive money habit.</p>
-                <strong>+300 points</strong>
-                <button class="primary-button" onclick="joinChallenge('7-Day Starter')">
-    Join Challenge
-</button>
-
-            <div class="card">
-                <span class="tag">POPULAR</span>
-                <h2>30-Day Wealth</h2>
-                <p>Small daily actions for stronger financial habits.</p>
-                <strong>+1,000 points</strong>
-                <button class="primary-button" onclick="joinChallenge('30-Day Wealth')">
-    Join Challenge
-</button>
-
-            <div class="card">
-                <span class="tag">LONG TERM</span>
-                <h2>52-Week Savings</h2>
-                <p>Build consistency throughout the year.</p>
-                <strong>+2,500 points</strong>
-                <button class="primary-button" onclick="joinChallenge('52-Week Savings')">
-    Join Challenge
-</button>
-
-            <div class="card">
-                <span class="tag">LEARN</span>
-                <h2>Financial Basics</h2>
-                <p>Learn important money concepts in seven days.</p>
-                <strong>+700 points</strong>
-                <button class="primary-button" onclick="joinChallenge('Financial Basics')">
-    Join Challenge
-</button>
-
-        </div>
-
-    </section>
+                </div>
 
 
-    <!-- LEARN -->
-    <section id="learn" class="page">
+                <div class="stat">
 
-        <p class="eyebrow">MICROLEARNING</p>
-
-        <h1>Learn money basics</h1>
-
-        <div class="lesson">
-
-            <h2>Saving vs Investing</h2>
-            <p>Understand the difference between saving and investing.</p>
-            <button class="outline-button">Start Lesson</button>
-
-        </div>
-
-        <div class="lesson">
-
-            <h2>Emergency Funds</h2>
-            <p>Learn why having a financial safety buffer matters.</p>
-            <button class="outline-button">Start Lesson</button>
-
-        </div>
-
-        <div class="lesson">
-
-            <h2>Compound Growth</h2>
-            <p>Understand how time can affect hypothetical growth.</p>
-            <button class="outline-button">Start Lesson</button>
-
-        </div>
-
-        <div class="lesson">
-
-            <h2>Investment Risk</h2>
-            <p>Learn why investment returns are never guaranteed.</p>
-            <button class="outline-button">Start Lesson</button>
-
-        </div>
-
-        <div class="notice">
-            Financial education only. This application does not provide
-            personalized investment advice or guarantee returns.
-        </div>
-
-    </section>
-
-
-    <!-- COMMUNITY -->
-<section id="community" class="page">
-
-    <p class="eyebrow">COMMUNITY</p>
-
-    <h1>Grow together</h1>
-
-    <p class="intro">
-        Connect with people building better money habits,
-        share your progress, and motivate each other.
-    </p>
-
-    <button class="primary-button" onclick="showPage('home')">
-        ← Back to Home
-    </button>
-
-    <div class="post">
-
-        <div class="avatar">A</div>
-
-        <div>
-            <strong>Amara</strong>
-
-            <p>
-                Just completed my 7-day savings challenge! 🔥
-            </p>
-
-            <button onclick="likePost(this)" data-likes="0">
-                ♡ Like
-            </button>
-
-        </div>
-
-    </div>
-
-    <div class="post">
-
-        <div class="avatar">D</div>
-
-        <div>
-            <strong>David</strong>
-
-            <p>
-                Day 15 of my money-habit challenge.
-                Consistency is the goal.
-            </p>
-
-            <button onclick="likePost(this)" data-likes="0">
-                ♡ Like
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
-
-    <!-- PROFILE -->
-    <section id="profile" class="page">
-
-        <p class="eyebrow">YOUR JOURNEY</p>
-
-        <h1>Profile</h1>
-
-        <div class="profile">
-
-            <div class="big-avatar">U</div>
-
-            <h2>Demo User</h2>
-
-            <p>India · INR ₹</p>
-
-            <div class="profile-stats">
-
-                <div>
                     <strong>1,250</strong>
-                    <span>Points</span>
+
+                    <span>
+                        Wealth points
+                    </span>
+
                 </div>
 
-                <div>
-                    <strong>8</strong>
-                    <span>Streak</span>
-                </div>
 
-                <div>
+                <div class="stat">
+
                     <strong>3</strong>
-                    <span>Badges</span>
+
+                    <span>
+                        Badges earned
+                    </span>
+
                 </div>
 
             </div>
 
-        </div>
 
-        <h2>Achievements</h2>
+            <!-- TODAY'S FOCUS -->
 
-        <div class="badges">
+            <h2>Today's Focus</h2>
 
-            <span>🏅 First Challenge</span>
-            <span>🔥 7-Day Streak</span>
-            <span>📚 Financial Learner</span>
+            <div class="task-card">
 
-        </div>
+                <div class="task-icon">
+                    ✓
+                </div>
 
-    </section>
+                <div class="task-content">
 
-</main>
+                    <strong>
+                        Save something today
+                    </strong>
 
+                    <p>
+                        Put aside a small amount before the day ends.
+                    </p>
 
-<!-- NAVIGATION -->
+                </div>
 
-<nav class="navigation">
+                <button
+                    class="outline-button"
+                    onclick="completeTask(this)">
 
-    <button onclick="showPage('home')">
-        🏠
-        <small>Home</small>
-    </button>
+                    Complete
 
-    <button onclick="showPage('challenges')">
-        🎯
-        <small>Challenges</small>
-    </button>
+                </button>
 
-    <button onclick="showPage('learn')">
-        📚
-        <small>Learn</small>
-    </button>
-
-    <button onclick="showPage('community')">
-        👥
-        <small>Community</small>
-    </button>
-
-    <button onclick="showPage('profile')">
-        👤
-        <small>Profile</small>
-    </button>
-
-</nav>
+            </div>
 
 
-<script src="app.js"></script>
+            <!-- COMMUNITY CTA -->
+
+            <div class="community-cta">
+
+                <p class="eyebrow">
+                    YOU DON'T HAVE TO DO IT ALONE
+                </p>
+
+                <h2>
+                    Grow together.
+                </h2>
+
+                <p class="intro">
+                    Join people around the world who are working
+                    toward better financial habits.
+                </p>
+
+                <button
+                    class="primary-button"
+                    onclick="showPage('community')">
+
+                    Join Community
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ============================= -->
+        <!-- CHALLENGES -->
+        <!-- ============================= -->
+
+        <section id="challenges" class="page">
+
+            <p class="eyebrow">
+                CHALLENGES
+            </p>
+
+            <h1>
+                Small actions.<br>
+                Big habits.
+            </h1>
+
+            <p class="intro">
+                Choose a challenge that matches your goals
+                and build financial discipline one step at a time.
+            </p>
+
+
+            <div class="cards">
+
+
+                <!-- CARD 1 -->
+
+                <div class="card">
+
+                    <span class="tag">
+                        BEGINNER
+                    </span>
+
+                    <h2>
+                        7-Day Starter
+                    </h2>
+
+                    <p>
+                        Start your financial journey with
+                        seven simple daily actions.
+                    </p>
+
+                    <strong>
+                        +100 points
+                    </strong>
+
+                    <button
+                        class="primary-button"
+                        onclick="joinChallenge('7-Day Starter')">
+
+                        Join Challenge
+
+                    </button>
+
+                </div>
+
+
+                <!-- CARD 2 -->
+
+                <div class="card">
+
+                    <span class="tag">
+                        POPULAR
+                    </span>
+
+                    <h2>
+                        30-Day Wealth
+                    </h2>
+
+                    <p>
+                        Build a consistent saving and
+                        money-management routine.
+                    </p>
+
+                    <strong>
+                        +500 points
+                    </strong>
+
+                    <button
+                        class="primary-button"
+                        onclick="joinChallenge('30-Day Wealth')">
+
+                        Join Challenge
+
+                    </button>
+
+                </div>
+
+
+                <!-- CARD 3 -->
+
+                <div class="card">
+
+                    <span class="tag">
+                        LONG TERM
+                    </span>
+
+                    <h2>
+                        52-Week Savings
+                    </h2>
+
+                    <p>
+                        Develop a year-long savings habit
+                        with manageable weekly goals.
+                    </p>
+
+                    <strong>
+                        +1,000 points
+                    </strong>
+
+                    <button
+                        class="primary-button"
+                        onclick="joinChallenge('52-Week Savings')">
+
+                        Join Challenge
+
+                    </button>
+
+                </div>
+
+
+                <!-- CARD 4 -->
+
+                <div class="card">
+
+                    <span class="tag">
+                        LEARNING
+                    </span>
+
+                    <h2>
+                        Financial Basics
+                    </h2>
+
+                    <p>
+                        Learn essential concepts that can
+                        help you make better financial decisions.
+                    </p>
+
+                    <strong>
+                        +250 points
+                    </strong>
+
+                    <button
+                        class="primary-button"
+                        onclick="joinChallenge('Financial Basics')">
+
+                        Start Learning
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ============================= -->
+        <!-- LEARN -->
+        <!-- ============================= -->
+
+        <section id="learn" class="page">
+
+            <p class="eyebrow">
+                FINANCIAL EDUCATION
+            </p>
+
+            <h1>
+                Learn before<br>
+                you invest.
+            </h1>
+
+            <p class="intro">
+                Simple financial lessons designed to help
+                you understand money, saving and investing.
+            </p>
+
+
+            <div class="lesson">
+
+                <h2>
+                    Saving vs Investing
+                </h2>
+
+                <p>
+                    Understand the difference between keeping
+                    money safe and putting money to work.
+                </p>
+
+                <button
+                    class="outline-button"
+                    onclick="startLesson('Saving vs Investing')">
+
+                    Start Lesson
+
+                </button>
+
+            </div>
+
+
+            <div class="lesson">
+
+                <h2>
+                    Emergency Funds
+                </h2>
+
+                <p>
+                    Learn why having money available for
+                    unexpected expenses matters.
+                </p>
+
+                <button
+                    class="outline-button"
+                    onclick="startLesson('Emergency Funds')">
+
+                    Start Lesson
+
+                </button>
+
+            </div>
+
+
+            <div class="lesson">
+
+                <h2>
+                    Understanding Compound Growth
+                </h2>
+
+                <p>
+                    Discover how money can potentially grow
+                    over time through compounding.
+                </p>
+
+                <button
+                    class="outline-button"
+                    onclick="startLesson('Compound Growth')">
+
+                    Start Lesson
+
+                </button>
+
+            </div>
+
+
+            <div class="lesson">
+
+                <h2>
+                    Understanding Investment Risk
+                </h2>
+
+                <p>
+                    Learn why investments can rise and fall
+                    and why risk matters.
+                </p>
+
+                <button
+                    class="outline-button"
+                    onclick="startLesson('Investment Risk')">
+
+                    Start Lesson
+
+                </button>
+
+            </div>
+
+
+            <div class="notice">
+
+                <strong>Important:</strong>
+
+                MicroWealth is currently focused on financial
+                education and healthy money habits. It does not
+                guarantee investment returns or provide regulated
+                investment advice.
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ============================= -->
+        <!-- COMMUNITY -->
+        <!-- ============================= -->
+
+        <section id="community" class="page">
+
+            <p class="eyebrow">
+                COMMUNITY
+            </p>
+
+            <h1>
+                Grow together.
+            </h1>
+
+            <p class="intro">
+                Connect with people building better money habits,
+                share your progress and motivate each other.
+            </p>
+
+
+            <button
+                class="primary-button"
+                onclick="showPage('home')">
+
+                ← Back to Home
+
+            </button>
+
+
+            <div class="post">
+
+                <div class="avatar">
+                    A
+                </div>
+
+                <div>
+
+                    <strong>
+                        Amara
+                    </strong>
+
+                    <p>
+                        Just completed my 7-day savings challenge! 🔥
+                    </p>
+
+                    <button
+                        onclick="likePost(this)"
+                        data-likes="0">
+
+                        ♡ Like
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="post">
+
+                <div class="avatar">
+                    D
+                </div>
+
+                <div>
+
+                    <strong>
+                        David
+                    </strong>
+
+                    <p>
+                        Day 15 of my money-habit challenge.
+                        Consistency is the goal.
+                    </p>
+
+                    <button
+                        onclick="likePost(this)"
+                        data-likes="0">
+
+                        ♡ Like
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="post">
+
+                <div class="avatar">
+                    S
+                </div>
+
+                <div>
+
+                    <strong>
+                        Sarah
+                    </strong>
+
+                    <p>
+                        Small savings every day are starting
+                        to become a real habit. 💪
+                    </p>
+
+                    <button
+                        onclick="likePost(this)"
+                        data-likes="0">
+
+                        ♡ Like
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ============================= -->
+        <!-- PROFILE -->
+        <!-- ============================= -->
+
+        <section id="profile" class="page">
+
+            <p class="eyebrow">
+                YOUR PROFILE
+            </p>
+
+            <h1>
+                Your progress.
+            </h1>
+
+            <div class="profile">
+
+                <div class="big-avatar">
+                    M
+                </div>
+
+                <h2>
+                    MicroWealth Member
+                </h2>
+
+                <p class="intro">
+                    Building better financial habits one day at a time.
+                </p>
+
+
+                <div class="profile-stats">
+
+                    <div>
+
+                        <strong>
+                            1,250
+                        </strong>
+
+                        <span>
+                            Points
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            🔥 8
+                        </strong>
+
+                        <span>
+                            Streak
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            3
+                        </strong>
+
+                        <span>
+                            Badges
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <h2>
+                Your Badges
+            </h2>
+
+            <div class="badges">
+
+                <span>
+                    🌱 First Step
+                </span>
+
+                <span>
+                    🔥 7 Day Streak
+                </span>
+
+                <span>
+                    🏆 Challenge Starter
+                </span>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- ============================= -->
+    <!-- BOTTOM NAVIGATION -->
+    <!-- ============================= -->
+
+    <nav class="navigation">
+
+        <button onclick="showPage('home')">
+
+            🏠
+
+            <small>
+                Home
+            </small>
+
+        </button>
+
+
+        <button onclick="showPage('challenges')">
+
+            🎯
+
+            <small>
+                Challenges
+            </small>
+
+        </button>
+
+
+        <button onclick="showPage('learn')">
+
+            📚
+
+            <small>
+                Learn
+            </small>
+
+        </button>
+
+
+        <button onclick="showPage('community')">
+
+            👥
+
+            <small>
+                Community
+            </small>
+
+        </button>
+
+
+        <button onclick="showPage('profile')">
+
+            👤
+
+            <small>
+                Profile
+            </small>
+
+        </button>
+
+    </nav>
+
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="app.js"></script>
 
 </body>
+
 </html>
