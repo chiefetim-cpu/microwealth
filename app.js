@@ -698,150 +698,90 @@ function escapeHTML(text) {
 ----------------------------- */
 
 function saveProfile() {
+  const nameInput = document.getElementById("userName");
+  const countryInput = document.getElementById("userCountry");
+  const currencySelect = document.getElementById("currencySelect");
 
-  const nameInput =
-    document.getElementById(
-      "userName"
-    );
-
-  const countryInput =
-    document.getElementById(
-      "userCountry"
-    );
-
-  const currencySelect =
-    document.getElementById(
-      "currencySelect"
-    );
-
-
-  userData.profileName =
-  nameInput
+  userData.profileName = nameInput
     ? nameInput.value.trim()
     : "";
 
-
-userData.profileCountry =
-  countryInput
+  userData.profileCountry = countryInput
     ? countryInput.value.trim()
     : "";
 
-
-  userData.currency =
-    currencySelect
-      ? currencySelect.value
-      : "INR";
-
+  userData.currency = currencySelect
+    ? currencySelect.value
+    : "INR";
 
   saveUserData();
-
   updateProfileDisplay();
 
-  showNotification(
-    "Profile saved successfully! 🎉"
-  );
+  showNotification("Profile saved successfully! 🎉");
 }
 
 
 function updateProfileDisplay() {
+  const name = userData.profileName || "Money Builder";
 
-  const name =
-   userData.profileName =
-  nameInput
-    ? nameInput.value.trim()
-    : "";
-
-
-userData.profileCountry =
-  countryInput
-    ? countryInput.value.trim()
-    : "";
+  const country =
+    userData.profileCountry || "Global Money Builder";
 
   const currency =
-    userData.currency ||
-    "INR";
+    userData.currency || "INR";
 
 
   const profileName =
-    document.getElementById(
-      "profileName"
-    );
+    document.getElementById("profileName");
 
   if (profileName) {
-
-    profileName.textContent =
-      name;
-
+    profileName.textContent = name;
   }
 
 
   const profileCountry =
-    document.getElementById(
-      "profileCountry"
-    );
+    document.getElementById("profileCountry");
 
   if (profileCountry) {
-
     profileCountry.textContent =
-      country ===
-      "Global Money Builder"
+      country === "Global Money Builder"
         ? "🌍 Global Money Builder"
         : `🌍 ${country}`;
-
   }
 
 
   const nameInput =
-    document.getElementById(
-      "userName"
-    );
+    document.getElementById("userName");
 
   if (nameInput) {
-
     nameInput.value =
       userData.profileName || "";
-
   }
 
 
   const countryInput =
-    document.getElementById(
-      "userCountry"
-    );
+    document.getElementById("userCountry");
 
   if (countryInput) {
-
     countryInput.value =
       userData.profileCountry || "";
-
   }
 
 
   const currencySelect =
-    document.getElementById(
-      "currencySelect"
-    );
+    document.getElementById("currencySelect");
 
   if (currencySelect) {
-
-    currencySelect.value =
-      currency;
-
+    currencySelect.value = currency;
   }
 
 
   const avatar =
-    document.querySelector(
-      ".profile-avatar"
-    );
+    document.querySelector(".profile-avatar");
 
   if (avatar) {
-
     avatar.textContent =
-      name
-        .charAt(0)
-        .toUpperCase();
-
+      name.charAt(0).toUpperCase();
   }
 }
 
