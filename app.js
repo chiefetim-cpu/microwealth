@@ -248,7 +248,6 @@ function updateDashboard() {
 
 
   updateChallengeProgress();
-
  
 }
 
