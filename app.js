@@ -748,12 +748,16 @@ function saveProfile() {
 function updateProfileDisplay() {
 
   const name =
-    userData.profileName ||
-    "Money Builder";
+   userData.profileName =
+  nameInput
+    ? nameInput.value.trim()
+    : "";
 
-  const country =
-    userData.profileCountry ||
-    "Global Money Builder";
+
+userData.profileCountry =
+  countryInput
+    ? countryInput.value.trim()
+    : "";
 
   const currency =
     userData.currency ||
