@@ -716,17 +716,15 @@ function saveProfile() {
 
 
   userData.profileName =
-    nameInput &&
-    nameInput.value.trim()
-      ? nameInput.value.trim()
-      : "Money Builder";
+  nameInput
+    ? nameInput.value.trim()
+    : "";
 
 
-  userData.profileCountry =
-    countryInput &&
-    countryInput.value.trim()
-      ? countryInput.value.trim()
-      : "Global Money Builder";
+userData.profileCountry =
+  countryInput
+    ? countryInput.value.trim()
+    : "";
 
 
   userData.currency =
