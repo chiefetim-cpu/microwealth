@@ -938,9 +938,8 @@ a {
     padding-left: 5%;
     padding-right: 5%;
   }
-}
 
-```css
+
 /* ================================
    PROFILE SETTINGS
 ================================ */
@@ -1041,5 +1040,7 @@ a {
 .profile-stat span {
   color: #6c7771;
   font-size: 14px;
+}
+
 }
 
