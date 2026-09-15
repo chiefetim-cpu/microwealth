@@ -560,7 +560,6 @@ function showNotification(message) {
 }
 
 
-```javascript
 /* =========================================
    PROFILE INFORMATION
 ========================================= */
