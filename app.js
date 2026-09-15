@@ -558,3 +558,120 @@ function showNotification(message) {
 
   }, 3000);
 }
+
+
+/* ================================
+   PROFILE SETTINGS
+================================ */
+
+function saveProfile() {
+
+  const nameInput =
+    document.getElementById("userName");
+
+  const countryInput =
+    document.getElementById("userCountry");
+
+  const currencySelect =
+    document.getElementById("currencySelect");
+
+  const name =
+    nameInput ? nameInput.value.trim() : "";
+
+  const country =
+    countryInput ? countryInput.value.trim() : "";
+
+  const currency =
+    currencySelect ? currencySelect.value : "INR";
+
+  if (name) {
+    userData.profileName = name;
+  }
+
+  if (country) {
+    userData.profileCountry = country;
+  }
+
+  userData.currency = currency;
+
+  saveUserData();
+
+  updateProfileDisplay();
+
+  showNotification(
+    "Profile saved successfully! 🎉"
+  );
+}
+
+
+/* -----------------------------
+   PROFILE DISPLAY
+----------------------------- */
+
+function updateProfileDisplay() {
+
+  const nameElement =
+    document.getElementById("profileName");
+
+  const countryElement =
+    document.getElementById("profileCountry");
+
+  const nameInput =
+    document.getElementById("userName");
+
+  const countryInput =
+    document.getElementById("userCountry");
+
+  const currencySelect =
+    document.getElementById("currencySelect");
+
+
+  const name =
+    userData.profileName ||
+    "Money Builder";
+
+  const country =
+    userData.profileCountry ||
+    "Global Money Builder";
+
+
+  if (nameElement) {
+    nameElement.textContent =
+      name;
+  }
+
+  if (countryElement) {
+    countryElement.textContent =
+      country === "Global Money Builder"
+        ? "🌍 Global Money Builder"
+        : `🌍 ${country}`;
+  }
+
+  if (nameInput) {
+    nameInput.value =
+      userData.profileName || "";
+  }
+
+  if (countryInput) {
+    countryInput.value =
+      userData.profileCountry || "";
+  }
+
+  if (currencySelect) {
+    currencySelect.value =
+      userData.currency || "INR";
+  }
+}
+
+
+/* -----------------------------
+   LOAD PROFILE
+----------------------------- */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+    updateProfileDisplay();
+  }
+);
+
