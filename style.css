@@ -930,7 +930,7 @@ a {
     padding: 22px;
   }
 
-  .profile-stats {
+    .profile-stats {
     grid-template-columns: 1fr;
   }
 
@@ -938,6 +938,13 @@ a {
     padding-left: 5%;
     padding-right: 5%;
   }
+
+}
+
+/* =====================================================
+   MICROWEALTH SCALE
+   PREMIUM PERSONAL INFORMATION
+===================================================== */
 
 
 /* =====================================================
@@ -1159,12 +1166,10 @@ a {
     padding: 14px;
   }
 
-  .profile-avatar {
+    .profile-avatar {
     width: 68px;
     height: 68px;
     font-size: 27px;
   }
+
 }
-
-
-
