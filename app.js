@@ -3,11 +3,6 @@
    Main application logic
 ========================================================= */
 
-
-/* =========================================================
-   USER DATA
-========================================================= */
-
 const defaultUserData = {
   points: 0,
   streak: 0,
@@ -18,35 +13,28 @@ const defaultUserData = {
   lastCompletedDate: null
 };
 
-
-/* =========================================================
-   LOAD USER DATA
-========================================================= */
-
 let userData = loadUserData();
 
+/* -----------------------------
+   DATA
+----------------------------- */
 
 function loadUserData() {
   try {
-    const savedData = localStorage.getItem("microWealthScaleUser");
+    const saved = localStorage.getItem("microWealthScaleUser");
 
-    if (savedData) {
+    if (saved) {
       return {
         ...defaultUserData,
-        ...JSON.parse(savedData)
+        ...JSON.parse(saved)
       };
     }
   } catch (error) {
-    console.error("Unable to load saved user data:", error);
+    console.error("Load error:", error);
   }
 
   return { ...defaultUserData };
 }
-
-
-/* =========================================================
-   SAVE USER DATA
-========================================================= */
 
 function saveUserData() {
   try {
@@ -55,32 +43,24 @@ function saveUserData() {
       JSON.stringify(userData)
     );
   } catch (error) {
-    console.error("Unable to save user data:", error);
+    console.error("Save error:", error);
   }
 }
 
-
-/* =========================================================
+/* -----------------------------
    PAGE NAVIGATION
-========================================================= */
+----------------------------- */
 
 function showPage(pageId) {
-
-  const pages = document.querySelectorAll(".page");
-
-  pages.forEach(page => {
+  document.querySelectorAll(".page").forEach(page => {
     page.classList.remove("active");
   });
 
+  const page = document.getElementById(pageId);
 
-  const selectedPage = document.getElementById(pageId);
-
-  if (selectedPage) {
-    selectedPage.classList.add("active");
+  if (page) {
+    page.classList.add("active");
   }
-
-
-  /* Close mobile menu */
 
   const nav = document.getElementById("mainNav");
 
@@ -88,41 +68,47 @@ function showPage(pageId) {
     nav.classList.remove("open");
   }
 
-
-  /* Scroll to top */
+  updateDashboard();
 
   window.scrollTo({
     top: 0,
     behavior: "smooth"
   });
+}
 
+/* -----------------------------
+   MOBILE MENU
+----------------------------- */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const menuButton = document.getElementById("menuButton");
+  const mainNav = document.getElementById("mainNav");
+
+  if (menuButton && mainNav) {
+    menuButton.addEventListener("click", () => {
+      mainNav.classList.toggle("open");
+    });
+  }
 
   updateDashboard();
-}
 
+  /* Reliable Complete Challenge button */
+  const completeButton =
+    document.getElementById("completeChallengeButton");
 
-/* =========================================================
-   MOBILE MENU
-========================================================= */
+  if (completeButton) {
+    completeButton.addEventListener(
+      "click",
+      completeCurrentChallenge
+    );
+  }
 
-const menuButton = document.getElementById("menuButton");
-const mainNav = document.getElementById("mainNav");
+});
 
-
-if (menuButton && mainNav) {
-
-  menuButton.addEventListener("click", () => {
-
-    mainNav.classList.toggle("open");
-
-  });
-
-}
-
-
-/* =========================================================
-   UPDATE DASHBOARD
-========================================================= */
+/* -----------------------------
+   DASHBOARD
+----------------------------- */
 
 function updateDashboard() {
 
@@ -132,13 +118,10 @@ function updateDashboard() {
   ];
 
   pointsElements.forEach(element => {
-
     if (element) {
       element.textContent = userData.points;
     }
-
   });
-
 
   const streakElements = [
     document.getElementById("streakValue"),
@@ -146,13 +129,10 @@ function updateDashboard() {
   ];
 
   streakElements.forEach(element => {
-
     if (element) {
       element.textContent = userData.streak;
     }
-
   });
-
 
   const completedElements = [
     document.getElementById("completedValue"),
@@ -160,21 +140,18 @@ function updateDashboard() {
   ];
 
   completedElements.forEach(element => {
-
     if (element) {
-      element.textContent = userData.completedChallenges;
+      element.textContent =
+        userData.completedChallenges;
     }
-
   });
-
 
   updateChallengeProgress();
 }
 
-
-/* =========================================================
+/* -----------------------------
    CHALLENGE PROGRESS
-========================================================= */
+----------------------------- */
 
 function updateChallengeProgress() {
 
@@ -187,33 +164,28 @@ function updateChallengeProgress() {
   const progressFill =
     document.getElementById("progressFill");
 
-
   if (!currentDayElement) return;
-
 
   const totalDays = 7;
 
   const currentDay =
     Math.min(userData.currentDay, totalDays);
 
-
   const completedDays =
     Math.max(currentDay - 1, 0);
 
-
   const percentage =
-    Math.round((completedDays / totalDays) * 100);
-
+    Math.round(
+      (completedDays / totalDays) * 100
+    );
 
   currentDayElement.textContent =
     currentDay;
-
 
   if (progressPercentElement) {
     progressPercentElement.textContent =
       `${percentage}%`;
   }
-
 
   if (progressFill) {
     progressFill.style.width =
@@ -221,19 +193,18 @@ function updateChallengeProgress() {
   }
 }
 
-
-/* =========================================================
+/* -----------------------------
    COMPLETE TODAY'S CHALLENGE
-========================================================= */
+----------------------------- */
 
 function completeCurrentChallenge() {
 
+  console.log("Complete Challenge button clicked");
+
   const today =
-    new Date().toISOString().split("T")[0];
+    getLocalDate();
 
-
-  /* Prevent multiple completions in one day */
-
+  /* Prevent duplicate completion */
   if (userData.lastCompletedDate === today) {
 
     showNotification(
@@ -243,54 +214,79 @@ function completeCurrentChallenge() {
     return;
   }
 
-
   /* Award points */
-
   userData.points += 50;
 
+  /* Count completion */
   userData.completedChallenges += 1;
 
-
   /* Update streak */
-
   updateStreak(today);
 
-
-  /* Move challenge forward */
-
+  /* Move to next day */
   if (userData.currentDay < 7) {
 
     userData.currentDay += 1;
 
   } else {
 
-    userData.currentDay = 1;
-
-    showNotification(
-      "🎉 Challenge completed! You earned a bonus!"
-    );
+    /* Completed the 7-day challenge */
 
     userData.points += 100;
+
+    userData.currentDay = 1;
+
+    userData.currentChallenge =
+      "7-Day Money Starter";
+
+    userData.lastCompletedDate = today;
+
+    saveUserData();
+    updateDashboard();
+
+    showNotification(
+      "🎉 7-Day Challenge completed! +150 points!"
+    );
+
+    return;
   }
 
-
   userData.lastCompletedDate = today;
-
 
   saveUserData();
 
   updateDashboard();
-
 
   showNotification(
     "Challenge completed! +50 points 🎉"
   );
 }
 
+/* -----------------------------
+   LOCAL DATE
+----------------------------- */
 
-/* =========================================================
-   STREAK SYSTEM
-========================================================= */
+function getLocalDate() {
+
+  const date = new Date();
+
+  const year =
+    date.getFullYear();
+
+  const month =
+    String(date.getMonth() + 1)
+      .padStart(2, "0");
+
+  const day =
+    String(date.getDate())
+      .padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
+
+/* -----------------------------
+   STREAK
+----------------------------- */
 
 function updateStreak(today) {
 
@@ -301,21 +297,26 @@ function updateStreak(today) {
     return;
   }
 
-
   const previousDate =
-    new Date(userData.lastCompletedDate);
-
-
-  const currentDate =
-    new Date(today);
-
-
-  const difference =
-    Math.floor(
-      (currentDate - previousDate) /
-      (1000 * 60 * 60 * 24)
+    new Date(
+      userData.lastCompletedDate +
+      "T00:00:00"
     );
 
+  const currentDate =
+    new Date(
+      today +
+      "T00:00:00"
+    );
+
+  const difference =
+    Math.round(
+      (
+        currentDate -
+        previousDate
+      ) /
+      (1000 * 60 * 60 * 24)
+    );
 
   if (difference === 1) {
 
@@ -327,18 +328,17 @@ function updateStreak(today) {
   }
 }
 
-
-/* =========================================================
+/* -----------------------------
    JOIN CHALLENGE
-========================================================= */
+----------------------------- */
 
 function joinChallenge(name, reward) {
 
   const alreadyJoined =
     userData.joinedChallenges.some(
-      challenge => challenge.name === name
+      challenge =>
+        challenge.name === name
     );
-
 
   if (alreadyJoined) {
 
@@ -351,59 +351,50 @@ function joinChallenge(name, reward) {
     return;
   }
 
-
   userData.joinedChallenges.push({
     name: name,
     reward: reward,
-    joinedAt: new Date().toISOString()
+    joinedAt:
+      new Date().toISOString()
   });
 
-
   saveUserData();
-
 
   showNotification(
     `🎯 You joined ${name}!`
   );
 
-
   showPage("home");
 }
 
-
-/* =========================================================
-   COMMUNITY LIKE
-========================================================= */
+/* -----------------------------
+   LIKE POSTS
+----------------------------- */
 
 function likePost(button) {
 
   if (!button) return;
 
-
   let likes =
-    Number(button.dataset.likes || 0);
-
+    Number(
+      button.dataset.likes || 0
+    );
 
   likes += 1;
-
 
   button.dataset.likes =
     likes;
 
-
   const counter =
     button.querySelector("span");
-
 
   if (counter) {
     counter.textContent =
       likes;
   }
 
-
   button.style.transform =
     "scale(1.08)";
-
 
   setTimeout(() => {
 
@@ -413,10 +404,9 @@ function likePost(button) {
   }, 150);
 }
 
-
-/* =========================================================
+/* -----------------------------
    CREATE COMMUNITY POST
-========================================================= */
+----------------------------- */
 
 function createPost() {
 
@@ -425,26 +415,22 @@ function createPost() {
       "Share your progress with the MicroWealth Scale community:"
     );
 
-
   if (!text || !text.trim()) {
     return;
   }
 
-
   const postsContainer =
-    document.getElementById("communityPosts");
-
+    document.getElementById(
+      "communityPosts"
+    );
 
   if (!postsContainer) return;
-
 
   const post =
     document.createElement("article");
 
-
   post.className =
     "post-card";
-
 
   post.innerHTML = `
     <div class="post-header">
@@ -478,60 +464,51 @@ function createPost() {
     </button>
   `;
 
-
   postsContainer.prepend(post);
-
 
   showNotification(
     "Your progress has been shared! 🎉"
   );
 }
 
-
-/* =========================================================
-   SECURITY HELPER
-========================================================= */
+/* -----------------------------
+   SECURITY
+----------------------------- */
 
 function escapeHTML(text) {
 
   const element =
     document.createElement("div");
 
-
   element.textContent =
     text;
-
 
   return element.innerHTML;
 }
 
-
-/* =========================================================
-   NOTIFICATION
-========================================================= */
+/* -----------------------------
+   NOTIFICATIONS
+----------------------------- */
 
 function showNotification(message) {
 
   const existing =
-    document.querySelector(".app-notification");
-
+    document.querySelector(
+      ".app-notification"
+    );
 
   if (existing) {
     existing.remove();
   }
 
-
   const notification =
     document.createElement("div");
-
 
   notification.className =
     "app-notification";
 
-
   notification.textContent =
     message;
-
 
   notification.style.position =
     "fixed";
@@ -569,29 +546,15 @@ function showNotification(message) {
   notification.style.boxShadow =
     "0 10px 30px rgba(0,0,0,0.2)";
 
-
   document.body.appendChild(
     notification
   );
 
-
   setTimeout(() => {
 
-    notification.remove();
+    if (notification) {
+      notification.remove();
+    }
 
   }, 3000);
 }
-
-
-/* =========================================================
-   INITIALIZE APP
-========================================================= */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
-
-    updateDashboard();
-
-  }
-);
