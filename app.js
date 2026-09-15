@@ -324,75 +324,74 @@ function updateChallengeProgress() {
 
 function completeCurrentChallenge() {
 
-  const today =
-    getLocalDate();
+  const today = getLocalDate();
 
-
-  if (
-    userData.lastCompletedDate ===
-    today
-  ) {
+  if (userData.lastCompletedDate === today) {
 
     showNotification(
       "You've already completed today's challenge! 🔥"
     );
 
     return;
-
   }
 
-
+  // Daily reward
   userData.points += 50;
 
   userData.completedChallenges += 1;
 
   updateStreak(today);
 
+  // Save today's completion
+  userData.lastCompletedDate = today;
 
-  if (
-    userData.currentDay < 7
-  ) {
+  // Day 7 = challenge completed
+  if (userData.currentDay === 7) {
 
-    userData.currentDay += 1;
-
-  } else {
-
+    // Challenge completion bonus
     userData.points += 100;
 
-    userData.currentDay = 1;
+    saveUserData();
 
-    userData.currentChallenge =
-      "7-Day Money Starter";
-
-  }
-
-
-  userData.lastCompletedDate =
-    today;
-
-
-  saveUserData();
-
-  updateDashboard();
-
-  updateProfileDisplay();
-
-
-  if (
-    userData.currentDay === 1
-  ) {
+    // Show the completed state
+    updateDashboard();
+    updateProfileDisplay();
 
     showNotification(
       "🎉 7-Day Challenge completed! +150 points!"
     );
 
-  } else {
+    // Start a new challenge after a short delay
+    setTimeout(() => {
 
-    showNotification(
-      "Challenge completed! +50 points 🎉"
-    );
+      userData.currentDay = 1;
+      userData.currentChallenge =
+        "7-Day Money Starter";
 
+      // Allow the next day's challenge
+      userData.lastCompletedDate = null;
+
+      saveUserData();
+
+      updateDashboard();
+      updateProfileDisplay();
+
+    }, 1500);
+
+    return;
   }
+
+  // Move to the next day
+  userData.currentDay += 1;
+
+  saveUserData();
+
+  updateDashboard();
+  updateProfileDisplay();
+
+  showNotification(
+    "Challenge completed! +50 points 🎉"
+  );
 }
 
 
