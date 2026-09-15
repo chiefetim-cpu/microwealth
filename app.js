@@ -250,7 +250,7 @@ function updateDashboard() {
   updateChallengeProgress();
 
   }
-}
+
 
 /* -----------------------------
    CHALLENGE PROGRESS
