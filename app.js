@@ -1,6 +1,6 @@
 /* =========================================================
    MICROWEALTH SCALE
-   Main application logic
+   Stable application logic
 ========================================================= */
 
 const defaultUserData = {
@@ -10,65 +10,107 @@ const defaultUserData = {
   currentDay: 1,
   currentChallenge: "7-Day Money Starter",
   joinedChallenges: [],
-  lastCompletedDate: null
+  lastCompletedDate: null,
+  profileName: "",
+  profileCountry: "",
+  currency: "INR"
 };
 
 let userData = loadUserData();
+
 
 /* -----------------------------
    DATA
 ----------------------------- */
 
 function loadUserData() {
+
   try {
-    const saved = localStorage.getItem("microWealthScaleUser");
+
+    const saved =
+      localStorage.getItem(
+        "microWealthScaleUser"
+      );
 
     if (saved) {
+
       return {
         ...defaultUserData,
         ...JSON.parse(saved)
       };
+
     }
+
   } catch (error) {
-    console.error("Load error:", error);
+
+    console.error(
+      "Unable to load user data:",
+      error
+    );
+
   }
 
-  return { ...defaultUserData };
+  return {
+    ...defaultUserData
+  };
 }
 
+
 function saveUserData() {
+
   try {
+
     localStorage.setItem(
       "microWealthScaleUser",
       JSON.stringify(userData)
     );
+
   } catch (error) {
-    console.error("Save error:", error);
+
+    console.error(
+      "Unable to save user data:",
+      error
+    );
+
   }
 }
 
+
 /* -----------------------------
-   PAGE NAVIGATION
+   NAVIGATION
 ----------------------------- */
 
 function showPage(pageId) {
-  document.querySelectorAll(".page").forEach(page => {
-    page.classList.remove("active");
-  });
 
-  const page = document.getElementById(pageId);
+  document
+    .querySelectorAll(".page")
+    .forEach(page => {
 
-  if (page) {
-    page.classList.add("active");
+      page.classList.remove("active");
+
+    });
+
+  const selectedPage =
+    document.getElementById(pageId);
+
+  if (selectedPage) {
+
+    selectedPage.classList.add("active");
+
   }
 
-  const nav = document.getElementById("mainNav");
+  const nav =
+    document.getElementById("mainNav");
 
   if (nav) {
+
     nav.classList.remove("open");
+
   }
 
   updateDashboard();
+
+  updateProfileDisplay();
 
   window.scrollTo({
     top: 0,
@@ -76,35 +118,50 @@ function showPage(pageId) {
   });
 }
 
+
 /* -----------------------------
    MOBILE MENU
 ----------------------------- */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
 
-  const menuButton = document.getElementById("menuButton");
-  const mainNav = document.getElementById("mainNav");
+    const menuButton =
+      document.getElementById(
+        "menuButton"
+      );
 
-  if (menuButton && mainNav) {
-    menuButton.addEventListener("click", () => {
-      mainNav.classList.toggle("open");
-    });
+    const mainNav =
+      document.getElementById(
+        "mainNav"
+      );
+
+    if (
+      menuButton &&
+      mainNav
+    ) {
+
+      menuButton.addEventListener(
+        "click",
+        () => {
+
+          mainNav.classList.toggle(
+            "open"
+          );
+
+        }
+      );
+
+    }
+
+    updateDashboard();
+
+    updateProfileDisplay();
+
   }
+);
 
-  updateDashboard();
-
-  /* Reliable Complete Challenge button */
-  const completeButton =
-    document.getElementById("completeChallengeButton");
-
-  if (completeButton) {
-    completeButton.addEventListener(
-      "click",
-      completeCurrentChallenge
-    );
-  }
-
-});
 
 /* -----------------------------
    DASHBOARD
@@ -113,41 +170,86 @@ document.addEventListener("DOMContentLoaded", () => {
 function updateDashboard() {
 
   const pointsElements = [
-    document.getElementById("pointsValue"),
-    document.getElementById("profilePoints")
+
+    document.getElementById(
+      "pointsValue"
+    ),
+
+    document.getElementById(
+      "profilePoints"
+    )
+
   ];
 
-  pointsElements.forEach(element => {
-    if (element) {
-      element.textContent = userData.points;
+  pointsElements.forEach(
+    element => {
+
+      if (element) {
+
+        element.textContent =
+          userData.points;
+
+      }
+
     }
-  });
+  );
+
 
   const streakElements = [
-    document.getElementById("streakValue"),
-    document.getElementById("profileStreak")
+
+    document.getElementById(
+      "streakValue"
+    ),
+
+    document.getElementById(
+      "profileStreak"
+    )
+
   ];
 
-  streakElements.forEach(element => {
-    if (element) {
-      element.textContent = userData.streak;
+  streakElements.forEach(
+    element => {
+
+      if (element) {
+
+        element.textContent =
+          userData.streak;
+
+      }
+
     }
-  });
+  );
+
 
   const completedElements = [
-    document.getElementById("completedValue"),
-    document.getElementById("profileCompleted")
+
+    document.getElementById(
+      "completedValue"
+    ),
+
+    document.getElementById(
+      "profileCompleted"
+    )
+
   ];
 
-  completedElements.forEach(element => {
-    if (element) {
-      element.textContent =
-        userData.completedChallenges;
+  completedElements.forEach(
+    element => {
+
+      if (element) {
+
+        element.textContent =
+          userData.completedChallenges;
+
+      }
+
     }
-  });
+  );
+
 
   updateChallengeProgress();
 }
+
 
 /* -----------------------------
    CHALLENGE PROGRESS
@@ -156,81 +258,103 @@ function updateDashboard() {
 function updateChallengeProgress() {
 
   const currentDayElement =
-    document.getElementById("currentDay");
+    document.getElementById(
+      "currentDay"
+    );
 
   const progressPercentElement =
-    document.getElementById("progressPercent");
+    document.getElementById(
+      "progressPercent"
+    );
 
   const progressFill =
-    document.getElementById("progressFill");
+    document.getElementById(
+      "progressFill"
+    );
 
-  if (!currentDayElement) return;
+  if (!currentDayElement) {
+
+    return;
+
+  }
 
   const totalDays = 7;
 
   const currentDay =
-    Math.min(userData.currentDay, totalDays);
+    Math.min(
+      userData.currentDay,
+      totalDays
+    );
 
   const completedDays =
-    Math.max(currentDay - 1, 0);
+    Math.max(
+      currentDay - 1,
+      0
+    );
 
   const percentage =
     Math.round(
-      (completedDays / totalDays) * 100
+      (completedDays / totalDays) *
+      100
     );
 
   currentDayElement.textContent =
     currentDay;
 
   if (progressPercentElement) {
+
     progressPercentElement.textContent =
       `${percentage}%`;
+
   }
 
   if (progressFill) {
+
     progressFill.style.width =
       `${percentage}%`;
+
   }
 }
 
+
 /* -----------------------------
-   COMPLETE TODAY'S CHALLENGE
+   COMPLETE CHALLENGE
 ----------------------------- */
 
 function completeCurrentChallenge() {
 
-  console.log("Complete Challenge button clicked");
-
   const today =
     getLocalDate();
 
-  /* Prevent duplicate completion */
-  if (userData.lastCompletedDate === today) {
+
+  if (
+    userData.lastCompletedDate ===
+    today
+  ) {
 
     showNotification(
       "You've already completed today's challenge! 🔥"
     );
 
     return;
+
   }
 
-  /* Award points */
+
   userData.points += 50;
 
-  /* Count completion */
   userData.completedChallenges += 1;
 
-  /* Update streak */
   updateStreak(today);
 
-  /* Move to next day */
-  if (userData.currentDay < 7) {
+
+  if (
+    userData.currentDay < 7
+  ) {
 
     userData.currentDay += 1;
 
   } else {
-
-    /* Completed the 7-day challenge */
 
     userData.points += 100;
 
@@ -239,28 +363,37 @@ function completeCurrentChallenge() {
     userData.currentChallenge =
       "7-Day Money Starter";
 
-    userData.lastCompletedDate = today;
-
-    saveUserData();
-    updateDashboard();
-
-    showNotification(
-      "🎉 7-Day Challenge completed! +150 points!"
-    );
-
-    return;
   }
 
-  userData.lastCompletedDate = today;
+
+  userData.lastCompletedDate =
+    today;
+
 
   saveUserData();
 
   updateDashboard();
 
-  showNotification(
-    "Challenge completed! +50 points 🎉"
-  );
+  updateProfileDisplay();
+
+
+  if (
+    userData.currentDay === 1
+  ) {
+
+    showNotification(
+      "🎉 7-Day Challenge completed! +150 points!"
+    );
+
+  } else {
+
+    showNotification(
+      "Challenge completed! +50 points 🎉"
+    );
+
+  }
 }
+
 
 /* -----------------------------
    LOCAL DATE
@@ -268,21 +401,25 @@ function completeCurrentChallenge() {
 
 function getLocalDate() {
 
-  const date = new Date();
+  const date =
+    new Date();
 
   const year =
     date.getFullYear();
 
   const month =
-    String(date.getMonth() + 1)
-      .padStart(2, "0");
+    String(
+      date.getMonth() + 1
+    ).padStart(2, "0");
 
   const day =
-    String(date.getDate())
-      .padStart(2, "0");
+    String(
+      date.getDate()
+    ).padStart(2, "0");
 
   return `${year}-${month}-${day}`;
 }
+
 
 /* -----------------------------
    STREAK
@@ -290,12 +427,16 @@ function getLocalDate() {
 
 function updateStreak(today) {
 
-  if (!userData.lastCompletedDate) {
+  if (
+    !userData.lastCompletedDate
+  ) {
 
     userData.streak = 1;
 
     return;
+
   }
+
 
   const previousDate =
     new Date(
@@ -309,6 +450,7 @@ function updateStreak(today) {
       "T00:00:00"
     );
 
+
   const difference =
     Math.round(
       (
@@ -318,27 +460,38 @@ function updateStreak(today) {
       (1000 * 60 * 60 * 24)
     );
 
-  if (difference === 1) {
+
+  if (
+    difference === 1
+  ) {
 
     userData.streak += 1;
 
-  } else if (difference > 1) {
+  } else if (
+    difference > 1
+  ) {
 
     userData.streak = 1;
+
   }
 }
+
 
 /* -----------------------------
    JOIN CHALLENGE
 ----------------------------- */
 
-function joinChallenge(name, reward) {
+function joinChallenge(
+  name,
+  reward
+) {
 
   const alreadyJoined =
     userData.joinedChallenges.some(
       challenge =>
         challenge.name === name
     );
+
 
   if (alreadyJoined) {
 
@@ -349,63 +502,86 @@ function joinChallenge(name, reward) {
     showPage("home");
 
     return;
+
   }
 
+
   userData.joinedChallenges.push({
+
     name: name,
+
     reward: reward,
+
     joinedAt:
       new Date().toISOString()
+
   });
 
+
   saveUserData();
+
 
   showNotification(
     `🎯 You joined ${name}!`
   );
 
+
   showPage("home");
 }
 
+
 /* -----------------------------
-   LIKE POSTS
+   LIKE POST
 ----------------------------- */
 
 function likePost(button) {
 
   if (!button) return;
 
+
   let likes =
     Number(
       button.dataset.likes || 0
     );
 
+
   likes += 1;
+
 
   button.dataset.likes =
     likes;
 
+
   const counter =
     button.querySelector("span");
 
+
   if (counter) {
+
     counter.textContent =
       likes;
+
   }
+
 
   button.style.transform =
     "scale(1.08)";
 
-  setTimeout(() => {
 
-    button.style.transform =
-      "scale(1)";
+  setTimeout(
+    () => {
 
-  }, 150);
+      button.style.transform =
+        "scale(1)";
+
+    },
+    150
+  );
 }
 
+
 /* -----------------------------
-   CREATE COMMUNITY POST
+   CREATE POST
 ----------------------------- */
 
 function createPost() {
@@ -415,24 +591,42 @@ function createPost() {
       "Share your progress with the MicroWealth Scale community:"
     );
 
-  if (!text || !text.trim()) {
+
+  if (
+    !text ||
+    !text.trim()
+  ) {
+
     return;
+
   }
+
 
   const postsContainer =
     document.getElementById(
       "communityPosts"
     );
 
-  if (!postsContainer) return;
+
+  if (!postsContainer) {
+
+    return;
+
+  }
+
 
   const post =
-    document.createElement("article");
+    document.createElement(
+      "article"
+    );
+
 
   post.className =
     "post-card";
 
+
   post.innerHTML = `
+
     <div class="post-header">
 
       <div class="avatar">
@@ -440,6 +634,7 @@ function createPost() {
       </div>
 
       <div>
+
         <strong>
           Money Builder
         </strong>
@@ -447,12 +642,15 @@ function createPost() {
         <small>
           Your Progress
         </small>
+
       </div>
 
     </div>
 
     <p>
-      ${escapeHTML(text.trim())}
+      ${escapeHTML(
+        text.trim()
+      )}
     </p>
 
     <button
@@ -462,23 +660,31 @@ function createPost() {
     >
       ❤️ <span>0</span>
     </button>
+
   `;
 
-  postsContainer.prepend(post);
+
+  postsContainer.prepend(
+    post
+  );
+
 
   showNotification(
     "Your progress has been shared! 🎉"
   );
 }
 
+
 /* -----------------------------
-   SECURITY
+   HTML SAFETY
 ----------------------------- */
 
 function escapeHTML(text) {
 
   const element =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
 
   element.textContent =
     text;
@@ -486,8 +692,160 @@ function escapeHTML(text) {
   return element.innerHTML;
 }
 
+
 /* -----------------------------
-   NOTIFICATIONS
+   PROFILE
+----------------------------- */
+
+function saveProfile() {
+
+  const nameInput =
+    document.getElementById(
+      "userName"
+    );
+
+  const countryInput =
+    document.getElementById(
+      "userCountry"
+    );
+
+  const currencySelect =
+    document.getElementById(
+      "currencySelect"
+    );
+
+
+  userData.profileName =
+    nameInput &&
+    nameInput.value.trim()
+      ? nameInput.value.trim()
+      : "Money Builder";
+
+
+  userData.profileCountry =
+    countryInput &&
+    countryInput.value.trim()
+      ? countryInput.value.trim()
+      : "Global Money Builder";
+
+
+  userData.currency =
+    currencySelect
+      ? currencySelect.value
+      : "INR";
+
+
+  saveUserData();
+
+  updateProfileDisplay();
+
+  showNotification(
+    "Profile saved successfully! 🎉"
+  );
+}
+
+
+function updateProfileDisplay() {
+
+  const name =
+    userData.profileName ||
+    "Money Builder";
+
+  const country =
+    userData.profileCountry ||
+    "Global Money Builder";
+
+  const currency =
+    userData.currency ||
+    "INR";
+
+
+  const profileName =
+    document.getElementById(
+      "profileName"
+    );
+
+  if (profileName) {
+
+    profileName.textContent =
+      name;
+
+  }
+
+
+  const profileCountry =
+    document.getElementById(
+      "profileCountry"
+    );
+
+  if (profileCountry) {
+
+    profileCountry.textContent =
+      country ===
+      "Global Money Builder"
+        ? "🌍 Global Money Builder"
+        : `🌍 ${country}`;
+
+  }
+
+
+  const nameInput =
+    document.getElementById(
+      "userName"
+    );
+
+  if (nameInput) {
+
+    nameInput.value =
+      userData.profileName || "";
+
+  }
+
+
+  const countryInput =
+    document.getElementById(
+      "userCountry"
+    );
+
+  if (countryInput) {
+
+    countryInput.value =
+      userData.profileCountry || "";
+
+  }
+
+
+  const currencySelect =
+    document.getElementById(
+      "currencySelect"
+    );
+
+  if (currencySelect) {
+
+    currencySelect.value =
+      currency;
+
+  }
+
+
+  const avatar =
+    document.querySelector(
+      ".profile-avatar"
+    );
+
+  if (avatar) {
+
+    avatar.textContent =
+      name
+        .charAt(0)
+        .toUpperCase();
+
+  }
+}
+
+
+/* -----------------------------
+   NOTIFICATION
 ----------------------------- */
 
 function showNotification(message) {
@@ -497,18 +855,27 @@ function showNotification(message) {
       ".app-notification"
     );
 
+
   if (existing) {
+
     existing.remove();
+
   }
 
+
   const notification =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
+
 
   notification.className =
     "app-notification";
 
+
   notification.textContent =
     message;
+
 
   notification.style.position =
     "fixed";
@@ -546,196 +913,23 @@ function showNotification(message) {
   notification.style.boxShadow =
     "0 10px 30px rgba(0,0,0,0.2)";
 
+
   document.body.appendChild(
     notification
   );
 
-  setTimeout(() => {
 
-    if (notification) {
-      notification.remove();
-    }
+  setTimeout(
+    () => {
 
-  }, 3000);
-}
+      if (notification) {
 
+        notification.remove();
 
-/* =========================================
-   PROFILE INFORMATION
-========================================= */
+      }
 
-function saveProfile() {
-
-  const nameInput =
-    document.getElementById("userName");
-
-  const countryInput =
-    document.getElementById("userCountry");
-
-  const currencySelect =
-    document.getElementById("currencySelect");
-
-  const name =
-    nameInput
-      ? nameInput.value.trim()
-      : "";
-
-  const country =
-    countryInput
-      ? countryInput.value.trim()
-      : "";
-
-  const currency =
-    currencySelect
-      ? currencySelect.value
-      : "INR";
-
-
-  /* Save user information */
-
-  userData.profileName =
-    name || "Money Builder";
-
-  userData.profileCountry =
-    country || "Global Money Builder";
-
-  userData.currency =
-    currency;
-
-
-  saveUserData();
-
-  updateProfileDisplay();
-
-  showNotification(
-    "Profile saved successfully! 🎉"
+    },
+    3000
   );
 }
-
-
-/* =========================================
-   UPDATE PROFILE DISPLAY
-========================================= */
-
-function updateProfileDisplay() {
-
-  const name =
-    userData.profileName ||
-    "Money Builder";
-
-  const country =
-    userData.profileCountry ||
-    "Global Money Builder";
-
-  const currency =
-    userData.currency ||
-    "INR";
-
-
-  /* Profile name */
-
-  const profileName =
-    document.getElementById(
-      "profileName"
-    );
-
-  if (profileName) {
-    profileName.textContent =
-      name;
-  }
-
-
-  /* Country */
-
-  const profileCountry =
-    document.getElementById(
-      "profileCountry"
-    );
-
-  if (profileCountry) {
-
-    if (
-      country ===
-      "Global Money Builder"
-    ) {
-
-      profileCountry.textContent =
-        "🌍 Global Money Builder";
-
-    } else {
-
-      profileCountry.textContent =
-        `🌍 ${country}`;
-    }
-  }
-
-
-  /* Input fields */
-
-  const nameInput =
-    document.getElementById(
-      "userName"
-    );
-
-  if (nameInput) {
-    nameInput.value =
-      userData.profileName || "";
-  }
-
-
-  const countryInput =
-    document.getElementById(
-      "userCountry"
-    );
-
-  if (countryInput) {
-    countryInput.value =
-      userData.profileCountry || "";
-  }
-
-
-  /* Currency */
-
-  const currencySelect =
-    document.getElementById(
-      "currencySelect"
-    );
-
-  if (currencySelect) {
-    currencySelect.value =
-      currency;
-  }
-
-
-  /* Profile avatar */
-
-  const avatar =
-    document.querySelector(
-      ".profile-avatar"
-    );
-
-  if (avatar) {
-
-    avatar.textContent =
-      name
-        .charAt(0)
-        .toUpperCase();
-  }
-}
-
-
-/* =========================================
-   PROFILE INITIALIZATION
-========================================= */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
-
-    updateProfileDisplay();
-
-  }
-);
-
-
 
