@@ -16,6 +16,67 @@ const defaultUserData = {
   currency: "INR"
 };
 
+const challengeLibrary = {
+  "7-Day Starter": {
+    duration: 7,
+    reward: 300,
+    tasks: [
+      "Save ₹20 today.",
+      "Write down everything you spent today.",
+      "Avoid one unnecessary purchase.",
+      "Set aside ₹30 for your savings goal.",
+      "Review your spending from the last 4 days.",
+      "Save ₹50 today.",
+      "Create one money goal for the next 30 days."
+    ]
+  },
+
+  "30-Day Wealth": {
+    duration: 30,
+    reward: 1000,
+    tasks: [
+      "Save a small amount today.",
+      "Track every expense today.",
+      "Avoid one unnecessary purchase.",
+      "Review your spending.",
+      "Set a savings target.",
+      "Save a little more than yesterday.",
+      "Check your subscriptions.",
+      "Plan tomorrow's spending.",
+      "Put money aside before spending.",
+      "Review your financial goal.",
+      "Avoid an impulse purchase.",
+      "Track your progress.",
+      "Save something today.",
+      "Review your biggest expense.",
+      "Plan a no-spend day.",
+      "Add to your savings.",
+      "Check your weekly progress.",
+      "Identify one money leak.",
+      "Save again today.",
+      "Review your financial habits.",
+      "Plan your next savings target.",
+      "Avoid unnecessary spending.",
+      "Track today's expenses.",
+      "Add money to your savings.",
+      "Review your progress.",
+      "Set a new small financial goal.",
+      "Save something today.",
+      "Plan tomorrow's budget.",
+      "Review your month.",
+      "Celebrate your consistency."
+    ]
+  },
+
+  "52-Week Savings": {
+    duration: 52,
+    reward: 2500,
+    tasks: [
+      "Set aside a small amount this week."
+    ]
+  }
+};
+
 let userData = loadUserData();
 
 
