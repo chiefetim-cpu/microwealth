@@ -540,50 +540,40 @@ function updateStreak(today) {
    JOIN CHALLENGE
 ----------------------------- */
 
-function joinChallenge(
-  name,
-  reward
-) {
+function joinChallenge(name, reward) {
+  const challenge = challengeLibrary[name];
 
-  const alreadyJoined =
-    userData.joinedChallenges.some(
-      challenge =>
-        challenge.name === name
-    );
-
-
-  if (alreadyJoined) {
-
-    showNotification(
-      `You're already participating in ${name}.`
-    );
-
-    showPage("home");
-
+  if (!challenge) {
+    showNotification("Challenge not found.");
     return;
-
   }
 
-
-  userData.joinedChallenges.push({
-
-    name: name,
-
-    reward: reward,
-
-    joinedAt:
-      new Date().toISOString()
-
-  });
-
-
-  saveUserData();
-
-
-  showNotification(
-    `🎯 You joined ${name}!`
+  const alreadyJoined = userData.joinedChallenges.some(
+    item => item.name === name
   );
 
+  if (alreadyJoined) {
+    showNotification(`You're already participating in ${name}.`);
+    showPage("home");
+    return;
+  }
+
+  userData.joinedChallenges.push({
+    name: name,
+    reward: challenge.reward,
+    duration: challenge.duration,
+    currentDay: 1,
+    joinedAt: new Date().toISOString()
+  });
+
+  userData.currentChallenge = name;
+  userData.currentDay = 1;
+
+  saveUserData();
+  updateDashboard();
+  updateProfileDisplay();
+
+  showNotification(`🎯 You joined ${name}!`);
 
   showPage("home");
 }
