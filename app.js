@@ -308,7 +308,7 @@ function updateDashboard() {
   );
 
 
-  updateChallengeProgress();
+  updateActiveChallengeDisplay();
  }
 
 /* -----------------------------
@@ -316,66 +316,84 @@ function updateDashboard() {
 ----------------------------- */
 
 function updateChallengeProgress() {
-
-  const currentDayElement =
-    document.getElementById(
-      "currentDay"
-    );
-
+  const currentDayElement = document.getElementById("currentDay");
   const progressPercentElement =
-    document.getElementById(
-      "progressPercent"
-    );
-
+    document.getElementById("progressPercent");
   const progressFill =
-    document.getElementById(
-      "progressFill"
-    );
+    document.getElementById("progressFill");
+  const challengeTotalDays =
+    document.getElementById("challengeTotalDays");
 
-  if (!currentDayElement) {
+  const challengeName =
+    userData.currentChallenge || "7-Day Starter";
 
-    return;
+  const challenge =
+    challengeLibrary[challengeName] ||
+    challengeLibrary["7-Day Starter"];
 
+  const totalDays = challenge.duration;
+  const currentDay = Math.min(
+    userData.currentDay || 1,
+    totalDays
+  );
+
+  const completedDays = Math.max(currentDay - 1, 0);
+  const percentage = Math.round(
+    (completedDays / totalDays) * 100
+  );
+
+  if (currentDayElement) {
+    currentDayElement.textContent = currentDay;
   }
 
-  const totalDays = 7;
-
-  const currentDay =
-    Math.min(
-      userData.currentDay,
-      totalDays
-    );
-
-  const completedDays =
-    Math.max(
-      currentDay - 1,
-      0
-    );
-
-  const percentage =
-    Math.round(
-      (completedDays / totalDays) *
-      100
-    );
-
-  currentDayElement.textContent =
-    currentDay;
+  if (challengeTotalDays) {
+    challengeTotalDays.textContent = totalDays;
+  }
 
   if (progressPercentElement) {
-
-    progressPercentElement.textContent =
-      `${percentage}%`;
-
+    progressPercentElement.textContent = `${percentage}%`;
   }
 
   if (progressFill) {
-
-    progressFill.style.width =
-      `${percentage}%`;
-
+    progressFill.style.width = `${percentage}%`;
   }
 }
 
+function updateActiveChallengeDisplay() {
+  const challengeName =
+    userData.currentChallenge || "7-Day Starter";
+
+  const challenge =
+    challengeLibrary[challengeName] ||
+    challengeLibrary["7-Day Starter"];
+
+  const nameElement =
+    document.getElementById("activeChallengeName");
+
+  const titleElement =
+    document.getElementById("activeChallengeTitle");
+
+  const descriptionElement =
+    document.getElementById("activeChallengeDescription");
+
+  if (nameElement) {
+    nameElement.textContent = challengeName;
+  }
+
+  if (titleElement) {
+    titleElement.textContent =
+      challengeName === "7-Day Starter"
+        ? "Build Your First Money Habit"
+        : challengeName;
+  }
+
+  if (descriptionElement) {
+    descriptionElement.textContent =
+      `Complete one money action every day for ${challenge.duration} days.`;
+  }
+
+  updateChallengeProgress();
+}
 
 /* -----------------------------
    COMPLETE CHALLENGE
