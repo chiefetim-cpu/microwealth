@@ -140,70 +140,67 @@
       </div>
 
 
-      <!-- CURRENT CHALLENGE -->
-      <div class="section-heading">
+     <!-- CURRENT CHALLENGE -->
+<div class="section-heading">
 
-        <div>
-          <span class="eyebrow">YOUR CURRENT CHALLENGE</span>
+  <div>
+    <span class="eyebrow">YOUR CURRENT CHALLENGE</span>
 
-          <h3>
-            7-Day Money Starter
-          </h3>
-        </div>
+    <h3 id="activeChallengeName">
+      7-Day Starter
+    </h3>
+  </div>
 
-      </div>
+</div>
 
+<div class="challenge-feature">
 
-      <div class="challenge-feature">
+  <div class="challenge-icon">
+    💰
+  </div>
 
-        <div class="challenge-icon">
-          💰
-        </div>
+  <div class="challenge-content">
 
-        <div class="challenge-content">
+    <h3 id="activeChallengeTitle">
+      Build Your First Money Habit
+    </h3>
 
-          <h3>
-            Build Your First Money Habit
-          </h3>
+    <p id="activeChallengeDescription">
+      Complete one simple money action every day for seven days.
+    </p>
 
-          <p>
-            Complete one simple money action every day for seven days.
-          </p>
+    <div class="progress-info">
 
-          <div class="progress-info">
+      <span>
+        Day <strong id="currentDay">1</strong>
+        of <strong id="challengeTotalDays">7</strong>
+      </span>
 
-            <span>
-              Day <strong id="currentDay">1</strong> of 7
-            </span>
+      <span id="progressPercent">
+        0%
+      </span>
 
-            <span id="progressPercent">
-              0%
-            </span>
+    </div>
 
-          </div>
+    <div class="progress-bar">
 
-          <div class="progress-bar">
+      <div
+        class="progress-fill"
+        id="progressFill"
+      ></div>
 
-            <div
-              class="progress-fill"
-              id="progressFill"
-            ></div>
+    </div>
 
-          </div>
+    <button
+      class="primary-button"
+      onclick="completeCurrentChallenge()"
+    >
+      Complete Today's Challenge
+    </button>
 
-          <button
-            class="primary-button"
-            onclick="completeCurrentChallenge()"
-          >
-            Complete Today's Challenge
-          </button>
+  </div>
 
-        </div>
-
-      </div>
-
-    </section>
-
+</div>
 
     <!-- =========================
          CHALLENGE HUB
