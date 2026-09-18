@@ -8,7 +8,7 @@ const defaultUserData = {
   streak: 0,
   completedChallenges: 0,
   currentDay: 1,
-  currentChallenge: "7-Day Money Starter",
+  currentChallenge: "7-Day Starter",
   joinedChallenges: [],
   lastCompletedDate: null,
   profileName: "",
