@@ -459,7 +459,6 @@ function completeCurrentChallenge() {
   showNotification("Challenge completed! +50 points 🎉");
 }
 
-
 /* -----------------------------
    LOCAL DATE
 ----------------------------- */
