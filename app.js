@@ -443,7 +443,7 @@ function completeCurrentChallenge() {
 
       userData.currentDay = 1;
       userData.currentChallenge =
-        "7-Day Money Starter";
+        "7-Day Starter";
 
       // Allow the next day's challenge
       userData.lastCompletedDate = null;
