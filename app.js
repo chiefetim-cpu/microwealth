@@ -400,75 +400,63 @@ function updateActiveChallengeDisplay() {
 ----------------------------- */
 
 function completeCurrentChallenge() {
-
   const today = getLocalDate();
 
   if (userData.lastCompletedDate === today) {
-
-    showNotification(
-      "You've already completed today's challenge! 🔥"
-    );
-
+    showNotification("You've already completed today's challenge! 🔥");
     return;
   }
 
+  const challengeName = userData.currentChallenge || "7-Day Starter";
+  const challenge = challengeLibrary[challengeName];
+
+  if (!challenge) {
+    showNotification("Challenge not found.");
+    return;
+  }
+
+  const totalDays = challenge.duration;
+  const currentDay = userData.currentDay || 1;
+
   // Daily reward
   userData.points += 50;
-
   userData.completedChallenges += 1;
 
+  // Update streak
   updateStreak(today);
-
-  // Save today's completion
   userData.lastCompletedDate = today;
 
-  // Day 7 = challenge completed
-  if (userData.currentDay === 7) {
-
-    // Challenge completion bonus
-    userData.points += 100;
+  // Check if the challenge is completed
+  if (currentDay >= totalDays) {
+    userData.points += challenge.reward;
 
     saveUserData();
-
-    // Show the completed state
     updateDashboard();
     updateProfileDisplay();
 
     showNotification(
-      "🎉 7-Day Challenge completed! +150 points!"
+      `🎉 ${challengeName} completed! +${challenge.reward + 50} points!`
     );
 
-    // Start a new challenge after a short delay
     setTimeout(() => {
-
       userData.currentDay = 1;
-      userData.currentChallenge =
-        "7-Day Starter";
-
-      // Allow the next day's challenge
       userData.lastCompletedDate = null;
-
       saveUserData();
-
       updateDashboard();
       updateProfileDisplay();
-
     }, 1500);
 
     return;
   }
 
   // Move to the next day
-  userData.currentDay += 1;
+  userData.currentDay = currentDay + 1;
 
   saveUserData();
-
   updateDashboard();
   updateProfileDisplay();
 
-  showNotification(
-    "Challenge completed! +50 points 🎉"
-  );
+  showNotification("Challenge completed! +50 points 🎉");
 }
 
 
