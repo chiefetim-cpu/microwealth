@@ -69,12 +69,26 @@ const challengeLibrary = {
   },
 
   "52-Week Savings": {
-    duration: 52,
-    reward: 2500,
-    tasks: [
-      "Set aside a small amount this week."
-    ]
-  }
+  duration: 52,
+  reward: 2500,
+  tasks: [
+    "Set aside a small amount this week."
+  ]
+},
+
+"No-Spend Challenge": {
+  duration: 7,
+  reward: 500,
+  tasks: [
+    "Avoid one unnecessary purchase today.",
+    "Track every expense you make today.",
+    "Avoid buying food or drinks you don't need.",
+    "Have a no-spend day and use what you already have.",
+    "Avoid impulse purchases today.",
+    "Review what you almost bought and decide whether you really need it.",
+    "Complete your final no-spend day and review what you saved."
+  ]
+}
 };
 
 let userData = loadUserData();
