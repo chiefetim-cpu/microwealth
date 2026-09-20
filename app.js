@@ -390,6 +390,9 @@ function updateActiveChallengeDisplay() {
   const descriptionElement =
     document.getElementById("activeChallengeDescription");
 
+   const taskElement =
+    document.getElementById("dailyTask");
+
   if (nameElement) {
     nameElement.textContent = challengeName;
   }
@@ -406,6 +409,16 @@ function updateActiveChallengeDisplay() {
       `Complete one money action every day for ${challenge.duration} days.`;
   }
 
+  if (taskElement) {
+   const taskIndex = Math.min(
+    Math.max((userData.currentDay || 1) - 1, 0),
+    challenge.tasks.length - 1
+  );
+
+  taskElement.textContent =
+    `Today's Task: ${challenge.tasks[taskIndex]}`;
+}
+   
   updateChallengeProgress();
 }
 
