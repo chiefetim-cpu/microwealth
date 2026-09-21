@@ -585,17 +585,16 @@ function joinChallenge(name, reward) {
   );
 
   if (alreadyJoined) {
-    userData.currentChallenge = name;
-    userData.currentDay = 1;
+  userData.currentChallenge = name;
 
-    saveUserData();
-    updateDashboard();
-    updateProfileDisplay();
+  saveUserData();
+  updateDashboard();
+  updateProfileDisplay();
 
-    showNotification(`You're already participating in ${name}.`);
-    showPage("home");
-    return;
-  }
+  showNotification(`You're already participating in ${name}.`);
+  showPage("home");
+  return;
+}
 
   userData.joinedChallenges.push({
     name: name,
