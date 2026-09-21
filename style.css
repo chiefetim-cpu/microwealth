@@ -561,6 +561,12 @@ a {
   margin-bottom: 18px;
 }
 
+.challenge-duration {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  opacity: 0.75;
+}
 
 /* -------------------------
    COMMUNITY
