@@ -390,6 +390,9 @@ function updateActiveChallengeDisplay() {
   const descriptionElement =
     document.getElementById("activeChallengeDescription");
 
+   const challengeButtons =
+  document.querySelectorAll(".challenge-join-button");
+
    const taskElement =
     document.getElementById("dailyTask");
 
@@ -418,6 +421,18 @@ function updateActiveChallengeDisplay() {
   taskElement.textContent =
     `Today's Task: ${challenge.tasks[taskIndex]}`;
 }
+
+   challengeButtons.forEach(button => {
+  const buttonChallenge = button.getAttribute("onclick");
+
+  if (buttonChallenge && buttonChallenge.includes(`'${challengeName}'`)) {
+    button.textContent = "✓ Active Challenge";
+    button.classList.add("active-challenge-button");
+  } else {
+    button.textContent = "Join Challenge";
+    button.classList.remove("active-challenge-button");
+  }
+});
    
   updateChallengeProgress();
 }
