@@ -585,6 +585,13 @@ function joinChallenge(name, reward) {
   );
 
   if (alreadyJoined) {
+    userData.currentChallenge = name;
+    userData.currentDay = 1;
+
+    saveUserData();
+    updateDashboard();
+    updateProfileDisplay();
+
     showNotification(`You're already participating in ${name}.`);
     showPage("home");
     return;
@@ -600,6 +607,7 @@ function joinChallenge(name, reward) {
 
   userData.currentChallenge = name;
   userData.currentDay = 1;
+  userData.lastCompletedDate = null;
 
   saveUserData();
   updateDashboard();
@@ -609,7 +617,6 @@ function joinChallenge(name, reward) {
 
   showPage("home");
 }
-
 
 /* -----------------------------
    LIKE POST
