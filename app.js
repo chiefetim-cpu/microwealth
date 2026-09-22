@@ -616,30 +616,38 @@ function joinChallenge(name, reward) {
     return;
   }
 
-  const alreadyJoined = userData.joinedChallenges.some(
+  const existingChallenge = userData.joinedChallenges.find(
     item => item.name === name
   );
 
-  if (alreadyJoined) {
-  userData.currentChallenge = name;
+  // If the challenge already exists, make it active
+  // and restore its saved progress.
+  if (existingChallenge) {
+    userData.currentChallenge = name;
+    userData.currentDay = existingChallenge.currentDay || 1;
 
-  saveUserData();
-  updateDashboard();
-  updateProfileDisplay();
+    saveUserData();
+    updateDashboard();
+    updateProfileDisplay();
 
-  showNotification(`You're already participating in ${name}.`);
-  showPage("home");
-  return;
-}
+    showNotification(`You're already participating in ${name}.`);
+    showPage("home");
+    return;
+  }
 
-  userData.joinedChallenges.push({
+  // Create a new challenge
+  const newChallenge = {
     name: name,
     reward: challenge.reward,
     duration: challenge.duration,
     currentDay: 1,
+    lastCompletedDate: null,
     joinedAt: new Date().toISOString()
-  });
+  };
 
+  userData.joinedChallenges.push(newChallenge);
+
+  // Make the new challenge active
   userData.currentChallenge = name;
   userData.currentDay = 1;
   userData.lastCompletedDate = null;
@@ -652,7 +660,6 @@ function joinChallenge(name, reward) {
 
   showPage("home");
 }
-
 /* -----------------------------
    LIKE POST
 ----------------------------- */
