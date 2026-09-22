@@ -1185,9 +1185,10 @@ a {
   /* existing styles */
 }
 
-/* Active Challenge */
 .active-challenge-button {
-  opacity: 0.85;
+  opacity: 1;
   cursor: default;
   font-weight: 700;
+  border: 2px solid currentColor;
+  transform: scale(0.98);
 }
