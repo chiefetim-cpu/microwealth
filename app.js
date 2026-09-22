@@ -444,11 +444,6 @@ function updateActiveChallengeDisplay() {
 function completeCurrentChallenge() {
   const today = getLocalDate();
 
-  if (userData.lastCompletedDate === today) {
-    showNotification("You've already completed today's challenge! 🔥");
-    return;
-  }
-
   const challengeName = userData.currentChallenge || "7-Day Starter";
   const challenge = challengeLibrary[challengeName];
 
@@ -457,8 +452,24 @@ function completeCurrentChallenge() {
     return;
   }
 
+  // Find the user's saved progress for the active challenge
+  const activeChallenge = userData.joinedChallenges.find(
+    item => item.name === challengeName
+  );
+
+  if (!activeChallenge) {
+    showNotification("Please join this challenge first.");
+    return;
+  }
+
+  // Prevent completing the same challenge twice on the same day
+  if (activeChallenge.lastCompletedDate === today) {
+    showNotification("You've already completed today's challenge! 🔥");
+    return;
+  }
+
   const totalDays = challenge.duration;
-  const currentDay = userData.currentDay || 1;
+  const currentDay = activeChallenge.currentDay || 1;
 
   // Daily reward
   userData.points += 50;
@@ -466,7 +477,9 @@ function completeCurrentChallenge() {
 
   // Update streak
   updateStreak(today);
-  userData.lastCompletedDate = today;
+
+  // Save completion date specifically for this challenge
+  activeChallenge.lastCompletedDate = today;
 
   // Check if the challenge is completed
   if (currentDay >= totalDays) {
@@ -481,8 +494,12 @@ function completeCurrentChallenge() {
     );
 
     setTimeout(() => {
+      activeChallenge.currentDay = 1;
+      activeChallenge.lastCompletedDate = null;
+
       userData.currentDay = 1;
       userData.lastCompletedDate = null;
+
       saveUserData();
       updateDashboard();
       updateProfileDisplay();
@@ -491,8 +508,12 @@ function completeCurrentChallenge() {
     return;
   }
 
-  // Move to the next day
-  userData.currentDay = currentDay + 1;
+  // Move this challenge to its next day
+  activeChallenge.currentDay = currentDay + 1;
+
+  // Keep the existing global value synchronized for the current display
+  userData.currentDay = activeChallenge.currentDay;
+  userData.lastCompletedDate = today;
 
   saveUserData();
   updateDashboard();
