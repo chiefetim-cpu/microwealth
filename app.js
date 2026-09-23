@@ -483,7 +483,11 @@ function completeCurrentChallenge() {
 
   // Check if the challenge is completed
   if (currentDay >= totalDays) {
-    userData.points += challenge.reward;
+  userData.points += challenge.reward;
+
+  // Mark this challenge as completed
+  activeChallenge.completed = true;
+  activeChallenge.completedAt = new Date().toISOString();
 
     saveUserData();
     updateDashboard();
