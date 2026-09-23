@@ -952,9 +952,23 @@ function updateChallengeHistory() {
       challenge.duration
     );
 
-    const completedDays = Math.max(currentDay - 1, 0);
+    const isCompleted = item.completed === true;
 
-    const isCompleted = completedDays >= challenge.duration;
+    const completedDays = isCompleted
+      ? challenge.duration
+      : Math.max(currentDay - 1, 0);
+
+    let completionDate = "";
+
+    if (isCompleted && item.completedAt) {
+      const date = new Date(item.completedAt);
+
+      completionDate = date.toLocaleDateString(undefined, {
+        day: "numeric",
+        month: "short",
+        year: "numeric"
+      });
+    }
 
     const card = document.createElement("div");
     card.className = "history-card";
@@ -968,10 +982,22 @@ function updateChallengeHistory() {
         <h4>${item.name}</h4>
 
         <p>
-          ${isCompleted
-            ? `Completed: ${challenge.duration}/${challenge.duration} days`
-            : `In Progress: Day ${currentDay}/${challenge.duration}`}
+          ${
+            isCompleted
+              ? `Completed: ${completedDays}/${challenge.duration} days`
+              : `In Progress: Day ${currentDay}/${challenge.duration}`
+          }
         </p>
+
+        <p class="history-reward">
+          💰 Bonus: +${item.reward || challenge.reward} points
+        </p>
+
+        ${
+          isCompleted && completionDate
+            ? `<p class="history-date">📅 Completed on ${completionDate}</p>`
+            : ""
+        }
 
         <span class="history-status">
           ${isCompleted ? "Completed" : "In Progress"}
