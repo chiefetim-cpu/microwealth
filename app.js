@@ -621,23 +621,45 @@ function joinChallenge(name, reward) {
   }
 
   const existingChallenge = userData.joinedChallenges.find(
-    item => item.name === name
-  );
+  item => item.name === name
+);
 
-  // If the challenge already exists, make it active
-  // and restore its saved progress.
-  if (existingChallenge) {
-    userData.currentChallenge = name;
-    userData.currentDay = existingChallenge.currentDay || 1;
+// If the challenge was already completed,
+// start a fresh attempt.
+if (existingChallenge && existingChallenge.completed === true) {
+  existingChallenge.completed = false;
+  existingChallenge.completedAt = null;
+  existingChallenge.currentDay = 1;
+  existingChallenge.lastCompletedDate = null;
+  existingChallenge.joinedAt = new Date().toISOString();
 
-    saveUserData();
-    updateDashboard();
-    updateProfileDisplay();
+  userData.currentChallenge = name;
+  userData.currentDay = 1;
+  userData.lastCompletedDate = null;
 
-    showNotification(`You're already participating in ${name}.`);
-    showPage("home");
-    return;
-  }
+  saveUserData();
+  updateDashboard();
+  updateProfileDisplay();
+
+  showNotification(`🔄 ${name} restarted!`);
+  showPage("home");
+  return;
+}
+
+// If the challenge already exists and is still active,
+// restore its saved progress.
+if (existingChallenge) {
+  userData.currentChallenge = name;
+  userData.currentDay = existingChallenge.currentDay || 1;
+
+  saveUserData();
+  updateDashboard();
+  updateProfileDisplay();
+
+  showNotification(`You're already participating in ${name}.`);
+  showPage("home");
+  return;
+}
 
   // Create a new challenge
   const newChallenge = {
