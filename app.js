@@ -913,6 +913,68 @@ function updateProfileDisplay() {
     avatar.textContent =
       name.charAt(0).toUpperCase();
   }
+
+   updateChallengeHistory();
+}
+
+function updateChallengeHistory() {
+  const historyList = document.getElementById("challengeHistoryList");
+
+  if (!historyList) return;
+
+  if (
+    !userData.joinedChallenges ||
+    userData.joinedChallenges.length === 0
+  ) {
+    historyList.innerHTML = `
+      <p class="empty-history">
+        Your challenge history will appear here.
+      </p>
+    `;
+    return;
+  }
+
+  historyList.innerHTML = "";
+
+  userData.joinedChallenges.forEach(item => {
+    const challenge = challengeLibrary[item.name];
+
+    if (!challenge) return;
+
+    const currentDay = Math.min(
+      item.currentDay || 1,
+      challenge.duration
+    );
+
+    const completedDays = Math.max(currentDay - 1, 0);
+
+    const isCompleted = completedDays >= challenge.duration;
+
+    const card = document.createElement("div");
+    card.className = "history-card";
+
+    card.innerHTML = `
+      <div class="history-card-icon">
+        ${isCompleted ? "🏆" : "🔥"}
+      </div>
+
+      <div class="history-card-content">
+        <h4>${item.name}</h4>
+
+        <p>
+          ${isCompleted
+            ? `Completed: ${challenge.duration}/${challenge.duration} days`
+            : `In Progress: Day ${currentDay}/${challenge.duration}`}
+        </p>
+
+        <span class="history-status">
+          ${isCompleted ? "Completed" : "In Progress"}
+        </span>
+      </div>
+    `;
+
+    historyList.appendChild(card);
+  });
 }
 
 
