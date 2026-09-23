@@ -688,6 +688,7 @@ if (existingChallenge) {
   name: name,
   reward: challenge.reward,
   duration: challenge.duration,
+  attempt: 1,
   currentDay: 1,
   lastCompletedDate: null,
   completed: false,
