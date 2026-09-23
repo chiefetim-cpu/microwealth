@@ -637,13 +637,15 @@ function joinChallenge(name, reward) {
 
   // Create a new challenge
   const newChallenge = {
-    name: name,
-    reward: challenge.reward,
-    duration: challenge.duration,
-    currentDay: 1,
-    lastCompletedDate: null,
-    joinedAt: new Date().toISOString()
-  };
+  name: name,
+  reward: challenge.reward,
+  duration: challenge.duration,
+  currentDay: 1,
+  lastCompletedDate: null,
+  completed: false,
+  completedAt: null,
+  joinedAt: new Date().toISOString()
+};
 
   userData.joinedChallenges.push(newChallenge);
 
