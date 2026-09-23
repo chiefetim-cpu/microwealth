@@ -425,13 +425,35 @@ function updateActiveChallengeDisplay() {
    challengeButtons.forEach(button => {
   const buttonChallenge = button.getAttribute("onclick");
 
-  if (buttonChallenge && buttonChallenge.includes(`'${challengeName}'`)) {
+  if (!buttonChallenge) return;
+
+  const isThisChallenge =
+    buttonChallenge.includes(`'${challengeName}'`);
+
+  const joinedChallenge = userData.joinedChallenges.find(
+    item => buttonChallenge.includes(`'${item.name}'`)
+  );
+
+  // Currently active challenge
+  if (isThisChallenge && joinedChallenge && !joinedChallenge.completed) {
     button.textContent = "✓ Active Challenge";
     button.classList.add("active-challenge-button");
-  } else {
-    button.textContent = "Join Challenge";
-    button.classList.remove("active-challenge-button");
+    button.classList.remove("restart-challenge-button");
+    return;
   }
+
+  // Previously completed challenge
+  if (joinedChallenge && joinedChallenge.completed) {
+    button.textContent = "↻ Restart Challenge";
+    button.classList.remove("active-challenge-button");
+    button.classList.add("restart-challenge-button");
+    return;
+  }
+
+  // Challenge not joined yet
+  button.textContent = "Join Challenge";
+  button.classList.remove("active-challenge-button");
+  button.classList.remove("restart-challenge-button");
 });
    
   updateChallengeProgress();
