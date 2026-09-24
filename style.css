@@ -1279,3 +1279,12 @@ a {
   letter-spacing: 0.04em;
   background: rgba(31, 143, 95, 0.12);
 }
+
+.history-attempt {
+  margin: -2px 0 6px !important;
+  font-size: 0.78rem !important;
+  font-weight: 700;
+  opacity: 0.6 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
