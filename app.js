@@ -649,11 +649,21 @@ function joinChallenge(name, reward) {
 // If the challenge was already completed,
 // start a fresh attempt.
 if (existingChallenge && existingChallenge.completed === true) {
-  existingChallenge.completed = false;
-  existingChallenge.completedAt = null;
-  existingChallenge.currentDay = 1;
-  existingChallenge.lastCompletedDate = null;
-  existingChallenge.joinedAt = new Date().toISOString();
+  const newAttemptNumber = (existingChallenge.attempt || 1) + 1;
+
+  const newAttempt = {
+    name: name,
+    reward: challenge.reward,
+    duration: challenge.duration,
+    attempt: newAttemptNumber,
+    currentDay: 1,
+    lastCompletedDate: null,
+    completed: false,
+    completedAt: null,
+    joinedAt: new Date().toISOString()
+  };
+
+  userData.joinedChallenges.push(newAttempt);
 
   userData.currentChallenge = name;
   userData.currentDay = 1;
@@ -663,7 +673,7 @@ if (existingChallenge && existingChallenge.completed === true) {
   updateDashboard();
   updateProfileDisplay();
 
-  showNotification(`🔄 ${name} restarted!`);
+  showNotification(`🔄 ${name} restarted — Attempt ${newAttemptNumber}!`);
   showPage("home");
   return;
 }
