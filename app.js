@@ -1036,7 +1036,11 @@ function updateChallengeHistory() {
       <div class="history-card-content">
         <h4>${item.name}</h4>
 
-        <p>
+      <p class="history-attempt">
+         Attempt ${item.attempt || 1}
+      </p>
+
+      <p>
           ${
             isCompleted
               ? `Completed: ${completedDays}/${challenge.duration} days`
