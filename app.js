@@ -1079,33 +1079,75 @@ function updateAchievements() {
   const firstStepUnlocked =
     (userData.completedChallenges || 0) >= 1;
 
-  achievementsList.innerHTML = `
-    <div class="achievement-card ${
-      firstStepUnlocked ? "unlocked" : "locked"
-    }">
+  const streakUnlocked =
+    (userData.streak || 0) >= 7;
 
-      <div class="achievement-icon">
-        ${firstStepUnlocked ? "🌱" : "🔒"}
-      </div>
+  const pointsUnlocked =
+    (userData.points || 0) >= 500;
 
-      <div class="achievement-content">
-        <h4>First Step</h4>
+  const championUnlocked =
+    userData.joinedChallenges?.some(
+      challenge => challenge.completed === true
+    );
 
-        <p>
-          Complete your first challenge day.
-        </p>
+  const achievements = [
+    {
+      icon: "🌱",
+      title: "First Step",
+      description: "Complete your first challenge day.",
+      unlocked: firstStepUnlocked
+    },
+    {
+      icon: "🔥",
+      title: "7-Day Streak",
+      description: "Reach a 7-day streak.",
+      unlocked: streakUnlocked
+    },
+    {
+      icon: "💰",
+      title: "Point Builder",
+      description: "Earn 500 points.",
+      unlocked: pointsUnlocked
+    },
+    {
+      icon: "🏆",
+      title: "Challenge Champion",
+      description: "Complete an entire challenge.",
+      unlocked: championUnlocked
+    }
+  ];
 
-        <span class="achievement-status">
+  achievementsList.innerHTML = achievements
+    .map(achievement => `
+      <div class="achievement-card ${
+        achievement.unlocked ? "unlocked" : "locked"
+      }">
+
+        <div class="achievement-icon">
           ${
-            firstStepUnlocked
-              ? "Unlocked"
-              : "Locked"
+            achievement.unlocked
+              ? achievement.icon
+              : "🔒"
           }
-        </span>
-      </div>
+        </div>
 
-    </div>
-  `;
+        <div class="achievement-content">
+          <h4>${achievement.title}</h4>
+
+          <p>${achievement.description}</p>
+
+          <span class="achievement-status">
+            ${
+              achievement.unlocked
+                ? "Unlocked"
+                : "Locked"
+            }
+          </span>
+        </div>
+
+      </div>
+    `)
+    .join("");
 }
 
 
