@@ -976,6 +976,7 @@ function updateProfileDisplay() {
   }
 
    updateChallengeHistory();
+   updateAchievements();
 }
 
 function updateChallengeHistory() {
