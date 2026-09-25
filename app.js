@@ -1070,6 +1070,45 @@ function updateChallengeHistory() {
 }
 
 
+function updateAchievements() {
+  const achievementsList =
+    document.getElementById("achievementsList");
+
+  if (!achievementsList) return;
+
+  const firstStepUnlocked =
+    (userData.completedChallenges || 0) >= 1;
+
+  achievementsList.innerHTML = `
+    <div class="achievement-card ${
+      firstStepUnlocked ? "unlocked" : "locked"
+    }">
+
+      <div class="achievement-icon">
+        ${firstStepUnlocked ? "🌱" : "🔒"}
+      </div>
+
+      <div class="achievement-content">
+        <h4>First Step</h4>
+
+        <p>
+          Complete your first challenge day.
+        </p>
+
+        <span class="achievement-status">
+          ${
+            firstStepUnlocked
+              ? "Unlocked"
+              : "Locked"
+          }
+        </span>
+      </div>
+
+    </div>
+  `;
+}
+
+
 /* -----------------------------
    NOTIFICATION
 ----------------------------- */
