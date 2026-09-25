@@ -977,6 +977,7 @@ function updateProfileDisplay() {
 
    updateChallengeHistory();
    updateAchievements();
+   updateAchievementSummary();
 }
 
 function updateChallengeHistory() {
@@ -1148,6 +1149,85 @@ function updateAchievements() {
       </div>
     `)
     .join("");
+}
+
+function updateAchievementSummary() {
+  const countElement =
+    document.getElementById("achievementCount");
+
+  const iconsElement =
+    document.getElementById("achievementMiniIcons");
+
+  const progressFill =
+    document.getElementById("achievementProgressFill");
+
+  const progressText =
+    document.getElementById("achievementProgressText");
+
+  if (
+    !countElement ||
+    !iconsElement ||
+    !progressFill ||
+    !progressText
+  ) {
+    return;
+  }
+
+  const achievements = [
+    {
+      icon: "🌱",
+      unlocked:
+        (userData.completedChallenges || 0) >= 1
+    },
+    {
+      icon: "🔥",
+      unlocked:
+        (userData.streak || 0) >= 7
+    },
+    {
+      icon: "💰",
+      unlocked:
+        (userData.points || 0) >= 500
+    },
+    {
+      icon: "🏆",
+      unlocked:
+        userData.joinedChallenges?.some(
+          challenge => challenge.completed === true
+        )
+    }
+  ];
+
+  const unlockedCount =
+    achievements.filter(
+      achievement => achievement.unlocked
+    ).length;
+
+  const totalAchievements = achievements.length;
+
+  const percentage = Math.round(
+    (unlockedCount / totalAchievements) * 100
+  );
+
+  countElement.textContent =
+    `${unlockedCount} / ${totalAchievements}`;
+
+  iconsElement.textContent =
+    achievements
+      .map(achievement =>
+        achievement.unlocked
+          ? achievement.icon
+          : "🔒"
+      )
+      .join(" ");
+
+  progressFill.style.width =
+    `${percentage}%`;
+
+  progressText.textContent =
+    unlockedCount === totalAchievements
+      ? "🎉 All achievements unlocked!"
+      : `${unlockedCount} of ${totalAchievements} achievements unlocked.`;
 }
 
 
