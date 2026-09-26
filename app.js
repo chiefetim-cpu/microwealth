@@ -1102,31 +1102,44 @@ function updateAchievements() {
     );
 
   const achievements = [
-    {
-      icon: "🌱",
-      title: "First Step",
-      description: "Complete your first challenge day.",
-      unlocked: firstStepUnlocked
-    },
-    {
-      icon: "🔥",
-      title: "7-Day Streak",
-      description: "Reach a 7-day streak.",
-      unlocked: streakUnlocked
-    },
-    {
-      icon: "💰",
-      title: "Point Builder",
-      description: "Earn 500 points.",
-      unlocked: pointsUnlocked
-    },
-    {
-      icon: "🏆",
-      title: "Challenge Champion",
-      description: "Complete an entire challenge.",
-      unlocked: championUnlocked
-    }
-  ];
+  {
+    icon: "🌱",
+    title: "First Step",
+    description: "Complete your first challenge day.",
+    reward: 25,
+    unlocked:
+      (userData.completedChallenges || 0) >= 1
+  },
+
+  {
+    icon: "🔥",
+    title: "7-Day Streak",
+    description: "Reach a 7-day streak.",
+    reward: 100,
+    unlocked:
+      (userData.streak || 0) >= 7
+  },
+
+  {
+    icon: "💰",
+    title: "Point Builder",
+    description: "Earn 500 points.",
+    reward: 150,
+    unlocked:
+      (userData.points || 0) >= 500
+  },
+
+  {
+    icon: "🏆",
+    title: "Challenge Champion",
+    description: "Complete an entire challenge.",
+    reward: 250,
+    unlocked:
+      userData.joinedChallenges?.some(
+        challenge => challenge.completed === true
+      )
+  }
+];
 
   achievementsList.innerHTML = achievements
     .map(achievement => `
