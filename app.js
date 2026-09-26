@@ -1174,6 +1174,76 @@ function updateAchievements() {
     .join("");
 }
 
+function checkAchievementRewards() {
+
+  if (!Array.isArray(userData.achievementRewards)) {
+    userData.achievementRewards = [];
+  }
+
+  const achievements = [
+    {
+      title: "First Step",
+      reward: 25,
+      unlocked:
+        (userData.completedChallenges || 0) >= 1
+    },
+
+    {
+      title: "7-Day Streak",
+      reward: 100,
+      unlocked:
+        (userData.streak || 0) >= 7
+    },
+
+    {
+      title: "Point Builder",
+      reward: 150,
+      unlocked:
+        (userData.points || 0) >= 500
+    },
+
+    {
+      title: "Challenge Champion",
+      reward: 250,
+      unlocked:
+        userData.joinedChallenges?.some(
+          challenge => challenge.completed === true
+        )
+    }
+  ];
+
+  let rewardEarned = false;
+
+  achievements.forEach(achievement => {
+
+    if (
+      achievement.unlocked &&
+      !userData.achievementRewards.includes(
+        achievement.title
+      )
+    ) {
+
+      userData.points += achievement.reward;
+
+      userData.achievementRewards.push(
+        achievement.title
+      );
+
+      rewardEarned = true;
+
+      showNotification(
+        `🏆 ${achievement.title} unlocked! +${achievement.reward} points!`
+      );
+    }
+
+  });
+
+  if (rewardEarned) {
+    saveUserData();
+  }
+}
+
+
 function updateAchievementSummary() {
   const countElement =
     document.getElementById("achievementCount");
