@@ -109,9 +109,18 @@ function loadUserData() {
 
     if (saved) {
 
+      const savedData = JSON.parse(saved);
+
       return {
         ...defaultUserData,
-        ...JSON.parse(saved)
+        ...savedData,
+
+        // Add achievement reward tracking
+        // without changing existing saved data.
+        achievementRewards:
+          Array.isArray(savedData.achievementRewards)
+            ? savedData.achievementRewards
+            : []
       };
 
     }
@@ -126,7 +135,8 @@ function loadUserData() {
   }
 
   return {
-    ...defaultUserData
+    ...defaultUserData,
+    achievementRewards: []
   };
 }
 
