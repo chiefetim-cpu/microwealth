@@ -14,6 +14,7 @@ const defaultUserData = {
   profileName: "",
   profileCountry: "",
   currency: "INR"
+  achievementRewards: [],
 };
 
 const challengeLibrary = {
