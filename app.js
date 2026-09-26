@@ -13,8 +13,7 @@ const defaultUserData = {
   lastCompletedDate: null,
   profileName: "",
   profileCountry: "",
-  currency: "INR"
-  achievementRewards: [],
+  currency: "INR"  
 };
 
 const challengeLibrary = {
