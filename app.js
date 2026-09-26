@@ -1214,7 +1214,8 @@ function checkAchievementRewards() {
     }
   ];
 
-  let rewardEarned = false;
+  let totalReward = 0;
+  let unlockedNames = [];
 
   achievements.forEach(achievement => {
 
@@ -1231,20 +1232,39 @@ function checkAchievementRewards() {
         achievement.title
       );
 
-      rewardEarned = true;
-
-      showNotification(
-        `🏆 ${achievement.title} unlocked! +${achievement.reward} points!`
-      );
+      totalReward += achievement.reward;
+      unlockedNames.push(achievement.title);
     }
-
   });
 
-  if (rewardEarned) {
+  if (totalReward > 0) {
+
     saveUserData();
+
+    showNotification(
+      `🏆 Achievement reward: +${totalReward} points!`
+    );
+
+    console.log(
+      "Achievement rewards added:",
+      unlockedNames,
+      "Total:",
+      totalReward,
+      "New points:",
+      userData.points
+    );
+
+  } else {
+
+    console.log(
+      "No new achievement rewards.",
+      "Already rewarded:",
+      userData.achievementRewards,
+      "Current points:",
+      userData.points
+    );
   }
 }
-
 
 function updateAchievementSummary() {
   const countElement =
