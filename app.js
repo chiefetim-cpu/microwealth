@@ -554,8 +554,11 @@ function completeCurrentChallenge() {
   userData.lastCompletedDate = today;
 
   saveUserData();
-  updateDashboard();
-  updateProfileDisplay();
+
+checkAchievementRewards();
+
+updateDashboard();
+updateProfileDisplay();
 
   showNotification("Challenge completed! +50 points 🎉");
 }
