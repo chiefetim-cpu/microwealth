@@ -513,9 +513,7 @@ function completeCurrentChallenge() {
   // Save completion date specifically for this challenge
   activeChallenge.lastCompletedDate = today;
   
-   checkAchievementRewards();
-
-  // Check if the challenge is completed
+   // Check if the challenge is completed
   if (currentDay >= totalDays) {
   userData.points += challenge.reward;
 
