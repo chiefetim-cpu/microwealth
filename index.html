@@ -169,6 +169,78 @@
 
 </div>
 
+
+<!-- SAVINGS GOAL TRACKER -->
+<div class="savings-goal-card">
+
+  <div class="savings-goal-header">
+    <span class="card-label">YOUR FINANCIAL GOAL</span>
+    <span class="savings-goal-icon">🎯</span>
+  </div>
+
+  <h3>My Savings Goal</h3>
+
+  <p class="savings-goal-description">
+    Set a target, track your savings and celebrate
+    every step toward your goal.
+  </p>
+
+  <div class="savings-goal-form">
+
+    <label for="savingsGoalName">Goal name</label>
+    <input
+      type="text"
+      id="savingsGoalName"
+      placeholder="e.g. Emergency Fund"
+    />
+
+    <label for="savingsGoalTarget">Savings target (₹)</label>
+    <input
+      type="number"
+      id="savingsGoalTarget"
+      placeholder="e.g. 10000"
+      min="1"
+    />
+
+    <label for="savingsGoalAmount">Already saved (₹)</label>
+    <input
+      type="number"
+      id="savingsGoalAmount"
+      placeholder="e.g. 1000"
+      min="0"
+    />
+
+    <button
+      type="button"
+      class="primary-button full-width"
+      onclick="saveSavingsGoal()"
+    >
+      Save My Goal
+    </button>
+
+  </div>
+
+  <div id="savingsGoalProgress" class="savings-goal-progress">
+    <div class="savings-goal-progress-header">
+      <span>Goal progress</span>
+      <strong id="savingsGoalPercent">0%</strong>
+    </div>
+
+    <div class="savings-goal-progress-track">
+      <div
+        id="savingsGoalProgressFill"
+        class="savings-goal-progress-fill"
+        style="width: 0%;">
+      </div>
+    </div>
+
+    <p id="savingsGoalSummary">
+      Set your first savings goal to begin.
+    </p>
+  </div>
+
+</div>
+            
      <!-- CURRENT CHALLENGE -->
 <div class="section-heading">
 
