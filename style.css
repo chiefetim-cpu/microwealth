@@ -1439,3 +1439,146 @@ a {
 .achievement-card.locked .achievement-status {
   color: #888888;
 }
+
+
+/* ==============================
+   SAVINGS GOAL TRACKER
+============================== */
+
+.savings-goal-card {
+  margin-top: 24px;
+  padding: 28px;
+  border-radius: 22px;
+  border: 1px solid rgba(128, 128, 128, 0.18);
+  background: var(--card-bg, #ffffff);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.05);
+}
+
+.savings-goal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.savings-goal-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: rgba(31, 143, 95, 0.12);
+  font-size: 1.7rem;
+}
+
+.savings-goal-card h3 {
+  margin: 8px 0;
+  font-size: 1.5rem;
+}
+
+.savings-goal-description {
+  margin: 0 0 24px;
+  line-height: 1.6;
+  opacity: 0.75;
+}
+
+.savings-goal-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.savings-goal-form label {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.savings-goal-form input {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 13px 14px;
+  border: 1px solid #d7ded9;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #222222;
+  font: inherit;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.savings-goal-form input:focus {
+  border-color: #1f8f5f;
+  box-shadow: 0 0 0 3px rgba(31, 143, 95, 0.12);
+}
+
+.savings-goal-form button {
+  width: 100%;
+  margin-top: 14px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.savings-goal-progress {
+  display: none;
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(128, 128, 128, 0.18);
+}
+
+.savings-goal-progress-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+#savingsGoalPercent {
+  color: #1f8f5f;
+  font-size: 1.1rem;
+}
+
+.savings-goal-progress-track {
+  display: block;
+  width: 100%;
+  height: 12px;
+  border-radius: 999px;
+  background: #e7eee9;
+  overflow: hidden;
+}
+
+.savings-goal-progress-fill {
+  display: block;
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #1f8f5f, #43c58a);
+  transition: width 0.5s ease;
+}
+
+#savingsGoalSummary {
+  margin: 14px 0 0;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 600px) {
+  .savings-goal-card {
+    padding: 20px 16px;
+    border-radius: 16px;
+  }
+
+  .savings-goal-card h3 {
+    font-size: 1.3rem;
+  }
+}
