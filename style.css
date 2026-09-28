@@ -1582,3 +1582,23 @@ a {
     font-size: 1.3rem;
   }
 }
+
+
+.savings-goal-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.savings-goal-green-circle {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  min-width: 12px;
+  border-radius: 50%;
+  background: #1f8f5f;
+}
+
+.savings-goal-progress-header h3 {
+  margin: 0;
+}
