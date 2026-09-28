@@ -1161,9 +1161,13 @@ function updateAchievements() {
         <div class="achievement-content">
           <h4>${achievement.title}</h4>
 
-          <p>${achievement.description}</p>
+         <p>${achievement.description}</p>
 
-          <span class="achievement-status">
+         <p class="achievement-reward">
+           🪙 Reward: +${achievement.reward} points
+         </p>
+
+         <span class="achievement-status">
             ${
               achievement.unlocked
                 ? "Unlocked"
