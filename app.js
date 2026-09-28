@@ -1440,3 +1440,131 @@ function showNotification(message) {
   );
 }
 
+function saveSavingsGoal() {
+  const nameInput = document.getElementById("savingsGoalName");
+  const targetInput = document.getElementById("savingsGoalTarget");
+  const amountInput = document.getElementById("savingsGoalAmount");
+
+  const name = nameInput.value.trim();
+  const target = Number(targetInput.value);
+  const saved = Number(amountInput.value);
+
+  if (!name) {
+    showNotification("Please enter a name for your savings goal.");
+    return;
+  }
+
+  if (!Number.isFinite(target) || target <= 0) {
+    showNotification("Please enter a valid savings target.");
+    return;
+  }
+
+  if (!Number.isFinite(saved) || saved < 0) {
+    showNotification("Please enter a valid saved amount.");
+    return;
+  }
+
+  if (saved > target) {
+    showNotification("Your saved amount cannot exceed your target.");
+    return;
+  }
+
+  try {
+    const storageKey = "microWealthScaleSavingsGoal";
+
+    const goal = {
+      name: name,
+      target: target,
+      saved: saved,
+      updatedAt: new Date().toISOString()
+    };
+
+    localStorage.setItem(storageKey, JSON.stringify(goal));
+
+    renderSavingsGoal(goal);
+
+    showNotification("🎯 Savings goal saved successfully!");
+  } catch (error) {
+    console.error("Unable to save savings goal:", error);
+    showNotification("Unable to save your goal. Please try again.");
+  }
+}
+
+function renderSavingsGoal(goal) {
+  const nameInput = document.getElementById("savingsGoalName");
+  const targetInput = document.getElementById("savingsGoalTarget");
+  const amountInput = document.getElementById("savingsGoalAmount");
+
+  const progressContainer = document.getElementById("savingsGoalProgress");
+  const percentElement = document.getElementById("savingsGoalPercent");
+  const progressFill = document.getElementById("savingsGoalProgressFill");
+  const summary = document.getElementById("savingsGoalSummary");
+
+  if (
+    !nameInput ||
+    !targetInput ||
+    !amountInput ||
+    !progressContainer ||
+    !percentElement ||
+    !progressFill ||
+    !summary
+  ) {
+    return;
+  }
+
+  nameInput.value = goal.name;
+  targetInput.value = goal.target;
+  amountInput.value = goal.saved;
+
+  const percentage = Math.min(
+    100,
+    Math.round((goal.saved / goal.target) * 100)
+  );
+
+  percentElement.textContent = `${percentage}%`;
+  progressFill.style.width = `${percentage}%`;
+
+  const remaining = Math.max(0, goal.target - goal.saved);
+
+  if (remaining === 0) {
+    summary.textContent = `🎉 Congratulations! You've reached your "${goal.name}" goal.`;
+  } else {
+    summary.textContent =
+      `₹${goal.saved.toLocaleString("en-IN")} saved of ` +
+      `₹${goal.target.toLocaleString("en-IN")}. ` +
+      `₹${remaining.toLocaleString("en-IN")} left to reach your goal.`;
+  }
+
+  progressContainer.style.display = "block";
+}
+
+function loadSavingsGoal() {
+  try {
+    const savedGoal = localStorage.getItem(
+      "microWealthScaleSavingsGoal"
+    );
+
+    if (!savedGoal) return;
+
+    const goal = JSON.parse(savedGoal);
+
+    if (
+      !goal ||
+      typeof goal.name !== "string" ||
+      !Number.isFinite(goal.target) ||
+      goal.target <= 0 ||
+      !Number.isFinite(goal.saved) ||
+      goal.saved < 0 ||
+      goal.saved > goal.target
+    ) {
+      return;
+    }
+
+    renderSavingsGoal(goal);
+  } catch (error) {
+    console.error("Unable to load savings goal:", error);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", loadSavingsGoal);
+
