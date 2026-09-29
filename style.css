@@ -1623,3 +1623,20 @@ a {
   box-shadow: 0 0 0 2px #1f8f5f;
   box-sizing: content-box;
 }
+
+
+.savings-goal-green-circle {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  min-width: 12px;
+  border-radius: 50%;
+  background: #1f8f5f;
+  border: 2px solid #ffffff;
+  box-shadow:
+    0 0 0 2px #1f8f5f,
+    0 0 0 4px #ffffff,
+    0 0 0 6px #1f8f5f,
+    0 0 0 8px #ffffff;
+  box-sizing: content-box;
+}
