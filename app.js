@@ -1500,6 +1500,12 @@ function renderSavingsGoal(goal) {
   const progressFill = document.getElementById("savingsGoalProgressFill");
   const summary = document.getElementById("savingsGoalSummary");
 
+   const displayNameElement =
+     document.getElementById("savingsGoalDisplayName");
+
+   const savedAmountElement =
+     document.getElementById("savingsGoalSavedAmount");
+   
   if (
     !nameInput ||
     !targetInput ||
@@ -1521,6 +1527,15 @@ function renderSavingsGoal(goal) {
     Math.round((goal.saved / goal.target) * 100)
   );
 
+   if (displayNameElement) {
+  displayNameElement.textContent = goal.name;
+   }   
+
+   if (savedAmountElement) {
+     savedAmountElement.textContent =
+    `₹${goal.saved.toLocaleString("en-IN")} saved`;
+}
+   
   percentElement.textContent = `${percentage}%`;
   progressFill.style.width = `${percentage}%`;
 
