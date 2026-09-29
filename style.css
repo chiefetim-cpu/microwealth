@@ -1624,19 +1624,22 @@ a {
   box-sizing: content-box;
 }
 
-
 .savings-goal-green-circle {
   display: inline-block;
-  width: 12px;
-  height: 12px;
-  min-width: 12px;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
   border-radius: 50%;
-  background: #1f8f5f;
-  border: 2px solid #ffffff;
-  box-shadow:
-    0 0 0 2px #1f8f5f,
-    0 0 0 4px #ffffff,
-    0 0 0 6px #1f8f5f,
-    0 0 0 8px #ffffff;
-  box-sizing: content-box;
+  background: radial-gradient(
+    circle,
+    #1f8f5f 0 2px,
+    #ffffff 2px 4px,
+    #1f8f5f 4px 5px,
+    #ffffff 5px 7px,
+    #1f8f5f 7px 8px,
+    #ffffff 8px 9px
+  );
+  box-sizing: border-box;
+  flex-shrink: 0;
 }
+
