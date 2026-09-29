@@ -1643,3 +1643,19 @@ a {
   flex-shrink: 0;
 }
 
+
+/* Elegant savings goal logo */
+.savings-goal-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.savings-goal-mark svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
