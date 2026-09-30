@@ -1583,3 +1583,83 @@ function loadSavingsGoal() {
 
 document.addEventListener("DOMContentLoaded", loadSavingsGoal);
 
+
+function addSavingsContribution() {
+  const amountInput = document.getElementById(
+    "additionalSavingsAmount"
+  );
+
+  if (!amountInput) {
+    showNotification("Savings input could not be found.");
+    return;
+  }
+
+  const contribution = Number(amountInput.value);
+
+  if (
+    amountInput.value.trim() === "" ||
+    !Number.isFinite(contribution) ||
+    contribution <= 0
+  ) {
+    showNotification("Please enter a valid savings amount.");
+    return;
+  }
+
+  try {
+    const storageKey = "microWealthScaleSavingsGoal";
+    const savedGoal = localStorage.getItem(storageKey);
+
+    if (!savedGoal) {
+      showNotification("Please create a savings goal first.");
+      return;
+    }
+
+    const goal = JSON.parse(savedGoal);
+
+    if (
+      !goal ||
+      !Number.isFinite(goal.target) ||
+      !Number.isFinite(goal.saved) ||
+      goal.target <= 0 ||
+      goal.saved < 0 ||
+      goal.saved > goal.target
+    ) {
+      showNotification("Your saved goal data is invalid.");
+      return;
+    }
+
+    if (goal.saved >= goal.target) {
+      showNotification("🎉 You've already reached your goal!");
+      return;
+    }
+
+    const remaining = goal.target - goal.saved;
+
+    if (contribution > remaining) {
+      showNotification(
+        `You can add up to ₹${remaining.toLocaleString("en-IN")} to reach your goal.`
+      );
+      return;
+    }
+
+    goal.saved += contribution;
+    goal.updatedAt = new Date().toISOString();
+
+    localStorage.setItem(
+      storageKey,
+      JSON.stringify(goal)
+    );
+
+    renderSavingsGoal(goal);
+    amountInput.value = "";
+
+    showNotification(
+      `💰 ₹${contribution.toLocaleString("en-IN")} added to your savings!`
+    );
+  } catch (error) {
+    console.error("Unable to add savings contribution:", error);
+    showNotification(
+      "Unable to update your savings. Please try again."
+    );
+  }
+}
