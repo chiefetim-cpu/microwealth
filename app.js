@@ -1582,6 +1582,7 @@ function loadSavingsGoal() {
 }
 
 document.addEventListener("DOMContentLoaded", loadSavingsGoal);
+document.addEventListener("DOMContentLoaded", loadSavingsHistory);
 
 
 function addSavingsContribution() {
@@ -1643,6 +1644,27 @@ function addSavingsContribution() {
     }
 
     goal.saved += contribution;
+
+
+    // Record this contribution in a separate history list.
+    const historyKey = "microWealthScaleSavingsHistory";
+    const existingHistory = localStorage.getItem(historyKey);
+    const history = existingHistory
+      ? JSON.parse(existingHistory)
+      : [];
+
+    if (!Array.isArray(history)) {
+      showNotification("Savings history data is invalid. No changes made.");
+      return;
+    }
+
+    history.push({
+      amount: contribution,
+      date: new Date().toISOString()
+    });
+
+    localStorage.setItem(historyKey, JSON.stringify(history));
+     
     goal.updatedAt = new Date().toISOString();
 
     localStorage.setItem(
@@ -1651,7 +1673,8 @@ function addSavingsContribution() {
     );
 
     renderSavingsGoal(goal);
-    amountInput.value = "";
+   loadSavingsHistory();
+   amountInput.value = "";
 
     showNotification(
       `💰 ₹${contribution.toLocaleString("en-IN")} added to your savings!`
