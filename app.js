@@ -1663,3 +1663,73 @@ function addSavingsContribution() {
     );
   }
 }
+
+function loadSavingsHistory() {
+  const historyList = document.getElementById("savingsHistoryList");
+  const historySummary = document.getElementById("savingsHistorySummary");
+
+  if (!historyList || !historySummary) return;
+
+  try {
+    const storageKey = "microWealthScaleSavingsHistory";
+    const savedHistory = localStorage.getItem(storageKey);
+    const history = savedHistory ? JSON.parse(savedHistory) : [];
+
+    if (!Array.isArray(history)) {
+      throw new Error("Savings history is not a valid list.");
+    }
+
+    historyList.replaceChildren();
+
+    if (history.length === 0) {
+      historySummary.textContent =
+        "No contributions recorded yet. Add savings to start your history.";
+      return;
+    }
+
+    const total = history.reduce((sum, entry) => {
+      return sum + (
+        Number.isFinite(entry.amount) && entry.amount > 0
+          ? entry.amount
+          : 0
+      );
+    }, 0);
+
+    historySummary.textContent =
+      `${history.length} contribution${history.length === 1 ? "" : "s"} recorded · ` +
+      `Total added: ₹${total.toLocaleString("en-IN")}`;
+
+    history.slice().reverse().forEach((entry) => {
+      const item = document.createElement("div");
+      item.className = "savings-history-item";
+
+      const details = document.createElement("div");
+      details.className = "savings-history-details";
+
+      const amount = document.createElement("strong");
+      amount.textContent =
+        `+₹${entry.amount.toLocaleString("en-IN")}`;
+
+      const date = document.createElement("span");
+      const parsedDate = new Date(entry.date);
+
+      date.textContent = Number.isNaN(parsedDate.getTime())
+        ? "Date unavailable"
+        : parsedDate.toLocaleString("en-IN", {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit"
+          });
+
+      details.append(amount, date);
+      item.append(details);
+      historyList.append(item);
+    });
+  } catch (error) {
+    console.error("Unable to load savings history:", error);
+    historySummary.textContent =
+      "Unable to display savings history. Your saved goal has not been changed.";
+  }
+}
