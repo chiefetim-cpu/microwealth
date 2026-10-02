@@ -1756,3 +1756,93 @@ function loadSavingsHistory() {
       "Unable to display savings history. Your saved goal has not been changed.";
   }
 }
+
+function editSavingsGoal() {
+  const storageKey = "microWealthScaleSavingsGoal";
+
+  try {
+    const savedGoal = localStorage.getItem(storageKey);
+
+    if (!savedGoal) {
+      showNotification("Please create a savings goal first.");
+      return;
+    }
+
+    const goal = JSON.parse(savedGoal);
+
+    if (
+      !goal ||
+      typeof goal.name !== "string" ||
+      !Number.isFinite(goal.target) ||
+      !Number.isFinite(goal.saved) ||
+      goal.target <= 0 ||
+      goal.saved < 0 ||
+      goal.saved > goal.target
+    ) {
+      showNotification("Your saved goal data is invalid.");
+      return;
+    }
+
+    const newName = prompt(
+      "Enter your updated savings goal name:",
+      goal.name
+    );
+
+    if (newName === null) return;
+
+    const trimmedName = newName.trim();
+
+    if (!trimmedName) {
+      showNotification("The goal name cannot be empty.");
+      return;
+    }
+
+    const targetInput = prompt(
+      "Enter your updated savings target (₹):",
+      String(goal.target)
+    );
+
+    if (targetInput === null) return;
+
+    if (targetInput.trim() === "") {
+      showNotification("Please enter a valid target amount.");
+      return;
+    }
+
+    const newTarget = Number(targetInput);
+
+    if (!Number.isFinite(newTarget) || newTarget <= 0) {
+      showNotification("Please enter a valid target amount.");
+      return;
+    }
+
+    if (newTarget < goal.saved) {
+      showNotification(
+        `Your target cannot be below your existing savings of ₹${goal.saved.toLocaleString("en-IN")}.`
+      );
+      return;
+    }
+
+    // Preserve the existing saved amount and all other goal fields.
+    const updatedGoal = {
+      ...goal,
+      name: trimmedName,
+      target: newTarget,
+      updatedAt: new Date().toISOString()
+    };
+
+    localStorage.setItem(
+      storageKey,
+      JSON.stringify(updatedGoal)
+    );
+
+    renderSavingsGoal(updatedGoal);
+
+    showNotification("✏️ Savings goal updated successfully!");
+  } catch (error) {
+    console.error("Unable to edit savings goal:", error);
+    showNotification(
+      "Unable to update your goal. Please try again."
+    );
+  }
+}
