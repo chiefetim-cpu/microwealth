@@ -1898,3 +1898,63 @@ function editSavingsGoal() {
     );
   }
 }
+
+
+function initializeOnboardingWelcome() {
+  const welcome = document.getElementById("onboardingWelcome");
+
+  if (!welcome) return;
+
+  try {
+    const existingUser = localStorage.getItem("microWealthScaleUser");
+    const existingGoal = localStorage.getItem(
+      "microWealthScaleSavingsGoal"
+    );
+    const onboardingCompleted = localStorage.getItem(
+      "microWealthScaleOnboardingCompleted"
+    );
+
+    // Preserve the normal experience for existing users.
+    if (existingUser || existingGoal || onboardingCompleted === "true") {
+      welcome.style.display = "none";
+      return;
+    }
+
+    // Show the welcome screen only for a new user.
+    welcome.style.display = "block";
+  } catch (error) {
+    console.error("Unable to initialize onboarding:", error);
+    welcome.style.display = "none";
+  }
+}
+
+function startOnboarding() {
+  const welcome = document.getElementById("onboardingWelcome");
+  const goalCard = document.querySelector(".savings-goal-card");
+
+  if (welcome) {
+    welcome.style.display = "none";
+  }
+
+  if (goalCard) {
+    goalCard.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+
+    const goalNameInput = document.getElementById("savingsGoalName");
+
+    if (goalNameInput) {
+      goalNameInput.focus({ preventScroll: true });
+    }
+  } else {
+    showNotification(
+      "Welcome to MicroWealth Scale! Start by setting your first savings goal."
+    );
+  }
+}
+
+document.addEventListener(
+  "DOMContentLoaded",
+  initializeOnboardingWelcome
+);
