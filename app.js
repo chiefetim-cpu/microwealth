@@ -1687,6 +1687,7 @@ function addSavingsContribution() {
   }
 }
 
+
 function loadSavingsHistory() {
   const historyList = document.getElementById("savingsHistoryList");
   const historySummary = document.getElementById("savingsHistorySummary");
@@ -1694,9 +1695,14 @@ function loadSavingsHistory() {
   if (!historyList || !historySummary) return;
 
   try {
-    const storageKey = "microWealthScaleSavingsHistory";
-    const savedHistory = localStorage.getItem(storageKey);
+    const historyKey = "microWealthScaleSavingsHistory";
+    const goalKey = "microWealthScaleSavingsGoal";
+
+    const savedHistory = localStorage.getItem(historyKey);
     const history = savedHistory ? JSON.parse(savedHistory) : [];
+
+    const savedGoal = localStorage.getItem(goalKey);
+    const goal = savedGoal ? JSON.parse(savedGoal) : null;
 
     if (!Array.isArray(history)) {
       throw new Error("Savings history is not a valid list.");
@@ -1704,25 +1710,47 @@ function loadSavingsHistory() {
 
     historyList.replaceChildren();
 
-    if (history.length === 0) {
-      historySummary.textContent =
-        "No contributions recorded yet. Add savings to start your history.";
-      return;
-    }
+    // Show the original balance separately from new contributions.
+    const openingBalance = 3000;
 
-    const total = history.reduce((sum, entry) => {
-      return sum + (
-        Number.isFinite(entry.amount) && entry.amount > 0
-          ? entry.amount
-          : 0
-      );
-    }, 0);
+    const openingItem = document.createElement("div");
+    openingItem.className = "savings-history-item";
 
-    historySummary.textContent =
-      `${history.length} contribution${history.length === 1 ? "" : "s"} recorded · ` +
-      `Total added: ₹${total.toLocaleString("en-IN")}`;
+    const openingDetails = document.createElement("div");
+    openingDetails.className = "savings-history-details";
+
+    const openingLabel = document.createElement("strong");
+    openingLabel.textContent =
+      `₹${openingBalance.toLocaleString("en-IN")} opening balance`;
+
+    const openingDate = document.createElement("span");
+    openingDate.textContent = "Savings accumulated before history tracking";
+
+    openingDetails.append(openingLabel, openingDate);
+    openingItem.append(openingDetails);
+    historyList.append(openingItem);
+
+    let recordedTotal = 0;
+
+    history.forEach((entry) => {
+      if (
+        entry &&
+        Number.isFinite(entry.amount) &&
+        entry.amount > 0
+      ) {
+        recordedTotal += entry.amount;
+      }
+    });
 
     history.slice().reverse().forEach((entry) => {
+      if (
+        !entry ||
+        !Number.isFinite(entry.amount) ||
+        entry.amount <= 0
+      ) {
+        return;
+      }
+
       const item = document.createElement("div");
       item.className = "savings-history-item";
 
@@ -1750,6 +1778,22 @@ function loadSavingsHistory() {
       item.append(details);
       historyList.append(item);
     });
+
+    historySummary.textContent =
+      `Opening balance: ₹${openingBalance.toLocaleString("en-IN")} · ` +
+      `Recorded contributions: ₹${recordedTotal.toLocaleString("en-IN")} · ` +
+      `Total represented: ₹${(openingBalance + recordedTotal).toLocaleString("en-IN")}`;
+
+    // Do not change the goal or its saved balance here.
+    if (
+      goal &&
+      Number.isFinite(goal.saved) &&
+      goal.saved !== openingBalance + recordedTotal
+    ) {
+      console.warn(
+        "Savings history and current balance differ. No saved data was changed."
+      );
+    }
   } catch (error) {
     console.error("Unable to load savings history:", error);
     historySummary.textContent =
