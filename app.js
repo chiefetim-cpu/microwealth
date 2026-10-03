@@ -1701,6 +1701,18 @@ function loadSavingsHistory() {
     const savedHistory = localStorage.getItem(historyKey);
     const history = savedHistory ? JSON.parse(savedHistory) : [];
 
+   let recordedTotal = 0;
+
+    history.forEach((entry) => {
+      if (
+        entry &&
+        Number.isFinite(entry.amount) &&
+        entry.amount > 0
+      ) {
+        recordedTotal += entry.amount;
+      }
+    });
+     
     const savedGoal = localStorage.getItem(goalKey);
     const goal = savedGoal ? JSON.parse(savedGoal) : null;
 
@@ -1711,8 +1723,16 @@ function loadSavingsHistory() {
     historyList.replaceChildren();
 
     // Show the original balance separately from new contributions.
-    const openingBalance = 3000;
+    const currentBalance =
+     goal && Number.isFinite(goal.saved) && goal.saved >= 0
+    ? goal.saved
+    : 0;
 
+   const openingBalance = Math.max(
+     0,
+  currentBalance - recordedTotal
+);
+     
     const openingItem = document.createElement("div");
     openingItem.className = "savings-history-item";
 
@@ -1728,19 +1748,7 @@ function loadSavingsHistory() {
 
     openingDetails.append(openingLabel, openingDate);
     openingItem.append(openingDetails);
-    historyList.append(openingItem);
-
-    let recordedTotal = 0;
-
-    history.forEach((entry) => {
-      if (
-        entry &&
-        Number.isFinite(entry.amount) &&
-        entry.amount > 0
-      ) {
-        recordedTotal += entry.amount;
-      }
-    });
+    historyList.append(openingItem); 
 
     history.slice().reverse().forEach((entry) => {
       if (
