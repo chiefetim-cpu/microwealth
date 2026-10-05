@@ -1835,66 +1835,26 @@ function editSavingsGoal() {
       return;
     }
 
-    const newName = prompt(
-      "Enter your updated savings goal name:",
-      goal.name
-    );
+    const nameInput = document.getElementById("savingsGoalName");
+    const targetInput = document.getElementById("savingsGoalTarget");
+    const amountInput = document.getElementById("savingsGoalAmount");
 
-    if (newName === null) return;
-
-    const trimmedName = newName.trim();
-
-    if (!trimmedName) {
-      showNotification("The goal name cannot be empty.");
+    if (!nameInput || !targetInput || !amountInput) {
+      showNotification("Savings goal form could not be found.");
       return;
     }
 
-    const targetInput = prompt(
-      "Enter your updated savings target (₹):",
-      String(goal.target)
-    );
+    nameInput.value = goal.name;
+    targetInput.value = goal.target;
+    amountInput.value = goal.saved;
 
-    if (targetInput === null) return;
+    nameInput.focus();
 
-    if (targetInput.trim() === "") {
-      showNotification("Please enter a valid target amount.");
-      return;
-    }
-
-    const newTarget = Number(targetInput);
-
-    if (!Number.isFinite(newTarget) || newTarget <= 0) {
-      showNotification("Please enter a valid target amount.");
-      return;
-    }
-
-    if (newTarget < goal.saved) {
-      showNotification(
-        `Your target cannot be below your existing savings of ₹${goal.saved.toLocaleString("en-IN")}.`
-      );
-      return;
-    }
-
-    // Preserve the existing saved amount and all other goal fields.
-    const updatedGoal = {
-      ...goal,
-      name: trimmedName,
-      target: newTarget,
-      updatedAt: new Date().toISOString()
-    };
-
-    localStorage.setItem(
-      storageKey,
-      JSON.stringify(updatedGoal)
-    );
-
-    renderSavingsGoal(updatedGoal);
-
-    showNotification("✏️ Savings goal updated successfully!");
+    showNotification("✏️ Your savings goal is ready to edit.");
   } catch (error) {
-    console.error("Unable to edit savings goal:", error);
+    console.error("Unable to load savings goal for editing:", error);
     showNotification(
-      "Unable to update your goal. Please try again."
+      "Unable to load your savings goal. Please try again."
     );
   }
 }
