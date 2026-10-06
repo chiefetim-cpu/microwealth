@@ -915,8 +915,8 @@ function saveProfile() {
     : "";
 
   userData.currency = currencySelect
-    ? currencySelect.value
-    : "INR";
+  ? currencySelect.value
+  : "";
 
   saveUserData();
   updateProfileDisplay();
@@ -932,8 +932,7 @@ function updateProfileDisplay() {
     userData.profileCountry || "Global Money Builder";
 
   const currency =
-    userData.currency || "INR";
-
+  userData.currency || "";
 
   const profileName =
     document.getElementById("profileName");
