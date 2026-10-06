@@ -1054,10 +1054,6 @@ a {
   font-weight: 400;
 }
 
-#currencySelect {
-  font-weight: 400;
-}
-
 /* Focus */
 
 .form-group input:focus,
@@ -1072,7 +1068,7 @@ a {
 
 .form-group select {
   cursor: pointer;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 
