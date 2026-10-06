@@ -1049,6 +1049,10 @@ a {
   font-weight: 400;
 }
 
+/* Currency selector placeholder */
+#currencySelect option[value=""] {
+  font-weight: 400;
+}
 
 /* Focus */
 
