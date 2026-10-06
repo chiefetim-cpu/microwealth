@@ -1054,6 +1054,10 @@ a {
   font-weight: 400;
 }
 
+#currencySelect {
+  font-weight: 400;
+}
+
 /* Focus */
 
 .form-group input:focus,
