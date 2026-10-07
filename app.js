@@ -1443,10 +1443,12 @@ function saveSavingsGoal() {
   const nameInput = document.getElementById("savingsGoalName");
   const targetInput = document.getElementById("savingsGoalTarget");
   const amountInput = document.getElementById("savingsGoalAmount");
+  const locationSelect = document.getElementById("savingsGoalLocation");
 
   const name = nameInput.value.trim();
   const target = Number(targetInput.value);
   const saved = Number(amountInput.value);
+  const location = locationSelect ? locationSelect.value : "";
 
   if (!name) {
     showNotification("Please enter a name for your savings goal.");
@@ -1468,6 +1470,11 @@ function saveSavingsGoal() {
     return;
   }
 
+  if (!location) {
+    showNotification("Please select where you are saving.");
+    return;
+  }
+
   try {
     const storageKey = "microWealthScaleSavingsGoal";
 
@@ -1475,6 +1482,7 @@ function saveSavingsGoal() {
       name: name,
       target: target,
       saved: saved,
+      location: location,
       updatedAt: new Date().toISOString()
     };
 
