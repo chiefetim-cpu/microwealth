@@ -1495,7 +1495,7 @@ function saveSavingsGoal() {
     showNotification("🎯 Savings goal saved successfully!");
   } catch (error) {
     console.error("Unable to save savings goal:", error);
-    showNotification("Unable to save your goal. Please try again.");
+    showNotification("Savings goal error: " + error.message);
   }
 }
 
