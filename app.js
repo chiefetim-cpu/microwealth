@@ -1522,6 +1522,9 @@ function renderSavingsGoal(goal) {
   const savedAmountElement =
     document.getElementById("savingsGoalSavedAmount");
 
+   const locationDisplay =
+     document.getElementById("savingsGoalLocationDisplay");
+
   if (
     !nameInput ||
     !targetInput ||
@@ -1564,6 +1567,18 @@ function renderSavingsGoal(goal) {
       `₹${goal.saved.toLocaleString("en-IN")} saved`;
   }
 
+   if (locationDisplay) {
+  const locationLabels = {
+    bank: "🏦 Bank / Savings Account",
+    home: "🏠 Cash / At Home",
+    wallet: "📱 Digital Wallet",
+    other: "💼 Other"
+  };
+
+  locationDisplay.textContent =
+    locationLabels[goal.location] || "";
+}
+   
   percentElement.textContent = `${percentage}%`;
   progressFill.style.width = `${percentage}%`;
 
