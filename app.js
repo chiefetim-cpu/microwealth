@@ -1443,12 +1443,14 @@ function saveSavingsGoal() {
   const nameInput = document.getElementById("savingsGoalName");
   const targetInput = document.getElementById("savingsGoalTarget");
   const amountInput = document.getElementById("savingsGoalAmount");
-  const locationSelect = document.getElementById("savingsGoalLocation");
+   
+   const locationInput =
+  document.querySelector('input[name="savingsLocation"]:checked');
 
   const name = nameInput.value.trim();
   const target = Number(targetInput.value);
   const saved = Number(amountInput.value);
-  const location = locationSelect ? locationSelect.value : "";
+  const location = locationInput ? locationInput.value : "";
 
   if (!name) {
     showNotification("Please enter a name for your savings goal.");
@@ -1501,7 +1503,9 @@ function renderSavingsGoal(goal) {
   const nameInput = document.getElementById("savingsGoalName");
   const targetInput = document.getElementById("savingsGoalTarget");
   const amountInput = document.getElementById("savingsGoalAmount");
-  const locationSelect = document.getElementById("savingsGoalLocation");
+  
+   const locationInput =
+  document.querySelector('input[name="savingsLocation"]:checked');
 
   const progressContainer =
     document.getElementById("savingsGoalProgress");
