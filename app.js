@@ -1500,6 +1500,23 @@ function saveSavingsGoal() {
 }
 
 function renderSavingsGoal(goal) {
+const currencySymbols = {
+  INR: "₹",
+  USD: "$",
+  GBP: "£",
+  NGN: "₦",
+  EUR: "€",
+  CAD: "$",
+  AUD: "$",
+  ZAR: "R"
+};
+
+const currencyCode = userData.currency || "INR";
+const currencySymbol = currencySymbols[currencyCode] || currencyCode;
+
+const formatAmount = (amount) =>
+  `${currencySymbol}${Number(amount).toLocaleString("en-IN")}`;
+   
   const nameInput = document.getElementById("savingsGoalName");
   const targetInput = document.getElementById("savingsGoalTarget");
   const amountInput = document.getElementById("savingsGoalAmount");
@@ -1564,7 +1581,7 @@ function renderSavingsGoal(goal) {
 
   if (savedAmountElement) {
     savedAmountElement.textContent =
-      `₹${goal.saved.toLocaleString("en-IN")} saved`;
+     `${formatAmount(goal.saved)} saved`;
   }
 
    if (locationDisplay) {
@@ -1591,10 +1608,10 @@ function renderSavingsGoal(goal) {
     summary.textContent =
       `🎉 Congratulations! You've reached your "${goal.name}" goal.`;
   } else {
-    summary.textContent =
-      `₹${goal.saved.toLocaleString("en-IN")} saved of ` +
-      `₹${goal.target.toLocaleString("en-IN")}. ` +
-      `₹${remaining.toLocaleString("en-IN")} left to reach your goal.`;
+   summary.textContent =
+  `${formatAmount(goal.saved)} saved of ` +
+  `${formatAmount(goal.target)}. ` +
+  `${formatAmount(remaining)} left to reach your goal.`;
   }
 
   progressContainer.style.display = "block";
