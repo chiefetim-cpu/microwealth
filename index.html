@@ -240,29 +240,76 @@
       min="0"
     />
 
-    <label for="savingsGoalLocation">Where are you saving?</label>
+    <div class="savings-location-group">
 
-<select id="savingsGoalLocation">
-  <option value="" disabled selected>
-    Select where you're saving
-  </option>
+  <label class="savings-location-label">
+    Where are you saving?
+  </label>
 
-  <option value="bank">
-    🏦 Bank / Savings Account
-  </option>
+  <div class="savings-location-options">
 
-  <option value="home">
-    🏠 Cash / At Home
-  </option>
+    <label class="savings-location-option">
+      <input
+        type="radio"
+        name="savingsLocation"
+        value="bank"
+        id="savingsLocationBank"
+      />
+      <span class="savings-location-box"></span>
+      <span class="savings-location-icon">🏦</span>
+      <span class="savings-location-text">
+        <strong>Bank / Savings Account</strong>
+        <small>Keep your savings in a bank account.</small>
+      </span>
+    </label>
 
-  <option value="wallet">
-    📱 Digital Wallet
-  </option>
+    <label class="savings-location-option">
+      <input
+        type="radio"
+        name="savingsLocation"
+        value="home"
+        id="savingsLocationHome"
+      />
+      <span class="savings-location-box"></span>
+      <span class="savings-location-icon">🏠</span>
+      <span class="savings-location-text">
+        <strong>Cash / At Home</strong>
+        <small>Keep your savings as cash at home.</small>
+      </span>
+    </label>
 
-  <option value="other">
-    💼 Other
-  </option>
-</select>
+    <label class="savings-location-option">
+      <input
+        type="radio"
+        name="savingsLocation"
+        value="wallet"
+        id="savingsLocationWallet"
+      />
+      <span class="savings-location-box"></span>
+      <span class="savings-location-icon">📱</span>
+      <span class="savings-location-text">
+        <strong>Digital Wallet</strong>
+        <small>Keep your savings in a digital wallet.</small>
+      </span>
+    </label>
+
+    <label class="savings-location-option">
+      <input
+        type="radio"
+        name="savingsLocation"
+        value="other"
+        id="savingsLocationOther"
+      />
+      <span class="savings-location-box"></span>
+      <span class="savings-location-icon">💼</span>
+      <span class="savings-location-text">
+        <strong>Other</strong>
+        <small>Another place where you keep your savings.</small>
+      </span>
+    </label>
+
+  </div>
+</div>
     
     <button
       type="button"
