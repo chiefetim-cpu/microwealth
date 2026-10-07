@@ -1503,9 +1503,6 @@ function renderSavingsGoal(goal) {
   const nameInput = document.getElementById("savingsGoalName");
   const targetInput = document.getElementById("savingsGoalTarget");
   const amountInput = document.getElementById("savingsGoalAmount");
-  
-   const locationInput =
-  document.querySelector('input[name="savingsLocation"]:checked');
 
   const progressContainer =
     document.getElementById("savingsGoalProgress");
@@ -1542,8 +1539,15 @@ function renderSavingsGoal(goal) {
   targetInput.value = goal.target;
   amountInput.value = goal.saved;
 
-  if (locationSelect && goal.location) {
-    locationSelect.value = goal.location;
+  /* Restore the selected savings location */
+  if (goal.location) {
+    const locationRadio = document.querySelector(
+      `input[name="savingsLocation"][value="${goal.location}"]`
+    );
+
+    if (locationRadio) {
+      locationRadio.checked = true;
+    }
   }
 
   const percentage = Math.min(
