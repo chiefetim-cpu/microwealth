@@ -1501,18 +1501,26 @@ function renderSavingsGoal(goal) {
   const nameInput = document.getElementById("savingsGoalName");
   const targetInput = document.getElementById("savingsGoalTarget");
   const amountInput = document.getElementById("savingsGoalAmount");
+  const locationSelect = document.getElementById("savingsGoalLocation");
 
-  const progressContainer = document.getElementById("savingsGoalProgress");
-  const percentElement = document.getElementById("savingsGoalPercent");
-  const progressFill = document.getElementById("savingsGoalProgressFill");
-  const summary = document.getElementById("savingsGoalSummary");
+  const progressContainer =
+    document.getElementById("savingsGoalProgress");
 
-   const displayNameElement =
-     document.getElementById("savingsGoalDisplayName");
+  const percentElement =
+    document.getElementById("savingsGoalPercent");
 
-   const savedAmountElement =
-     document.getElementById("savingsGoalSavedAmount");
-   
+  const progressFill =
+    document.getElementById("savingsGoalProgressFill");
+
+  const summary =
+    document.getElementById("savingsGoalSummary");
+
+  const displayNameElement =
+    document.getElementById("savingsGoalDisplayName");
+
+  const savedAmountElement =
+    document.getElementById("savingsGoalSavedAmount");
+
   if (
     !nameInput ||
     !targetInput ||
@@ -1522,6 +1530,7 @@ function renderSavingsGoal(goal) {
     !progressFill ||
     !summary
   ) {
+    console.error("Savings goal display elements are missing.");
     return;
   }
 
@@ -1529,27 +1538,35 @@ function renderSavingsGoal(goal) {
   targetInput.value = goal.target;
   amountInput.value = goal.saved;
 
+  if (locationSelect && goal.location) {
+    locationSelect.value = goal.location;
+  }
+
   const percentage = Math.min(
     100,
     Math.round((goal.saved / goal.target) * 100)
   );
 
-   if (displayNameElement) {
-  displayNameElement.textContent = goal.name;
-   }   
+  if (displayNameElement) {
+    displayNameElement.textContent = goal.name;
+  }
 
-   if (savedAmountElement) {
-     savedAmountElement.textContent =
-    `₹${goal.saved.toLocaleString("en-IN")} saved`;
-}
-   
+  if (savedAmountElement) {
+    savedAmountElement.textContent =
+      `₹${goal.saved.toLocaleString("en-IN")} saved`;
+  }
+
   percentElement.textContent = `${percentage}%`;
   progressFill.style.width = `${percentage}%`;
 
-  const remaining = Math.max(0, goal.target - goal.saved);
+  const remaining = Math.max(
+    0,
+    goal.target - goal.saved
+  );
 
   if (remaining === 0) {
-    summary.textContent = `🎉 Congratulations! You've reached your "${goal.name}" goal.`;
+    summary.textContent =
+      `🎉 Congratulations! You've reached your "${goal.name}" goal.`;
   } else {
     summary.textContent =
       `₹${goal.saved.toLocaleString("en-IN")} saved of ` +
