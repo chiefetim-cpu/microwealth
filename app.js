@@ -1749,7 +1749,6 @@ function addSavingsContribution() {
   }
 }
 
-
 function loadSavingsHistory() {
   const historyList = document.getElementById("savingsHistoryList");
   const historySummary = document.getElementById("savingsHistorySummary");
@@ -1763,7 +1762,29 @@ function loadSavingsHistory() {
     const savedHistory = localStorage.getItem(historyKey);
     const history = savedHistory ? JSON.parse(savedHistory) : [];
 
-   let recordedTotal = 0;
+    if (!Array.isArray(history)) {
+      throw new Error("Savings history is not a valid list.");
+    }
+
+    const currencySymbols = {
+      INR: "₹",
+      USD: "$",
+      GBP: "£",
+      NGN: "₦",
+      EUR: "€",
+      CAD: "$",
+      AUD: "$",
+      ZAR: "R"
+    };
+
+    const currencyCode = userData.currency || "INR";
+    const currencySymbol =
+      currencySymbols[currencyCode] || currencyCode;
+
+    const formatAmount = (amount) =>
+      `${currencySymbol}${Number(amount).toLocaleString("en-IN")}`;
+
+    let recordedTotal = 0;
 
     history.forEach((entry) => {
       if (
@@ -1774,27 +1795,25 @@ function loadSavingsHistory() {
         recordedTotal += entry.amount;
       }
     });
-     
+
     const savedGoal = localStorage.getItem(goalKey);
     const goal = savedGoal ? JSON.parse(savedGoal) : null;
-
-    if (!Array.isArray(history)) {
-      throw new Error("Savings history is not a valid list.");
-    }
 
     historyList.replaceChildren();
 
     // Show the original balance separately from new contributions.
     const currentBalance =
-     goal && Number.isFinite(goal.saved) && goal.saved >= 0
-    ? goal.saved
-    : 0;
+      goal &&
+      Number.isFinite(goal.saved) &&
+      goal.saved >= 0
+        ? goal.saved
+        : 0;
 
-   const openingBalance = Math.max(
-     0,
-  currentBalance - recordedTotal
-);
-     
+    const openingBalance = Math.max(
+      0,
+      currentBalance - recordedTotal
+    );
+
     const openingItem = document.createElement("div");
     openingItem.className = "savings-history-item";
 
@@ -1803,14 +1822,15 @@ function loadSavingsHistory() {
 
     const openingLabel = document.createElement("strong");
     openingLabel.textContent =
-      `₹${openingBalance.toLocaleString("en-IN")} opening balance`;
+      `${formatAmount(openingBalance)} opening balance`;
 
     const openingDate = document.createElement("span");
-    openingDate.textContent = "Savings accumulated before history tracking";
+    openingDate.textContent =
+      "Savings accumulated before history tracking";
 
     openingDetails.append(openingLabel, openingDate);
     openingItem.append(openingDetails);
-    historyList.append(openingItem); 
+    historyList.append(openingItem);
 
     history.slice().reverse().forEach((entry) => {
       if (
@@ -1829,7 +1849,7 @@ function loadSavingsHistory() {
 
       const amount = document.createElement("strong");
       amount.textContent =
-        `+₹${entry.amount.toLocaleString("en-IN")}`;
+        `+${formatAmount(entry.amount)}`;
 
       const date = document.createElement("span");
       const parsedDate = new Date(entry.date);
@@ -1850,9 +1870,11 @@ function loadSavingsHistory() {
     });
 
     historySummary.textContent =
-      `Opening balance: ₹${openingBalance.toLocaleString("en-IN")} · ` +
-      `Recorded contributions: ₹${recordedTotal.toLocaleString("en-IN")} · ` +
-      `Total represented: ₹${(openingBalance + recordedTotal).toLocaleString("en-IN")}`;
+      `Opening balance: ${formatAmount(openingBalance)} · ` +
+      `Recorded contributions: ${formatAmount(recordedTotal)} · ` +
+      `Total represented: ${formatAmount(
+        openingBalance + recordedTotal
+      )}`;
 
     // Do not change the goal or its saved balance here.
     if (
