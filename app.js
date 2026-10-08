@@ -1661,20 +1661,6 @@ function addSavingsContribution() {
 
   const contribution = Number(amountInput.value);
 
-  const currencySymbols = {
-  INR: "₹",
-  USD: "$",
-  GBP: "£",
-  NGN: "₦",
-  EUR: "€",
-  CAD: "$",
-  AUD: "$",
-  ZAR: "R"
-};
-
-const currencyCode = userData.currency || "INR";
-const currencySymbol = currencySymbols[currencyCode] || currencyCode;
-
   if (
     amountInput.value.trim() === "" ||
     !Number.isFinite(contribution) ||
@@ -1715,32 +1701,14 @@ const currencySymbol = currencySymbols[currencyCode] || currencyCode;
     const remaining = goal.target - goal.saved;
 
     if (contribution > remaining) {
-   
-   const currencySymbols = {
-  INR: "₹",
-  USD: "$",
-  GBP: "£",
-  NGN: "₦",
-  EUR: "€",
-  CAD: "$",
-  AUD: "$",
-  ZAR: "R"
-};
-
-const currencyCode = userData.currency || "INR";
-const currencySymbol = currencySymbols[currencyCode] || currencyCode;
-
-showNotification(
-  `You can add up to ${currencySymbol}${remaining.toLocaleString("en-IN")} to reach your goal.`
-);
+      showNotification(
+        `You can add up to ₹${remaining.toLocaleString("en-IN")} to reach your goal.`
       );
       return;
     }
 
     goal.saved += contribution;
 
-
-    // Record this contribution in a separate history list.
     const historyKey = "microWealthScaleSavingsHistory";
     const existingHistory = localStorage.getItem(historyKey);
     const history = existingHistory
@@ -1758,7 +1726,7 @@ showNotification(
     });
 
     localStorage.setItem(historyKey, JSON.stringify(history));
-     
+
     goal.updatedAt = new Date().toISOString();
 
     localStorage.setItem(
@@ -1767,13 +1735,12 @@ showNotification(
     );
 
     renderSavingsGoal(goal);
-   loadSavingsHistory();
-   amountInput.value = "";
+    loadSavingsHistory();
+    amountInput.value = "";
 
     showNotification(
-  `💰 ${currencySymbol}${contribution.toLocaleString("en-IN")} added to your savings!`
-   );
-  
+      `💰 ₹${contribution.toLocaleString("en-IN")} added to your savings!`
+    );
   } catch (error) {
     console.error("Unable to add savings contribution:", error);
     showNotification(
