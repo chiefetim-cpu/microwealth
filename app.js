@@ -1661,6 +1661,20 @@ function addSavingsContribution() {
 
   const contribution = Number(amountInput.value);
 
+  const currencySymbols = {
+  INR: "₹",
+  USD: "$",
+  GBP: "£",
+  NGN: "₦",
+  EUR: "€",
+  CAD: "$",
+  AUD: "$",
+  ZAR: "R"
+};
+
+const currencyCode = userData.currency || "INR";
+const currencySymbol = currencySymbols[currencyCode] || currencyCode;
+
   if (
     amountInput.value.trim() === "" ||
     !Number.isFinite(contribution) ||
@@ -1701,8 +1715,24 @@ function addSavingsContribution() {
     const remaining = goal.target - goal.saved;
 
     if (contribution > remaining) {
-      showNotification(
-        `You can add up to ₹${remaining.toLocaleString("en-IN")} to reach your goal.`
+   
+   const currencySymbols = {
+  INR: "₹",
+  USD: "$",
+  GBP: "£",
+  NGN: "₦",
+  EUR: "€",
+  CAD: "$",
+  AUD: "$",
+  ZAR: "R"
+};
+
+const currencyCode = userData.currency || "INR";
+const currencySymbol = currencySymbols[currencyCode] || currencyCode;
+
+showNotification(
+  `You can add up to ${currencySymbol}${remaining.toLocaleString("en-IN")} to reach your goal.`
+);
       );
       return;
     }
@@ -1741,8 +1771,9 @@ function addSavingsContribution() {
    amountInput.value = "";
 
     showNotification(
-      `💰 ₹${contribution.toLocaleString("en-IN")} added to your savings!`
-    );
+  `💰 ${currencySymbol}${contribution.toLocaleString("en-IN")} added to your savings!`
+   );
+  
   } catch (error) {
     console.error("Unable to add savings contribution:", error);
     showNotification(
