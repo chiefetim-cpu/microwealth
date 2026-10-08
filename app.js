@@ -1757,8 +1757,6 @@ function loadSavingsHistory() {
 
   try {
     const historyKey = "microWealthScaleSavingsHistory";
-    const goalKey = "microWealthScaleSavingsGoal";
-
     const savedHistory = localStorage.getItem(historyKey);
     const history = savedHistory ? JSON.parse(savedHistory) : [];
 
@@ -1784,53 +1782,35 @@ function loadSavingsHistory() {
     const formatAmount = (amount) =>
       `${currencySymbol}${Number(amount).toLocaleString("en-IN")}`;
 
-    let recordedTotal = 0;
+    historyList.replaceChildren();
 
-    history.forEach((entry) => {
-      if (
+    const validHistory = history.filter(
+      (entry) =>
         entry &&
         Number.isFinite(entry.amount) &&
         entry.amount > 0
-      ) {
-        recordedTotal += entry.amount;
-      }
-    });
-
-    const savedGoal = localStorage.getItem(goalKey);
-    const goal = savedGoal ? JSON.parse(savedGoal) : null;
-
-    historyList.replaceChildren();
-
-    // Show the original balance separately from new contributions.
-    const currentBalance =
-      goal &&
-      Number.isFinite(goal.saved) &&
-      goal.saved >= 0
-        ? goal.saved
-        : 0;
-
-    const openingBalance = Math.max(
-      0,
-      currentBalance - recordedTotal
     );
 
-    const openingItem = document.createElement("div");
-    openingItem.className = "savings-history-item";
+    // Show a clean empty state for new users.
+    if (validHistory.length === 0) {
+      const emptyMessage = document.createElement("div");
+      emptyMessage.className = "savings-history-empty";
+      emptyMessage.textContent =
+        "No savings contributions yet. Add to your savings to start building your history. 🎯";
 
-    const openingDetails = document.createElement("div");
-    openingDetails.className = "savings-history-details";
+      historyList.append(emptyMessage);
 
-    const openingLabel = document.createElement("strong");
-    openingLabel.textContent =
-      `${formatAmount(openingBalance)} opening balance`;
+      historySummary.textContent =
+        "Your savings contributions will appear here.";
 
-    const openingDate = document.createElement("span");
-    openingDate.textContent =
-      "Savings accumulated before history tracking";
+      return;
+    }
 
-    openingDetails.append(openingLabel, openingDate);
-    openingItem.append(openingDetails);
-    historyList.append(openingItem);
+    let recordedTotal = 0;
+
+    validHistory.forEach((entry) => {
+      recordedTotal += entry.amount;
+    });
 
     history.slice().reverse().forEach((entry) => {
       if (
@@ -1870,24 +1850,12 @@ function loadSavingsHistory() {
     });
 
     historySummary.textContent =
-      `Opening balance: ${formatAmount(openingBalance)} · ` +
-      `Recorded contributions: ${formatAmount(recordedTotal)} · ` +
-      `Total represented: ${formatAmount(
-        openingBalance + recordedTotal
-      )}`;
-
-    // Do not change the goal or its saved balance here.
-    if (
-      goal &&
-      Number.isFinite(goal.saved) &&
-      goal.saved !== openingBalance + recordedTotal
-    ) {
-      console.warn(
-        "Savings history and current balance differ. No saved data was changed."
-      );
-    }
+      `Recorded contributions: ${formatAmount(recordedTotal)}`;
   } catch (error) {
     console.error("Unable to load savings history:", error);
+
+    historyList.replaceChildren();
+
     historySummary.textContent =
       "Unable to display savings history. Your saved goal has not been changed.";
   }
