@@ -1443,13 +1443,18 @@ function saveSavingsGoal() {
   const nameInput = document.getElementById("savingsGoalName");
   const targetInput = document.getElementById("savingsGoalTarget");
   const amountInput = document.getElementById("savingsGoalAmount");
-   
-   const locationInput =
-  document.querySelector('input[name="savingsLocation"]:checked');
+
+  const locationInput = document.querySelector(
+    'input[name="savingsLocation"]:checked'
+  );
+
+  if (!nameInput || !targetInput || !amountInput) {
+    showNotification("Savings goal form could not be found.");
+    return;
+  }
 
   const name = nameInput.value.trim();
   const target = Number(targetInput.value);
-  const saved = Number(amountInput.value);
   const location = locationInput ? locationInput.value : "";
 
   if (!name) {
@@ -1462,16 +1467,6 @@ function saveSavingsGoal() {
     return;
   }
 
-  if (!Number.isFinite(saved) || saved < 0) {
-    showNotification("Please enter a valid saved amount.");
-    return;
-  }
-
-  if (saved > target) {
-    showNotification("Your saved amount cannot exceed your target.");
-    return;
-  }
-
   if (!location) {
     showNotification("Please select where you are saving.");
     return;
@@ -1479,6 +1474,36 @@ function saveSavingsGoal() {
 
   try {
     const storageKey = "microWealthScaleSavingsGoal";
+    const existingData = localStorage.getItem(storageKey);
+
+    let saved = 0;
+
+    if (existingData) {
+      const existingGoal = JSON.parse(existingData);
+
+      if (
+        !existingGoal ||
+        !Number.isFinite(existingGoal.saved) ||
+        existingGoal.saved < 0 ||
+        !Number.isFinite(existingGoal.target) ||
+        existingGoal.target <= 0
+      ) {
+        showNotification(
+          "Your existing savings data is invalid. No changes made."
+        );
+        return;
+      }
+
+      // Preserve savings already recorded.
+      saved = existingGoal.saved;
+    }
+
+    if (saved > target) {
+      showNotification(
+        "Your new target cannot be less than the amount already saved."
+      );
+      return;
+    }
 
     const goal = {
       name: name,
@@ -1492,10 +1517,16 @@ function saveSavingsGoal() {
 
     renderSavingsGoal(goal);
 
-    showNotification("🎯 Savings goal saved successfully!");
+    showNotification(
+      saved === 0
+        ? "🎯 Savings goal created! Start with your first contribution."
+        : "🎯 Savings goal updated successfully! Your saved amount is preserved."
+    );
   } catch (error) {
     console.error("Unable to save savings goal:", error);
-    showNotification("Savings goal error: " + error.message);
+    showNotification(
+      "Unable to save your goal. Please try again."
+    );
   }
 }
 
