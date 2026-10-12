@@ -1680,6 +1680,37 @@ document.addEventListener("DOMContentLoaded", loadSavingsGoal);
 document.addEventListener("DOMContentLoaded", loadSavingsHistory);
 
 
+function startSaving() {
+  const amountInput = document.getElementById(
+    "additionalSavingsAmount"
+  );
+
+  if (!amountInput) {
+    showNotification(
+      "The savings contribution form could not be found."
+    );
+    return;
+  }
+
+  // Reveal the contribution form if it is hidden.
+  const contributionSection =
+    amountInput.closest(
+      "#savingsContributionSection, .savings-contribution-section"
+    ) || amountInput.parentElement;
+
+  if (contributionSection) {
+    contributionSection.style.display = "";
+  }
+
+  amountInput.focus();
+
+  showNotification(
+    "Start your savings journey by entering your first contribution."
+  );
+}
+
+
+
 function addSavingsContribution() {
   const amountInput = document.getElementById(
     "additionalSavingsAmount"
