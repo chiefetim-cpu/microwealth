@@ -1705,9 +1705,6 @@ function startSaving() {
   );
 }
 
-
-
-
 function addSavingsContribution() {
   const amountInput = document.getElementById(
     "additionalSavingsAmount"
