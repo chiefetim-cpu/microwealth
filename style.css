@@ -2007,3 +2007,9 @@ a {
   line-height: 1.45;
   color: #6b7771;
 }
+
+
+/* Savings contribution section */
+.add-savings-section {
+  display: none;
+}
