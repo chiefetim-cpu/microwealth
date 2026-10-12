@@ -1609,11 +1609,41 @@ const formatAmount = (amount) =>
   if (displayNameElement) {
     displayNameElement.textContent = goal.name;
   }
+  
+const startSavingSection =
+  document.getElementById("startSavingSection");
+
+const contributionSection =
+  document.querySelector(".add-savings-section");
+
+if (Number(goal.saved) <= 0) {
+  // New goal: show Start Saving, not a saved total.
+  if (startSavingSection) {
+    startSavingSection.style.display = "block";
+  }
+
+  if (savedAmountElement) {
+    savedAmountElement.textContent = "";
+  }
+
+  if (contributionSection) {
+    contributionSection.style.display = "none";
+  }
+} else {
+  // After the first contribution, show the saved total.
+  if (startSavingSection) {
+    startSavingSection.style.display = "none";
+  }
 
   if (savedAmountElement) {
     savedAmountElement.textContent =
-     `${formatAmount(goal.saved)} saved`;
+      `${formatAmount(goal.saved)} saved`;
   }
+
+  if (contributionSection) {
+    contributionSection.style.display = "block";
+  }
+}
 
    if (locationDisplay) {
   const locationLabels = {
