@@ -2047,35 +2047,29 @@ function initializeOnboardingWelcome() {
 
 function startOnboarding() {
   const welcome = document.getElementById("onboardingWelcome");
-  const goalCard = document.querySelector(".savings-goal-card");
+  const profileForm = document.querySelector(".profile-settings");
 
   if (welcome) {
     welcome.style.display = "none";
   }
 
-  if (goalCard) {
-    goalCard.scrollIntoView({
+  if (profileForm) {
+    profileForm.scrollIntoView({
       behavior: "smooth",
       block: "start"
     });
 
-    const goalNameInput = document.getElementById("savingsGoalName");
+    const nameInput = document.getElementById("userName");
 
-    if (goalNameInput) {
-      goalNameInput.focus({ preventScroll: true });
+    if (nameInput) {
+      nameInput.focus({ preventScroll: true });
     }
   } else {
     showNotification(
-      "Welcome to MicroWealth Scale! Start by setting your first savings goal."
+      "Profile form could not be found. Please try again."
     );
   }
 }
-
-document.addEventListener(
-  "DOMContentLoaded",
-  initializeOnboardingWelcome
-);
-
 
 function resetMicroWealthRecords() {
   const confirmed = confirm(
