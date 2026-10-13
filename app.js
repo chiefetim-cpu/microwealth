@@ -906,22 +906,41 @@ function saveProfile() {
   const countryInput = document.getElementById("userCountry");
   const currencySelect = document.getElementById("currencySelect");
 
-  userData.profileName = nameInput
-    ? nameInput.value.trim()
-    : "";
+  const name = nameInput ? nameInput.value.trim() : "";
+  const country = countryInput ? countryInput.value.trim() : "";
+  const currency = currencySelect ? currencySelect.value : "";
 
-  userData.profileCountry = countryInput
-    ? countryInput.value.trim()
-    : "";
+  // Require all profile details for new users
+  if (!name || !country || !currency) {
+    showNotification(
+      "Please enter your display name, country, and preferred currency."
+    );
+    return;
+  }
 
-  userData.currency = currencySelect
-  ? currencySelect.value
-  : "";
+  userData.profileName = name;
+  userData.profileCountry = country;
+  userData.currency = currency;
 
   saveUserData();
   updateProfileDisplay();
 
   showNotification("Profile saved successfully! 🎉");
+
+  // Close the welcome screen and show the main app
+  const welcome = document.getElementById("onboardingWelcome");
+  if (welcome) {
+    welcome.style.display = "none";
+  }
+
+  const goalCard = document.querySelector(".savings-goal-card");
+
+  if (goalCard) {
+    goalCard.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }
 }
 
 
