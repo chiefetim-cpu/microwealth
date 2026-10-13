@@ -2086,3 +2086,5 @@ function resetMicroWealthRecords() {
   }
 }
 
+window.resetMicroWealthRecords = resetMicroWealthRecords;
+
