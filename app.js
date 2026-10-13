@@ -2056,3 +2056,33 @@ document.addEventListener(
   "DOMContentLoaded",
   initializeOnboardingWelcome
 );
+
+
+function resetMicroWealthRecords() {
+  const confirmed = confirm(
+    "This will reset your profile, points, streaks, challenges, savings goal, and savings history on this browser. This cannot be undone. Continue?"
+  );
+
+  if (!confirmed) {
+    return;
+  }
+
+  try {
+    localStorage.removeItem("microWealthScaleUser");
+    localStorage.removeItem("microWealthScaleSavingsGoal");
+    localStorage.removeItem("microWealthScaleSavingsHistory");
+
+    alert(
+      "Your MicroWealth Scale records have been reset. Reload the page to start fresh."
+    );
+
+    location.reload();
+  } catch (error) {
+    console.error("Unable to reset records:", error);
+
+    alert(
+      "The records could not be reset. Please try again."
+    );
+  }
+}
+
