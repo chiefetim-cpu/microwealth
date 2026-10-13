@@ -2084,6 +2084,7 @@ function resetMicroWealthRecords() {
     localStorage.removeItem("microWealthScaleUser");
     localStorage.removeItem("microWealthScaleSavingsGoal");
     localStorage.removeItem("microWealthScaleSavingsHistory");
+    localStorage.removeItem("microWealthScaleOnboardingCompleted");
 
     alert(
       "Your MicroWealth Scale records have been reset. Reload the page to start fresh."
