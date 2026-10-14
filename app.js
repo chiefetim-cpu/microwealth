@@ -2102,3 +2102,9 @@ function resetMicroWealthRecords() {
 
 window.resetMicroWealthRecords = resetMicroWealthRecords;
 
+// Initialize the welcome screen when the page loads.
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initializeOnboardingWelcome);
+} else {
+  initializeOnboardingWelcome();
+}
