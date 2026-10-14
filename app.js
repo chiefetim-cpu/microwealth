@@ -2052,29 +2052,38 @@ function startOnboarding() {
     welcome.style.display = "none";
   }
 
-  // Open the existing Profile page first.
+  // Open the Profile page.
   if (typeof showPage === "function") {
     showPage("profile");
   } else {
+    document.querySelectorAll(".page").forEach(function(page) {
+      page.classList.remove("active");
+    });
+
     const profilePage = document.getElementById("profile");
 
     if (profilePage) {
-      document.querySelectorAll(".page").forEach(function(page) {
-        page.classList.remove("active");
-      });
-
       profilePage.classList.add("active");
     }
   }
 
-  // Focus the Display Name field.
+  // Find the Personal Information form.
+  const profileForm = document.querySelector("#profile .profile-settings");
   const nameInput = document.getElementById("userName");
 
-  if (nameInput) {
-    setTimeout(function() {
+  // Wait for the Profile page to become visible.
+  setTimeout(function() {
+    if (profileForm) {
+      profileForm.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
+
+    if (nameInput) {
       nameInput.focus({ preventScroll: true });
-    }, 300);
-  }
+    }
+  }, 350);
 }
 
 function resetMicroWealthRecords() {
