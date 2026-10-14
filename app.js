@@ -2047,27 +2047,33 @@ function initializeOnboardingWelcome() {
 
 function startOnboarding() {
   const welcome = document.getElementById("onboardingWelcome");
-  const profileForm = document.querySelector(".profile-settings");
 
   if (welcome) {
     welcome.style.display = "none";
   }
 
-  if (profileForm) {
-    profileForm.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
-
-    const nameInput = document.getElementById("userName");
-
-    if (nameInput) {
-      nameInput.focus({ preventScroll: true });
-    }
+  // Open the existing Profile page first.
+  if (typeof showPage === "function") {
+    showPage("profile");
   } else {
-    showNotification(
-      "Profile form could not be found. Please try again."
-    );
+    const profilePage = document.getElementById("profile");
+
+    if (profilePage) {
+      document.querySelectorAll(".page").forEach(function(page) {
+        page.classList.remove("active");
+      });
+
+      profilePage.classList.add("active");
+    }
+  }
+
+  // Focus the Display Name field.
+  const nameInput = document.getElementById("userName");
+
+  if (nameInput) {
+    setTimeout(function() {
+      nameInput.focus({ preventScroll: true });
+    }, 300);
   }
 }
 
