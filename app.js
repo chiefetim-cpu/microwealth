@@ -948,15 +948,13 @@ function saveProfile() {
   }
 }
 
-
 function updateProfileDisplay() {
   const name = userData.profileName || "Money Builder";
 
   const country =
     userData.profileCountry || "Global Money Builder";
 
-  const currency =
-  userData.currency || "";
+  const currency = userData.currency || "";
 
   const profileName =
     document.getElementById("profileName");
@@ -964,7 +962,6 @@ function updateProfileDisplay() {
   if (profileName) {
     profileName.textContent = name;
   }
-
 
   const profileCountry =
     document.getElementById("profileCountry");
@@ -976,24 +973,27 @@ function updateProfileDisplay() {
         : `🌍 ${country}`;
   }
 
-
   const nameInput =
     document.getElementById("userName");
 
   if (nameInput) {
-    nameInput.value =
-      userData.profileName || "";
+    nameInput.value = userData.profileName || "";
   }
 
+  // Restore saved Date of Birth
+  const dobInput =
+    document.getElementById("userDateOfBirth");
+
+  if (dobInput) {
+    dobInput.value = userData.profileDateOfBirth || "";
+  }
 
   const countryInput =
     document.getElementById("userCountry");
 
   if (countryInput) {
-    countryInput.value =
-      userData.profileCountry || "";
+    countryInput.value = userData.profileCountry || "";
   }
-
 
   const currencySelect =
     document.getElementById("currencySelect");
@@ -1001,7 +1001,6 @@ function updateProfileDisplay() {
   if (currencySelect) {
     currencySelect.value = currency;
   }
-
 
   const avatar =
     document.querySelector(".profile-avatar");
@@ -1011,9 +1010,9 @@ function updateProfileDisplay() {
       name.charAt(0).toUpperCase();
   }
 
-   updateChallengeHistory();
-   updateAchievements();
-   updateAchievementSummary();
+  updateChallengeHistory();
+  updateAchievements();
+  updateAchievementSummary();
 }
 
 function updateChallengeHistory() {
