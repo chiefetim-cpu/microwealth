@@ -903,14 +903,17 @@ function escapeHTML(text) {
 
 function saveProfile() {
   const nameInput = document.getElementById("userName");
+  const dobInput = document.getElementById("userDateOfBirth");
   const countryInput = document.getElementById("userCountry");
   const currencySelect = document.getElementById("currencySelect");
 
   const name = nameInput ? nameInput.value.trim() : "";
+  const dateOfBirth = dobInput ? dobInput.value : "";
   const country = countryInput ? countryInput.value.trim() : "";
   const currency = currencySelect ? currencySelect.value : "";
 
-  // Require all profile details for new users
+  // Require the display name, country, and preferred currency.
+  // Date of Birth is optional.
   if (!name || !country || !currency) {
     showNotification(
       "Please enter your display name, country, and preferred currency."
@@ -919,6 +922,7 @@ function saveProfile() {
   }
 
   userData.profileName = name;
+  userData.profileDateOfBirth = dateOfBirth;
   userData.profileCountry = country;
   userData.currency = currency;
 
@@ -927,7 +931,7 @@ function saveProfile() {
 
   showNotification("Profile saved successfully! 🎉");
 
-  // Close the welcome screen and show the main app
+  // Close the welcome screen and show the main app.
   const welcome = document.getElementById("onboardingWelcome");
   if (welcome) {
     welcome.style.display = "none";
