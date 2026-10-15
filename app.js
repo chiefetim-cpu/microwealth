@@ -12,8 +12,9 @@ const defaultUserData = {
   joinedChallenges: [],
   lastCompletedDate: null,
   profileName: "",
+  profileDateOfBirth: "",
   profileCountry: "",
-  currency: "" 
+  currency: ""
 };
 
 const challengeLibrary = {
