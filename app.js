@@ -688,7 +688,7 @@ if (existingChallenge && existingChallenge.completed === true) {
   updateProfileDisplay();
 
   showNotification(`🔄 ${name} restarted — Attempt ${newAttemptNumber}!`);
-  showPage("home");
+  showPage("dashboard");
   return;
 }
 
@@ -703,7 +703,7 @@ if (existingChallenge) {
   updateProfileDisplay();
 
   showNotification(`You're already participating in ${name}.`);
-  showPage("home");
+  showPage("dashboard");
   return;
 }
 
@@ -733,7 +733,7 @@ if (existingChallenge) {
 
   showNotification(`🎯 You joined ${name}!`);
 
-  showPage("home");
+  showPage("dashboard");
 }
 /* -----------------------------
    LIKE POST
