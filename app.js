@@ -2014,6 +2014,7 @@ function editSavingsGoal() {
 }
 
 
+
 function initializeOnboardingWelcome() {
   const welcome = document.getElementById("onboardingWelcome");
 
@@ -2028,19 +2029,31 @@ function initializeOnboardingWelcome() {
       "microWealthScaleOnboardingCompleted"
     );
 
-    // Preserve the normal experience for existing users.
-    if (existingUser || existingGoal || onboardingCompleted === "true") {
+    // Returning users go directly to the Dashboard.
+    if (
+      existingUser ||
+      existingGoal ||
+      onboardingCompleted === "true"
+    ) {
       welcome.style.display = "none";
+
+      if (document.getElementById("dashboard")) {
+        showPage("dashboard");
+      }
+
       return;
     }
 
-    // Show the welcome screen only for a new user.
+    // New users begin on the Welcome page.
+    showPage("home");
     welcome.style.display = "block";
+
   } catch (error) {
     console.error("Unable to initialize onboarding:", error);
-    welcome.style.display = "none";
+    welcome.style.display = "block";
   }
 }
+
 
 function startOnboarding() {
   const welcome = document.getElementById("onboardingWelcome");
