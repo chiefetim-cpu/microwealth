@@ -932,21 +932,14 @@ function saveProfile() {
 
   showNotification("Profile saved successfully! 🎉");
 
-  // Close the welcome screen and show the main app.
+    // Close the welcome screen and open the Savings Goal Tracker.
   const welcome = document.getElementById("onboardingWelcome");
+
   if (welcome) {
     welcome.style.display = "none";
   }
 
-  const goalCard = document.querySelector(".savings-goal-card");
-
-  if (goalCard) {
-    goalCard.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
-  }
-}
+  showPage("savings");
 
 function updateProfileDisplay() {
   const name = userData.profileName || "Money Builder";
