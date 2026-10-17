@@ -57,306 +57,49 @@
   <main class="app-container">
 
 
-    <!-- =========================
-         HOME
-    ========================== -->
-    <section id="home" class="page active">
-   
-    <!-- NEW USER ONBOARDING WELCOME -->
-    <div id="onboardingWelcome" class="onboarding-welcome" style="display: none;">
-
-  <div class="onboarding-welcome-icon">🌱</div>
-
-  <span class="card-label">WELCOME TO MICROWEALTH SCALE</span>
-
-  <h2>Start Small. Grow Together.</h2>
-
-  <p>
-    Your journey toward better money habits starts here.
-    Set a savings goal, track your progress, and celebrate
-    every step forward.
-  </p>
-
-  <button
-    type="button"
-    class="primary-button full-width"
-    onclick="startOnboarding()"
-  >
-    Get Started →
-  </button>
-
-  <p class="onboarding-note">
-    Small steps today. Greater possibilities tomorrow.
-  </p>
-
-</div>
-      
-<!-- END NEW USER ONBOARDING WELCOME -->
-       
-<!-- SAVINGS GOAL TRACKER -->
-<div class="savings-goal-card">
-
-  <div class="savings-goal-header">
-    <span class="card-label">YOUR FINANCIAL GOAL</span>
-    <span class="savings-goal-icon">🎯</span>
-  </div>
-
- <h3>Savings Goal Tracker</h3>
-
-  <p class="savings-goal-description">
-    Set a target, track your savings and celebrate
-    every step toward your goal.
-  </p>
-
-  <div class="savings-goal-form">
-
-    <label for="savingsGoalName">Goal name</label>
-    <input
-      type="text"
-      id="savingsGoalName"
-      placeholder="e.g. Emergency Fund"
-    />
-
-    <label for="savingsGoalTarget">Savings target</label>
-    <input
-      type="number"
-      id="savingsGoalTarget"
-      placeholder="e.g. 10000"
-      min="1"
-    />
-
-    <input type="hidden" id="savingsGoalAmount" value="0" />
     
-<div id="startSavingSection">
-  <button
-    type="button"
-    id="startSavingButton"
-    onclick="startSaving()"
+<!-- =========================
+     HOME
+========================== -->
+<section id="home" class="page active">
+
+  <!-- NEW USER ONBOARDING WELCOME -->
+  <div
+    id="onboardingWelcome"
+    class="onboarding-welcome"
+    style="display: none;"
   >
-    Start Saving
-  </button>
-</div>
 
+    <div class="onboarding-welcome-icon">🌱</div>
 
-    <div class="savings-location-group">
+    <span class="card-label">WELCOME TO MICROWEALTH SCALE</span>
 
-  <label class="savings-location-label">
-    Where are you saving?
-  </label>
+    <h2>Start Small. Grow Together.</h2>
 
-  <div class="savings-location-options">
+    <p>
+      Your journey toward better money habits starts here.
+      Set a savings goal, track your progress, and celebrate
+      every step forward.
+    </p>
 
-    <label class="savings-location-option">
-      <input
-        type="radio"
-        name="savingsLocation"
-        value="bank"
-        id="savingsLocationBank"
-      />
-      <span class="savings-location-box"></span>
-      <span class="savings-location-icon">🏦</span>
-      <span class="savings-location-text">
-        <strong>Bank / Savings Account</strong>
-        <small>Keep your savings in a bank account.</small>
-      </span>
-    </label>
-
-    <label class="savings-location-option">
-      <input
-        type="radio"
-        name="savingsLocation"
-        value="home"
-        id="savingsLocationHome"
-      />
-      <span class="savings-location-box"></span>
-      <span class="savings-location-icon">🏠</span>
-      <span class="savings-location-text">
-        <strong>Cash / At Home</strong>
-        <small>Keep your savings as cash at home.</small>
-      </span>
-    </label>
-
-    <label class="savings-location-option">
-      <input
-        type="radio"
-        name="savingsLocation"
-        value="wallet"
-        id="savingsLocationWallet"
-      />
-      <span class="savings-location-box"></span>
-      <span class="savings-location-icon">📱</span>
-      <span class="savings-location-text">
-        <strong>Digital Wallet</strong>
-        <small>Keep your savings in a digital wallet.</small>
-      </span>
-    </label>
-
-    <label class="savings-location-option">
-      <input
-        type="radio"
-        name="savingsLocation"
-        value="other"
-        id="savingsLocationOther"
-      />
-      <span class="savings-location-box"></span>
-      <span class="savings-location-icon">💼</span>
-      <span class="savings-location-text">
-        <strong>Other</strong>
-        <small>Another place where you keep your savings.</small>
-      </span>
-    </label>
-
-  </div>
-</div>
-    
     <button
       type="button"
       class="primary-button full-width"
-      onclick="saveSavingsGoal()"
+      onclick="startOnboarding()"
     >
-      Save My Goal
+      Get Started →
     </button>
 
+    <p class="onboarding-note">
+      Small steps today. Greater possibilities tomorrow.
+    </p>
 
-    <button
-    type="button"
-    id="editSavingsGoalButton"
-    class="secondary-button full-width"
-    onclick="editSavingsGoal()"
-  >
-    ✏️ Edit Savings Goal
-    </button>
-    
   </div>
-  
-<div id="savingsGoalProgress" class="savings-goal-progress">
-<div class="savings-goal-progress-header">
-  <div class="savings-goal-title">
+  <!-- END NEW USER ONBOARDING WELCOME -->
 
-<span class="savings-goal-mark" aria-hidden="true">
-  <svg
-    viewBox="0 0 24 24"
-    width="24"
-    height="24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg">
-
-    <circle
-      cx="12"
-      cy="12"
-      r="9"
-      stroke="#D4A64A"
-      stroke-width="1.8"/>
-
-    <circle
-      cx="12"
-      cy="12"
-      r="6.5"
-      stroke="#243B53"
-      stroke-width="1.2"/>
-
-    <text
-      x="12"
-      y="16"
-      text-anchor="middle"
-      font-size="12"
-      font-weight="700"
-      fill="#243B53">$</text>
-
-  </svg>
-</span>
-    
-    <h3 id="savingsGoalDisplayName">Emergency Fund</h3>
-  </div>
-
-  <strong id="savingsGoalPercent">25%</strong>
-</div>
-
-  <div class="savings-goal-progress-track">
-    <div
-      id="savingsGoalProgressFill"
-      class="savings-goal-progress-fill"
-      style="width: 0%;">
-    </div>
-  </div>
-
-  <h2 id="savingsGoalSavedAmount">₹0 saved</h2>
-
-  <p id="savingsGoalSummary">
-    Set your first savings goal to begin.
-  </p>
-
-<div id="savingsGoalLocationDisplay" class="savings-goal-location-display"></div>
-
-<div class="savings-money-disclaimer">
-  <div class="savings-money-disclaimer-title">
-    🔒 Your Money Stays With You
-  </div>
-
-  <p>
-    MicroWealth Scale does not hold, receive, transfer, invest, or manage
-    your money. We only help you set financial goals and keep records of
-    your savings progress.
-  </p>
-
-  <p>
-    Your savings remain wherever you choose to keep them, such as your
-    bank account, cash at home, or a digital wallet.
-  </p>
-
-  <small>
-    MicroWealth Scale is a savings planning and record-keeping tool,
-    not a bank or financial institution.
-  </small>
-</div>  
-
-<div class="add-savings-section">
-  <label for="additionalSavingsAmount">
-  Add to your savings
-</label>
-
-  <input
-    type="number"
-    id="additionalSavingsAmount"
-    min="1"
-    step="1"
-    placeholder="Enter contribution amount"
-  />
-
-  <button
-    type="button"
-    class="primary-button full-width"
-    onclick="addSavingsContribution()"
-  >
-    + Add Savings
-  </button>
-</div>
-
-    <!-- SAVINGS CONTRIBUTION HISTORY -->
-    <div class="savings-history-section">
-      <div class="savings-history-header">
-        <div>
-          <span class="card-label">YOUR SAVINGS JOURNEY</span>
-          <h3>Savings History</h3>
-        </div>
-        <span class="savings-history-icon">📈</span>
-      </div>
-
-      <p class="savings-history-description">
-        Track your contributions and celebrate every step forward.
-      </p>
-
-      <div id="savingsHistorySummary" class="savings-history-summary">
-        Your contributions will appear here.
-      </div>
-
-      <div id="savingsHistoryList" class="savings-history-list">
-      </div>
-    </div>
-  
-</div>
-  
 </section>
+<!-- END HOME -->
+
 
   <!-- DASHBOARD PAGE -->
 <section id="dashboard" class="page">
