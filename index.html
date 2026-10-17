@@ -259,6 +259,182 @@
 </div>
  
 </section>
+
+<!-- =========================
+     SAVINGS GOAL TRACKER
+========================== -->
+<section id="savings" class="page">
+
+  <div class="page-header">
+    <p class="eyebrow">YOUR SAVINGS JOURNEY</p>
+    <h2>Savings Goal Tracker</h2>
+    <p>Set a target, track your savings and celebrate every step toward your goal.</p>
+  </div>
+
+  <div class="savings-goal-card">
+
+    <div class="savings-goal-header">
+      <span class="card-label">YOUR FINANCIAL GOAL</span>
+      <span class="savings-goal-icon">🎯</span>
+    </div>
+
+    <h3>Savings Goal Tracker</h3>
+
+    <p class="savings-goal-description">
+      Set a target, track your savings and celebrate every step toward your goal.
+    </p>
+
+    <div class="savings-goal-form">
+
+      <label for="savingsGoalName">Goal name</label>
+      <input type="text" id="savingsGoalName" placeholder="e.g. Emergency Fund" />
+
+      <label for="savingsGoalTarget">Savings target</label>
+      <input type="number" id="savingsGoalTarget" placeholder="e.g. 10000" min="1" />
+
+      <input type="hidden" id="savingsGoalAmount" value="0" />
+
+      <div id="startSavingSection">
+        <button type="button" id="startSavingButton" onclick="startSaving()">
+          Start Saving
+        </button>
+      </div>
+
+      <div class="savings-location-group">
+        <label class="savings-location-label">Where are you saving?</label>
+
+        <div class="savings-location-options">
+
+          <label class="savings-location-option">
+            <input type="radio" name="savingsLocation" value="bank" id="savingsLocationBank" />
+            <span class="savings-location-box"></span>
+            <span class="savings-location-icon">🏦</span>
+            <span class="savings-location-text">
+              <strong>Bank / Savings Account</strong>
+              <small>Keep your savings in a bank account.</small>
+            </span>
+          </label>
+
+          <label class="savings-location-option">
+            <input type="radio" name="savingsLocation" value="home" id="savingsLocationHome" />
+            <span class="savings-location-box"></span>
+            <span class="savings-location-icon">🏠</span>
+            <span class="savings-location-text">
+              <strong>Cash / At Home</strong>
+              <small>Keep your savings as cash at home.</small>
+            </span>
+          </label>
+
+          <label class="savings-location-option">
+            <input type="radio" name="savingsLocation" value="wallet" id="savingsLocationWallet" />
+            <span class="savings-location-box"></span>
+            <span class="savings-location-icon">📱</span>
+            <span class="savings-location-text">
+              <strong>Digital Wallet</strong>
+              <small>Keep your savings in a digital wallet.</small>
+            </span>
+          </label>
+
+          <label class="savings-location-option">
+            <input type="radio" name="savingsLocation" value="other" id="savingsLocationOther" />
+            <span class="savings-location-box"></span>
+            <span class="savings-location-icon">💼</span>
+            <span class="savings-location-text">
+              <strong>Other</strong>
+              <small>Another place where you keep your savings.</small>
+            </span>
+          </label>
+
+        </div>
+      </div>
+
+      <button type="button" class="primary-button full-width" onclick="saveSavingsGoal()">
+        Save My Goal
+      </button>
+
+      <button type="button" id="editSavingsGoalButton" class="secondary-button full-width" onclick="editSavingsGoal()">
+        ✏️ Edit Savings Goal
+      </button>
+
+    </div>
+
+    <div id="savingsGoalProgress" class="savings-goal-progress">
+
+      <div class="savings-goal-progress-header">
+        <div class="savings-goal-title">
+          <span class="savings-goal-mark" aria-hidden="true">🎯</span>
+          <h3 id="savingsGoalDisplayName">Savings Goal</h3>
+        </div>
+        <strong id="savingsGoalPercent">0%</strong>
+      </div>
+
+      <div class="savings-goal-progress-track">
+        <div id="savingsGoalProgressFill" class="savings-goal-progress-fill" style="width: 0%;"></div>
+      </div>
+
+      <h2 id="savingsGoalSavedAmount">₹0 saved</h2>
+
+      <p id="savingsGoalSummary">Set your first savings goal to begin.</p>
+
+      <div id="savingsGoalLocationDisplay" class="savings-goal-location-display"></div>
+
+      <div class="savings-money-disclaimer">
+        <div class="savings-money-disclaimer-title">🔒 Your Money Stays With You</div>
+
+        <p>
+          MicroWealth Scale does not hold, receive, transfer, invest, or manage
+          your money. We only help you set financial goals and keep records of
+          your savings progress.
+        </p>
+
+        <p>
+          Your savings remain wherever you choose to keep them, such as your
+          bank account, cash at home, or a digital wallet.
+        </p>
+
+        <small>
+          MicroWealth Scale is a savings planning and record-keeping tool,
+          not a bank or financial institution.
+        </small>
+      </div>
+
+      <div class="add-savings-section">
+        <label for="additionalSavingsAmount">Add to your savings</label>
+
+        <input type="number" id="additionalSavingsAmount" min="1" step="1" placeholder="Enter contribution amount" />
+
+        <button type="button" class="primary-button full-width" onclick="addSavingsContribution()">
+          + Add Savings
+        </button>
+      </div>
+
+      <div class="savings-history-section">
+        <div class="savings-history-header">
+          <div>
+            <span class="card-label">YOUR SAVINGS JOURNEY</span>
+            <h3>Savings History</h3>
+          </div>
+          <span class="savings-history-icon">📈</span>
+        </div>
+
+        <p class="savings-history-description">
+          Track your contributions and celebrate every step forward.
+        </p>
+
+        <div id="savingsHistorySummary" class="savings-history-summary">
+          Your contributions will appear here.
+        </div>
+
+        <div id="savingsHistoryList" class="savings-history-list"></div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+<!-- END SAVINGS GOAL TRACKER -->
+
     
     <!-- =========================
          CHALLENGE HUB
