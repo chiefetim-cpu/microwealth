@@ -2052,11 +2052,30 @@ function startOnboarding() {
     welcome.style.display = "none";
   }
 
-  // Open the Profile page.
-  if (typeof showPage === "function") {
-    showPage("profile");
-  } else {
-    document.querySelectorAll(".page").forEach(function(page) {
+  // Open the Profile page.   
+if (typeof showPage === "function") {
+  showPage("profile");
+} else {
+  document.querySelectorAll(".page").forEach(function(page) {
+    page.classList.remove("active");
+  });
+
+  const profilePage = document.getElementById("profile");
+
+  if (profilePage) {
+    profilePage.classList.add("active");
+  }
+}
+
+const profileCheck = document.getElementById("profile");
+
+alert(
+  profileCheck
+    ? "Profile found. Current class: " + profileCheck.className
+    : "ERROR: Profile section not found"
+);
+   
+      document.querySelectorAll(".page").forEach(function(page) {
       page.classList.remove("active");
     });
 
