@@ -939,7 +939,8 @@ function saveProfile() {
     welcome.style.display = "none";
   }
 
-  showPage("savings");
+   showPage("savings");
+}
 
 function updateProfileDisplay() {
   const name = userData.profileName || "Money Builder";
