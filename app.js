@@ -2013,8 +2013,6 @@ function editSavingsGoal() {
   }
 }
 
-
-
 function initializeOnboardingWelcome() {
   const welcome = document.getElementById("onboardingWelcome");
 
@@ -2022,30 +2020,46 @@ function initializeOnboardingWelcome() {
 
   try {
     const existingUser = localStorage.getItem("microWealthScaleUser");
-    const existingGoal = localStorage.getItem(
-      "microWealthScaleSavingsGoal"
-    );
     const onboardingCompleted = localStorage.getItem(
       "microWealthScaleOnboardingCompleted"
     );
 
-    // Returning users go directly to the Dashboard.
+    let profileCompleted = false;
+
+    if (existingUser) {
+      try {
+        const userData = JSON.parse(existingUser);
+
+        profileCompleted = Boolean(
+          userData.profileName &&
+          userData.profileCountry &&
+          userData.currency
+        );
+      } catch (error) {
+        console.error("Unable to read saved profile:", error);
+      }
+    }
+
+    // Returning users with a completed profile go to the Dashboard.
     if (
-      existingUser ||
-      existingGoal ||
+      profileCompleted &&
       onboardingCompleted === "true"
     ) {
       welcome.style.display = "none";
 
-      if (document.getElementById("dashboard")) {
+      if (typeof showPage === "function") {
         showPage("dashboard");
       }
 
       return;
     }
 
-    // New users begin on the Welcome page.
-    showPage("home");
+    // New users and users who have not completed onboarding
+    // begin on the Welcome page.
+    if (typeof showPage === "function") {
+      showPage("home");
+    }
+
     welcome.style.display = "block";
 
   } catch (error) {
