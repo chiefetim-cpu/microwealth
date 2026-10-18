@@ -167,43 +167,34 @@ function saveUserData() {
 ----------------------------- */
 
 function showPage(pageId) {
-
-  document
-    .querySelectorAll(".page")
-    .forEach(page => {
-
-      page.classList.remove("active");
-
-    });
-
-  const selectedPage =
-    document.getElementById(pageId);
-
-  if (selectedPage) {
-
-    selectedPage.classList.add("active");
-
-  }
-
-  const nav =
-    document.getElementById("mainNav");
-
-  if (nav) {
-
-    nav.classList.remove("open");
-
-  }
-
-  updateDashboard();
-
-  updateProfileDisplay();
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
+  document.querySelectorAll(".page").forEach(function(page) {
+    page.classList.remove("active");
   });
-}
 
+  const selectedPage = document.getElementById(pageId);
+
+  if (!selectedPage) {
+    console.error("Page not found:", pageId);
+    return;
+  }
+
+  selectedPage.classList.add("active");
+
+  const nav = document.getElementById("mainNav");
+  if (nav) {
+    nav.classList.remove("open");
+  }
+
+  if (typeof updateDashboard === "function") {
+    updateDashboard();
+  }
+
+  if (typeof updateProfileDisplay === "function") {
+    updateProfileDisplay();
+  }
+
+  window.scrollTo({ top: 0, behavior: "auto" });
+}
 
 /* -----------------------------
    MOBILE MENU
