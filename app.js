@@ -2052,52 +2052,31 @@ function startOnboarding() {
     welcome.style.display = "none";
   }
 
-  // Open the Profile page.   
-if (typeof showPage === "function") {
-  showPage("profile");
-} else {
+  const profilePage = document.getElementById("profile");
+
+  if (!profilePage) {
+    console.error("Profile section not found in index.html");
+    if (welcome) {
+      welcome.style.display = "block";
+    }
+    return;
+  }
+
   document.querySelectorAll(".page").forEach(function(page) {
     page.classList.remove("active");
   });
 
-  const profilePage = document.getElementById("profile");
+  profilePage.classList.add("active");
 
-  if (profilePage) {
-    profilePage.classList.add("active");
-  }
-}
-
-const profileCheck = document.getElementById("profile");
-
-alert(
-  profileCheck
-    ? "Profile found. Current class: " + profileCheck.className
-    : "ERROR: Profile section not found"
-);
-   
-      document.querySelectorAll(".page").forEach(function(page) {
-      page.classList.remove("active");
-    });
-
-    const profilePage = document.getElementById("profile");
-
-    if (profilePage) {
-      profilePage.classList.add("active");
-    }
+  const nav = document.getElementById("mainNav");
+  if (nav) {
+    nav.classList.remove("open");
   }
 
-  // Find the Personal Information form.
-  const profileForm = document.querySelector("#profile .profile-settings");
-  const nameInput = document.getElementById("userName");
+  window.scrollTo({ top: 0, behavior: "auto" });
 
-  // Wait for the Profile page to become visible.
   setTimeout(function() {
-    if (profileForm) {
-      profileForm.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-    }
+    const nameInput = document.getElementById("userName");
 
     if (nameInput) {
       nameInput.focus({ preventScroll: true });
