@@ -2020,29 +2020,16 @@ function initializeOnboardingWelcome() {
 
   try {
     const existingUser = localStorage.getItem("microWealthScaleUser");
+    const existingGoal = localStorage.getItem(
+      "microWealthScaleSavingsGoal"
+    );
     const onboardingCompleted = localStorage.getItem(
       "microWealthScaleOnboardingCompleted"
     );
 
-    let profileCompleted = false;
-
-    if (existingUser) {
-      try {
-        const userData = JSON.parse(existingUser);
-
-        profileCompleted = Boolean(
-          userData.profileName &&
-          userData.profileCountry &&
-          userData.currency
-        );
-      } catch (error) {
-        console.error("Unable to read saved profile:", error);
-      }
-    }
-
-    // Returning users with a completed profile go to the Dashboard.
     if (
-      profileCompleted &&
+      existingUser ||
+      existingGoal ||
       onboardingCompleted === "true"
     ) {
       welcome.style.display = "none";
@@ -2054,8 +2041,6 @@ function initializeOnboardingWelcome() {
       return;
     }
 
-    // New users and users who have not completed onboarding
-    // begin on the Welcome page.
     if (typeof showPage === "function") {
       showPage("home");
     }
@@ -2067,7 +2052,6 @@ function initializeOnboardingWelcome() {
     welcome.style.display = "block";
   }
 }
-
 
 function startOnboarding() {
   const welcome = document.getElementById("onboardingWelcome");
