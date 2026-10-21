@@ -2047,42 +2047,53 @@ function initializeOnboardingWelcome() {
 
 function startOnboarding() {
   const welcome = document.getElementById("onboardingWelcome");
+  const profilePage = document.getElementById("profile");
 
+  if (!profilePage) {
+    console.error("Profile section not found.");
+    return;
+  }
+
+  // Hide the Welcome card.
   if (welcome) {
     welcome.style.display = "none";
   }
 
-  const profilePage = document.getElementById("profile");
-
-  if (!profilePage) {
-    console.error("Profile section not found in index.html");
-    if (welcome) {
-      welcome.style.display = "block";
-    }
-    return;
-  }
-
+  // Hide all pages.
   document.querySelectorAll(".page").forEach(function(page) {
     page.classList.remove("active");
   });
 
+  // Activate the Profile page directly.
   profilePage.classList.add("active");
 
+  // Close the mobile navigation menu if open.
   const nav = document.getElementById("mainNav");
   if (nav) {
     nav.classList.remove("open");
   }
 
-  window.scrollTo({ top: 0, behavior: "auto" });
-
+  // Scroll to the Personal Information form.
   setTimeout(function() {
+    const profileForm = document.querySelector(
+      "#profile .profile-settings"
+    );
+
     const nameInput = document.getElementById("userName");
+
+    if (profileForm) {
+      profileForm.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
 
     if (nameInput) {
       nameInput.focus({ preventScroll: true });
     }
-  }, 350);
+  }, 200);
 }
+
 
 function resetMicroWealthRecords() {
   const confirmed = confirm(
