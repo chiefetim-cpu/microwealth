@@ -660,18 +660,60 @@
         </p>
 
       </div>
+     
+<div class="community-actions">
 
+  <button
+    class="primary-button"
+    type="button"
+    onclick="createPost()"
+  >
+    + Share Your Progress
+  </button>
 
-      <div class="community-actions">
+</div>
 
-        <button
-          class="primary-button"
-          onclick="createPost()"
-        >
-          + Share Your Progress
-        </button>
+<div id="communityPostForm" class="profile-settings" style="display: none;">
 
-      </div>
+  <h3>Share your progress</h3>
+
+  <label for="communityPostText">
+    What progress would you like to share?
+  </label>
+
+  <textarea
+    id="communityPostText"
+    rows="4"
+    maxlength="500"
+    placeholder="Celebrate a savings milestone, a new habit, or a small win..."
+  ></textarea>
+
+  <div class="community-form-actions">
+
+    <button
+      type="button"
+      class="primary-button"
+      onclick="submitCommunityPost()"
+    >
+      Publish Post
+    </button>
+
+    <button
+      type="button"
+      class="back-button"
+      onclick="cancelCommunityPost()"
+    >
+      Cancel
+    </button>
+
+  </div>
+
+  <small>Maximum 500 characters.</small>
+
+</div>
+
+<div id="communityPosts" class="community-feed"></div>
+
 
      <div id="communityPosts" class="community-feed">
 
