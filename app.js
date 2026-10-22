@@ -776,98 +776,116 @@ function likePost(button) {
 }
 
 
+
 /* -----------------------------
-   CREATE POST
+   CREATE COMMUNITY POST
 ----------------------------- */
 
 function createPost() {
+  const form = document.getElementById("communityPostForm");
+  const textarea = document.getElementById("communityPostText");
 
-  const text =
-    prompt(
-      "Share your progress with the MicroWealth Scale community:"
-    );
-
-
-  if (
-    !text ||
-    !text.trim()
-  ) {
-
+  if (!form || !textarea) {
+    console.error("Community post form not found.");
     return;
-
   }
 
+  form.style.display = "block";
+  textarea.focus();
+  form.scrollIntoView({
+    behavior: "smooth",
+    block: "nearest"
+  });
+}
 
-  const postsContainer =
-    document.getElementById(
-      "communityPosts"
-    );
+/* -----------------------------
+   SUBMIT COMMUNITY POST
+----------------------------- */
 
+function submitCommunityPost() {
+  const textarea = document.getElementById("communityPostText");
+  const postsContainer = document.getElementById("communityPosts");
 
-  if (!postsContainer) {
-
+  if (!textarea || !postsContainer) {
+    console.error("Community post elements not found.");
     return;
-
   }
 
+  const text = textarea.value.trim();
 
-  const post =
-    document.createElement(
-      "article"
-    );
+  if (!text) {
+    showNotification("Please write something before publishing.");
+    textarea.focus();
+    return;
+  }
+
+  if (text.length > 500) {
+    showNotification("Your post must be 500 characters or fewer.");
+    return;
+  }
+
+  const post = document.createElement("article");
+  post.className = "post-card";
+
+  const header = document.createElement("div");
+  header.className = "post-header";
+
+  const avatar = document.createElement("div");
+  avatar.className = "avatar";
+  avatar.textContent = "M";
+
+  const authorInfo = document.createElement("div");
+
+  const author = document.createElement("strong");
+  author.textContent = "Money Builder";
+
+  const subtitle = document.createElement("small");
+  subtitle.textContent = "Your Progress";
+
+  authorInfo.append(author, subtitle);
+  header.append(avatar, authorInfo);
+
+  const paragraph = document.createElement("p");
+  paragraph.textContent = text;
+
+  const likeButton = document.createElement("button");
+  likeButton.className = "like-button";
+  likeButton.type = "button";
+  likeButton.dataset.likes = "0";
+  likeButton.innerHTML = '❤️ <span>0</span>';
+  likeButton.addEventListener("click", function () {
+    likePost(likeButton);
+  });
+
+  post.append(header, paragraph, likeButton);
+  postsContainer.prepend(post);
+
+  textarea.value = "";
+
+  const form = document.getElementById("communityPostForm");
+  if (form) {
+    form.style.display = "none";
+  }
+
+  showNotification("Your progress has been shared! 🎉");
+}
 
 
-  post.className =
-    "post-card";
+/* -----------------------------
+   CANCEL COMMUNITY POST
+----------------------------- */
 
+function cancelCommunityPost() {
+  const form = document.getElementById("communityPostForm");
+  const textarea = document.getElementById("communityPostText");
 
-  post.innerHTML = `
+  if (textarea) {
+    textarea.value = "";
+  }
 
-    <div class="post-header">
-
-      <div class="avatar">
-        M
-      </div>
-
-      <div>
-
-        <strong>
-          Money Builder
-        </strong>
-
-        <small>
-          Your Progress
-        </small>
-
-      </div>
-
-    </div>
-
-    <p>
-      ${escapeHTML(
-        text.trim()
-      )}
-    </p>
-
-    <button
-      class="like-button"
-      onclick="likePost(this)"
-      data-likes="0"
-    >
-      ❤️ <span>0</span>
-    </button>
-
-  `;
-
-
-  postsContainer.prepend(
-    post
-  );
-
-
-  showNotification(
-    "Your progress has been shared! 🎉"
-  );
+  if (form) {
+    form.style.display = "none";
+  }
 }
 
 
