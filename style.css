@@ -2187,3 +2187,57 @@ a {
   font-size: 13px;
   line-height: 1.7;
 }
+
+/* Clean Welcome Page Introduction */
+.welcome-introduction {
+  text-align: center;
+  margin: 10px 0 22px;
+}
+
+.welcome-intro-icon {
+  width: 54px;
+  height: 54px;
+  margin: 0 auto 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #E8F7ED;
+  border-radius: 50%;
+  font-size: 29px;
+}
+
+.welcome-introduction h2 {
+  margin: 12px 0;
+  color: #166534;
+}
+
+.welcome-introduction p {
+  max-width: 480px;
+  margin: 0 auto;
+  color: #526579;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* Money Control Disclaimer */
+.money-control-notice {
+  margin: 22px 0 0;
+  padding: 14px 16px;
+  background: #F0FDF4;
+  border: 1px solid #BBF7D0;
+  border-radius: 12px;
+  text-align: left;
+}
+
+.money-control-notice h3 {
+  margin: 0 0 8px;
+  color: #166534;
+  font-size: 15px;
+}
+
+.money-control-notice p {
+  margin: 0;
+  color: #365344;
+  font-size: 13px;
+  line-height: 1.6;
+}
