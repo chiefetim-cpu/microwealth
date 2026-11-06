@@ -789,34 +789,43 @@
       maxlength="40"
     >
   </div>
+  
+<div class="form-group">
+  <label for="currencySelect">Preferred Currency</label>
 
-  <div class="form-group">
-    <label for="currencySelect">Preferred Currency</label>
+  <select id="currencySelect" onchange="toggleCustomCurrency()">
+    <option value="" disabled selected>
+      Select your preferred currency
+    </option>
 
-    <select id="currencySelect">
-      <option value="" disabled selected>
-        Select your preferred currency
-      </option>
-
-      <option value="INR">🇮🇳 INR ₹ — Indian Rupee</option>
-      <option value="USD">🇺🇸 USD $ — US Dollar</option>
-      <option value="GBP">🇬🇧 GBP £ — British Pound</option>
-      <option value="NGN">🇳🇬 NGN ₦ — Nigerian Naira</option>
-      <option value="EUR">🇪🇺 EUR € — Euro</option>
-      <option value="CAD">🇨🇦 CAD $ — Canadian Dollar</option>
-      <option value="AUD">🇦🇺 AUD $ — Australian Dollar</option>
-      <option value="ZAR">🇿🇦 ZAR R — South African Rand</option>
-    </select>
-  </div>
-
-  <button
-    class="primary-button"
-    onclick="saveProfile()"
-  >
-    Save Profile
-  </button>
-
+    <option value="INR">🇮🇳 INR ₹ — Indian Rupee</option>
+    <option value="USD">🇺🇸 USD $ — US Dollar</option>
+    <option value="GBP">🇬🇧 GBP £ — British Pound</option>
+    <option value="NGN">🇳🇬 NGN ₦ — Nigerian Naira</option>
+    <option value="EUR">🇪🇺 EUR € — Euro</option>
+    <option value="CAD">🇨🇦 CAD $ — Canadian Dollar</option>
+    <option value="AUD">🇦🇺 AUD $ — Australian Dollar</option>
+    <option value="ZAR">🇿🇦 ZAR R — South African Rand</option>
+    <option value="OTHER">🌍 Others — My currency is not listed</option>
+  </select>
 </div>
+
+<div class="form-group" id="customCurrencyFields" style="display: none;">
+  <label for="customCurrencyCode">Currency Name or Code</label>
+  <input
+    type="text"
+    id="customCurrencyCode"
+    placeholder="e.g. AED or UAE Dirham"
+  >
+
+  <label for="customCurrencySymbol">Currency Symbol</label>
+  <input
+    type="text"
+    id="customCurrencySymbol"
+    placeholder="e.g. د.إ"
+  >
+</div>
+
  
 </section>
 
