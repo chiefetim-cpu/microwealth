@@ -2008,8 +2008,26 @@ a {
   color: #6b7771;
 }
 
-
 /* Savings contribution section */
 .add-savings-section {
   display: none;
+}
+
+/* Custom Currency Fields */
+#customCurrencyFields .form-group {
+  margin-bottom: 16px;
+}
+
+#customCurrencyFields .form-group:last-child {
+  margin-bottom: 0;
+}
+
+#customCurrencyFields label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+#customCurrencyFields input {
+  width: 100%;
+  box-sizing: border-box;
 }
