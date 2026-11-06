@@ -14,7 +14,10 @@ const defaultUserData = {
   profileName: "",
   profileDateOfBirth: "",
   profileCountry: "",
-  currency: ""
+  currency: "",
+  customCurrencyCode: "",
+  customCurrencyName: "",
+  customCurrencySymbol: ""
 };
 
 const challengeLibrary = {
