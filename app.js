@@ -909,6 +909,20 @@ function escapeHTML(text) {
   return element.innerHTML;
 }
 
+function toggleCustomCurrency() {
+  const currencySelect =
+    document.getElementById("currencySelect");
+
+  const customFields =
+    document.getElementById("customCurrencyFields");
+
+  if (!currencySelect || !customFields) return;
+
+  const isOther = currencySelect.value === "OTHER";
+
+  customFields.style.display =
+    isOther ? "block" : "none";
+}
 
 /* -----------------------------
    PROFILE
@@ -920,16 +934,40 @@ function saveProfile() {
   const countryInput = document.getElementById("userCountry");
   const currencySelect = document.getElementById("currencySelect");
 
+  const customNameInput = document.getElementById("customCurrencyName");
+  const customCodeInput = document.getElementById("customCurrencyCode");
+  const customSymbolInput = document.getElementById("customCurrencySymbol");
+
   const name = nameInput ? nameInput.value.trim() : "";
   const dateOfBirth = dobInput ? dobInput.value : "";
   const country = countryInput ? countryInput.value.trim() : "";
   const currency = currencySelect ? currencySelect.value : "";
 
-  // Require the display name, country, and preferred currency.
-  // Date of Birth is optional.
+  const customCurrencyName = customNameInput
+    ? customNameInput.value.trim()
+    : "";
+
+  const customCurrencyCode = customCodeInput
+    ? customCodeInput.value.trim().toUpperCase()
+    : "";
+
+  const customCurrencySymbol = customSymbolInput
+    ? customSymbolInput.value.trim()
+    : "";
+
   if (!name || !country || !currency) {
     showNotification(
       "Please enter your display name, country, and preferred currency."
+    );
+    return;
+  }
+
+  if (
+    currency === "OTHER" &&
+    (!customCurrencyName || !customCurrencyCode || !customCurrencySymbol)
+  ) {
+    showNotification(
+      "Please enter your custom currency name, code, and symbol."
     );
     return;
   }
@@ -939,38 +977,40 @@ function saveProfile() {
   userData.profileCountry = country;
   userData.currency = currency;
 
+  userData.customCurrencyName =
+    currency === "OTHER" ? customCurrencyName : "";
+
+  userData.customCurrencyCode =
+    currency === "OTHER" ? customCurrencyCode : "";
+
+  userData.customCurrencySymbol =
+    currency === "OTHER" ? customCurrencySymbol : "";
+
   saveUserData();
   updateProfileDisplay();
 
   showNotification("Profile saved successfully! 🎉");
 
-    // Close the welcome screen and open the Savings Goal Tracker.
   const welcome = document.getElementById("onboardingWelcome");
 
   if (welcome) {
     welcome.style.display = "none";
   }
 
-   showPage("savings");
+  showPage("savings");
 }
 
 function updateProfileDisplay() {
   const name = userData.profileName || "Money Builder";
+  const country = userData.profileCountry || "Global Money Builder";
 
-  const country =
-    userData.profileCountry || "Global Money Builder";
-
-  const currency = userData.currency || "";
-
-  const profileName =
-    document.getElementById("profileName");
+  const profileName = document.getElementById("profileName");
 
   if (profileName) {
     profileName.textContent = name;
   }
 
-  const profileCountry =
-    document.getElementById("profileCountry");
+  const profileCountry = document.getElementById("profileCountry");
 
   if (profileCountry) {
     profileCountry.textContent =
@@ -979,47 +1019,63 @@ function updateProfileDisplay() {
         : `🌍 ${country}`;
   }
 
-  const nameInput =
-    document.getElementById("userName");
+  const nameInput = document.getElementById("userName");
 
   if (nameInput) {
     nameInput.value = userData.profileName || "";
   }
 
-  // Restore saved Date of Birth
-  const dobInput =
-    document.getElementById("userDateOfBirth");
+  const dobInput = document.getElementById("userDateOfBirth");
 
   if (dobInput) {
     dobInput.value = userData.profileDateOfBirth || "";
   }
 
-  const countryInput =
-    document.getElementById("userCountry");
+  const countryInput = document.getElementById("userCountry");
 
   if (countryInput) {
     countryInput.value = userData.profileCountry || "";
   }
 
-  const currencySelect =
-    document.getElementById("currencySelect");
+  const currencySelect = document.getElementById("currencySelect");
 
   if (currencySelect) {
-    currencySelect.value = currency;
+    currencySelect.value = userData.currency || "";
+    toggleCustomCurrency();
   }
 
-  const avatar =
-    document.querySelector(".profile-avatar");
+  const customNameInput =
+    document.getElementById("customCurrencyName");
+
+  if (customNameInput) {
+    customNameInput.value = userData.customCurrencyName || "";
+  }
+
+  const customCodeInput =
+    document.getElementById("customCurrencyCode");
+
+  if (customCodeInput) {
+    customCodeInput.value = userData.customCurrencyCode || "";
+  }
+
+  const customSymbolInput =
+    document.getElementById("customCurrencySymbol");
+
+  if (customSymbolInput) {
+    customSymbolInput.value = userData.customCurrencySymbol || "";
+  }
+
+  const avatar = document.querySelector(".profile-avatar");
 
   if (avatar) {
-    avatar.textContent =
-      name.charAt(0).toUpperCase();
+    avatar.textContent = name.charAt(0).toUpperCase();
   }
 
   updateChallengeHistory();
   updateAchievements();
   updateAchievementSummary();
 }
+
 
 function updateChallengeHistory() {
   const historyList = document.getElementById("challengeHistoryList");
@@ -1560,6 +1616,7 @@ function saveSavingsGoal() {
 }
 
 function renderSavingsGoal(goal) {
+
 const currencySymbols = {
   INR: "₹",
   USD: "$",
@@ -1572,7 +1629,11 @@ const currencySymbols = {
 };
 
 const currencyCode = userData.currency || "INR";
-const currencySymbol = currencySymbols[currencyCode] || currencyCode;
+
+const currencySymbol =
+  currencyCode === "OTHER"
+    ? (userData.customCurrencySymbol || "")
+    : (currencySymbols[currencyCode] || currencyCode);
 
 const formatAmount = (amount) =>
   `${currencySymbol}${Number(amount).toLocaleString("en-IN")}`;
